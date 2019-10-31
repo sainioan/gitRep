@@ -1,4 +1,4 @@
-                         # README File for *gitRep*
+# README File for **gitRep**
 
 This is the first line.
 
