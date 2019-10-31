@@ -1,0 +1,115 @@
+commit f9f7a013bbf6799645b3f89603bf7177b90d5dff
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 15:22:50 2019 +0200
+
+    more changes
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 1bf2685bcf12de8d9000f974cc656c7b8f69bc36
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 15:18:39 2019 +0200
+
+    new files
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit d4c365c20ca57e79191a2ffcd255e2dbd1eb74fa
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 14:15:05 2019 +0200
+
+    a change
+
+ eka.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 4eff26c1f247ed99430b3164d7a27bdaee10962c
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 14:03:11 2019 +0200
+
+    some modifications to files called eka.txt and kolmas.txt
+
+ eka.txt    | 3 +++
+ kolmas.txt | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 5973fcabeffdd1c865840701fd74ff48561e488c
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 14:01:00 2019 +0200
+
+    file renamed
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f650d68000e354c935d496116dbf311beb3f5480
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 13:59:48 2019 +0200
+
+     toinen.txt deleted
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit ffe4d7d0f9daabfe483f6028140977b7bb4b88ac
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 13:54:31 2019 +0200
+
+    text added to tiedosto.txt
+
+ tiedosto.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a1514569155be47ac8843894c119ae3f07bc1ca8
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 13:32:57 2019 +0200
+
+    test.txt added
+
+ stuff/test.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 8e49474ddc2584d0780998f445bcc856db727d84
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 13:30:25 2019 +0200
+
+    second and third doc modified
+
+ kolmas.txt | 2 ++
+ toinen.txt | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit 754f168230fde61b48f8135d042cf90e06f37998
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 13:28:59 2019 +0200
+
+    third doc added
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 99cabf2a5fc137af7eb675f10863d874b2ddaf60
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 13:23:27 2019 +0200
+
+    addition and modification
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit aa545087ab0678d1b6a3c9b5e6276a827e3f399b
+Author: Anniina Sainio <anniinasainio@Anniinas-MacBook-Pro.local>
+Date:   Wed Oct 30 13:17:59 2019 +0200
+
+    tiedosto.txt created
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+anniinasainio@Anniinas-MacBook-Pro tiedostoja % git commit -m"more changes"
+
