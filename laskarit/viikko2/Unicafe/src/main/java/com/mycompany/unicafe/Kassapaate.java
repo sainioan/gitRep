@@ -8,8 +8,10 @@ public class Kassapaate {
     private int maukkaat;
 
     public Kassapaate() {
-        this.kassassaRahaa = 100000;
-    } public Kassapaate(int saldoAlussa){
+      this.kassassaRahaa = 100000;
+    }
+public Kassapaate(int saldoAlussa){
+        saldoAlussa = 100000;
             this.kassassaRahaa = saldoAlussa;
     }
     public int syoEdullisesti(int maksu) {
@@ -75,8 +77,5 @@ public class Kassapaate {
         return edulliset;
     }
 
-    @Override
-    public String toString() {
-        return "Kassapaate{" + "kassassaRahaa=" + kassassaRahaa + ", edulliset=" + edulliset + ", maukkaat=" + maukkaat + '}';
-    }
+  
 }

@@ -7,9 +7,7 @@ public class Maksukortti {
     
     private final int EDULLINEN = 260;
     private final int MAUKAS = 400;
-    public Maksukortti(){
-        
-    }
+    
     public Maksukortti(int saldoAlussa) {
         this.saldo = saldoAlussa;
     } public int getSaldo(){
