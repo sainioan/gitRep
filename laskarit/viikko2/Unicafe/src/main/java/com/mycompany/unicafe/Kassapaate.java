@@ -9,13 +9,14 @@ public class Kassapaate {
 
     public Kassapaate() {
         this.kassassaRahaa = 100000;
+    } public Kassapaate(int saldoAlussa){
+            this.kassassaRahaa = saldoAlussa;
     }
-
     public int syoEdullisesti(int maksu) {
-        if (maksu >= 240) {
-            this.kassassaRahaa = kassassaRahaa + 240;
+        if (maksu >= 260) {
+            this.kassassaRahaa = kassassaRahaa + 260;
             ++this.edulliset;
-            return maksu - 240;
+            return maksu - 260;
         } else {
             return maksu;
         }
@@ -32,8 +33,9 @@ public class Kassapaate {
     }
 
     public boolean syoEdullisesti(Maksukortti kortti) {
-        if (kortti.saldo() >= 240) {
-            kortti.otaRahaa(240);
+        
+        if (kortti.getSaldo() >= 260) {
+            kortti.otaRahaa(260);
             this.edulliset++;
             return true;
         } else {
@@ -42,7 +44,8 @@ public class Kassapaate {
     }
 
     public boolean syoMaukkaasti(Maksukortti kortti) {
-        if (kortti.saldo() >= 400) {
+        
+        if (kortti.getSaldo() >= 400) {
             kortti.otaRahaa(400);
             this.maukkaat++;
             return true;
@@ -70,5 +73,10 @@ public class Kassapaate {
 
     public int edullisiaLounaitaMyyty() {
         return edulliset;
+    }
+
+    @Override
+    public String toString() {
+        return "Kassapaate{" + "kassassaRahaa=" + kassassaRahaa + ", edulliset=" + edulliset + ", maukkaat=" + maukkaat + '}';
     }
 }

@@ -4,17 +4,38 @@ package com.mycompany.unicafe;
 public class Maksukortti {
  
     private int saldo;
- 
-    public Maksukortti(int saldo) {
-        this.saldo = saldo;
+    
+    private final int EDULLINEN = 260;
+    private final int MAUKAS = 400;
+    public Maksukortti(){
+        
     }
- 
-    public int saldo() {
-        return saldo;
+    public Maksukortti(int saldoAlussa) {
+        this.saldo = saldoAlussa;
+    } public int getSaldo(){
+        return this.saldo;
+    } 
+    public void syoEdullisesti() {
+        if (this.saldo >= EDULLINEN) {
+            this.saldo -= EDULLINEN;
+        }
     }
  
     public void lataaRahaa(int lisays) {
+        if (lisays < 0) {
+            return;
+        }
+ 
         this.saldo += lisays;
+        if (this.saldo > 15000) {
+            this.saldo = 15000;
+        }
+    }
+public void syoMaukkaasti() {
+    
+        if (this.saldo >= MAUKAS) {
+            this.saldo-= MAUKAS;
+        }
     }
  
     public boolean otaRahaa(int maara) {
@@ -28,9 +49,8 @@ public class Maksukortti {
 
     @Override
     public String toString() {
-        int euroa = saldo/100;
-        int senttia = saldo%100;
-        return "saldo: "+euroa+"."+senttia;
+        
+        return "Kortilla on rahaa " + this.saldo + " senttia";
     } 
     
 }
