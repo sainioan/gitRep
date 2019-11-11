@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
  */
 public class KassapaateTest {
     Kassapaate kassapaate;
+    Maksukortti kortti = new Maksukortti(1000);
     public KassapaateTest() {
     }
     
@@ -100,6 +101,26 @@ public class KassapaateTest {
     public void maaraEdullisistaOikein(){
         kassapaate.syoEdullisesti(260);
         assertEquals(1, kassapaate.edullisiaLounaitaMyyty());
+    }
+    @Test 
+    public void kortiltaVeroitetaanMaukas(){
+        boolean result = kassapaate.syoMaukkaasti(kortti);
+        assertTrue(result);
+    }
+    @Test
+    public void kortilatVeroitetaanMaukasOikein(){
+        kassapaate.syoMaukkaasti(kortti);
+        assertEquals(600, kortti.getSaldo());
+    }
+    @Test 
+    public void kortiltaVeroitetaanEdullisesti(){
+        boolean result = kassapaate.syoEdullisesti(kortti);
+        assertTrue(result);
+    }
+    @Test
+    public void kortilatVeroitetaanEdullinenOikein(){
+        kassapaate.syoEdullisesti(kortti);
+        assertEquals(740, kortti.getSaldo());
     }
 
 }
