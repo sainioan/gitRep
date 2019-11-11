@@ -1,0 +1,19 @@
+# Requirement Specifications / Vaatimusmäärittely
+
+## Purpose of the Application
+
+The application is a budget application intended for managing personal finances. 
+Users can track their incomes and expenditures. To use the app, the user has to login into the application.
+## Users
+
+## Functions of the App
+### Before Login
+* User can sign up for the app by create a unique username and password.
+  * User name must be unique and at least 5 characters long..
+* User can login with a username and password
+### After Login
+* User can logout
+* User can create budgets
+* Käyttäjä voi poistaa oman käyttäjänsä, joka poistaa myös siihen liittyvät budjetit ja kulut
+
+## Development Ideas
