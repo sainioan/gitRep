@@ -6,7 +6,7 @@ This document needs to apply **markdown** style.
 
 The word 'markdown' is in bold on the previous line. 
 
-The is the first week of our *software engineering* class.
+This the first week of our *software engineering* class.
 
 The word 'software engineering' is in italics on the previous line.
 
