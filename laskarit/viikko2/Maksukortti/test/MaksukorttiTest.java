@@ -91,7 +91,7 @@ public void syoMakkaustiEiVieSaldoaNegatiivikseksi(){
     kortti.syoEdullisesti();
     kortti.syoEdullisesti();
     kortti.syoEdullisesti();
-    // nyt kortin saldo on 2
+    
     kortti.syoMaukkaasti();
 
     assertEquals("Kortilla on rahaa 2.5 euroa", kortti.toString());
