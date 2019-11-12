@@ -3,7 +3,7 @@
 ## Purpose of the Application
 
 The application is a budget application intended for managing personal finances. 
-Users can track their incomes and expenditures. To use the application, the user has to login into the application.
+Users can track their incomes and expenses. To use the application, the user has to login into the application.
 
 ## Users
 
@@ -12,7 +12,7 @@ Individuals who want to manage their personal finances.
 ## Functions of the App
 The user should be able to add income to different categories (salary).
 The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
-The user should be able to add/remove new or old categories of income and expenditures.
+The user should be able to add/remove new or old categories of income and expenses.
 
 ### Before Login
 * User can sign up for the app by create a unique username and password.
