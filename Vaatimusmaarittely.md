@@ -15,7 +15,6 @@ Users can track their incomes and expenditures. To use the application, the user
 ### After Login
 * User can logout
 * User can create budgets
-* Käyttäjä voi poistaa oman käyttäjänsä, joka poistaa myös siihen liittyvät budjetit ja kulut
 
 ## Development Ideas
 
