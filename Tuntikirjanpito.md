@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # työaikakirjapito
 
 | päivä |aika  | mitä tein |
