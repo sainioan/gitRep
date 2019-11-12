@@ -1,9 +1,10 @@
-# Requirement Specifications / Vaatimusmäärittely
+# Requirement Specifications
 
 ## Purpose of the Application
 
 The application is a budget application intended for managing personal finances. 
-Users can track their incomes and expenditures. To use the app, the user has to login into the application.
+Users can track their incomes and expenditures. To use the application, the user has to login into the application.
+
 ## Users
 
 ## Functions of the App
@@ -17,3 +18,4 @@ Users can track their incomes and expenditures. To use the app, the user has to 
 * Käyttäjä voi poistaa oman käyttäjänsä, joka poistaa myös siihen liittyvät budjetit ja kulut
 
 ## Development Ideas
+
