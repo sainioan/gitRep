@@ -10,9 +10,7 @@ Users can track their incomes and expenses. To use the application, the user has
 Individuals who want to manage their personal finances.
 
 ## Functions of the App
-The user should be able to add income to different categories (salary).
-The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
-The user should be able to add/remove new or old categories of income and expenses.
+
 
 ### Before Login
 * User can sign up for the app by create a unique username and password.
@@ -21,6 +19,11 @@ The user should be able to add/remove new or old categories of income and expens
 ### After Login
 * User can logout
 * User can create budgets
+* The user should be able to add income to different categories (salary).
+* The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
+* The user should be able to add/remove new or old categories of income and expenses.
+* The user should be able to create/edit/remove budgets.
+* The user should be able to remove his/her account.
 
 ## Development Ideas
 
