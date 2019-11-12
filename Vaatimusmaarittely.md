@@ -7,7 +7,13 @@ Users can track their incomes and expenditures. To use the application, the user
 
 ## Users
 
+Individuals who want to manage their personal finances.
+
 ## Functions of the App
+The user should be able to add income to different categories (salary).
+The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
+The user should be able to add/remove new or old categories of income and expenditures.
+
 ### Before Login
 * User can sign up for the app by create a unique username and password.
   * User name must be unique and at least 5 characters long..
