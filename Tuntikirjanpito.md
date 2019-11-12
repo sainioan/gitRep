@@ -1,4 +1,5 @@
-#Tuntikirjapito
-| Päivä|Aika| Mitä tein
-|----------------------
-|12.11.| | Aiheevalinta ja määrittelydokumentin laatiminen
+# työaikakirjapito
+
+| päivä |aika  | mitä tein |
+| :----:|:-----|---------|
+| 12.11.|      | määrittelydokumentti |
