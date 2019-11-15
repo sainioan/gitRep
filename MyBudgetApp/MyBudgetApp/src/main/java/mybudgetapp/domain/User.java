@@ -10,20 +10,20 @@ package mybudgetapp.domain;
  * @author ralahtin
  */
 public class User {
-private String name;
-private String username;
 
-public User(String username, String name){
-    this.name = name;
+private String username;
+private String password;
+public User(String username, String password){
+    this.password = password;
     this.username = username;
 }
 
-    public String getName() {
-        return name;
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPassword(String password) {
+        this.password = password;
     }
     
    

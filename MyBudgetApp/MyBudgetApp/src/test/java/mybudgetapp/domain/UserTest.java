@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * @author anniinasainio
  */
 public class UserTest {
-    
+    User user = new User("Mamiko", "AtOIC2020");
     public UserTest() {
     }
     
@@ -36,24 +36,27 @@ public class UserTest {
     
     @Test
     public void equalWhenSameUsername() {
-        User u1 = new User("tester", "Tanya");
-        User u2 = new User("tester", "Tanya");
-        assertTrue(u1.equals(u2));
+        User user1 = new User("Tanya", "Hall75");
+        User user2 = new User("Tanya", "Hall75");
+        assertTrue(user1.equals(user2));
     }
     
     @Test
     public void nonEqualWhenDifferentUsername() {
-        User u1 = new User("tester", "Tanya");
-        User u2 = new User("McKenna", "Alistair");
-        assertFalse(u1.equals(u2));
+        User user1 = new User("Tanya", "Hall75");
+        User user2 = new User("Alistair", "McKenna59");
+        assertFalse(user1.equals(user2));
     } 
     
     @Test
     public void nonEqualWhenDifferentType() {
-        User u = new User("tester", "Tanya");
-        Object o = new Object();
-        assertFalse(u.equals(o));
-    }     
+        User user = new User("Tanya", "Hall72");
+        Object obj = new Object();
+        assertFalse(user.equals(obj));
+    }   @Test
+    public void users_Password_IsCorrect() {
+        assertEquals("AtOIC2020", user.getPassword());
+    }    
 }
 
 
