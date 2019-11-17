@@ -41,8 +41,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
-
+import java.text.*;
 /**
  *
  * @author ralahtin
@@ -69,66 +68,67 @@ public class MyBudgetAppUI extends Application {
     primarystage.setTitle("MyBudgetApp");
     
   BorderPane bp = new BorderPane();
-//    bp.setPadding(new Insets(10,50,50,50));
-//    
-//    HBox inputPane = new HBox();    
-//    inputPane.setPadding(new Insets(20,20,20,30));
-//    
-//    GridPane gridpane = new GridPane();
-//    gridpane.setPadding(new Insets(20,20,20,20));
-//    gridpane.setHgap(5);
-//    gridpane.setVgap(5);
-//   
-//    Label usernameLabel = new Label("Username"); 
-//    TextField usernameInput = new TextField();
-//    Label passwordLabel = new Label("Password");
-//    PasswordField passwordInput = new PasswordField();
-//    Button loginButton = new Button("Login");
-//    Label loginMessage = new Label();
-// 
-//
-//    gridpane.add(usernameLabel, 0,0);
-//    gridpane.add(usernameInput, 1,0);
-//    gridpane.add(passwordLabel, 0,1);
-//    gridpane.add(passwordInput, 1,1);
-//    gridpane.add(loginButton,2,1);
-//    gridpane.add(loginMessage,1,2);
-//    
-//    Reflection reflection = new Reflection();
-//    reflection.setFraction(0.7f);
-//    gridpane.setEffect(reflection);
-//    
-//    DropShadow dropShadow = new DropShadow();
-//        dropShadow.setOffsetX(5);
-//        dropShadow.setOffsetY(5);
-//           Text text = new Text("MyBudgetApp Login");
-//        text.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
-//        text.setEffect(dropShadow);
-//   inputPane.getChildren().add(text);
-//   bp.setId("bp");
-//   gridpane.setId("root");
-//   loginButton.setId("loginButton");
-//   text.setId("text");
-//   loginButton.setOnAction(e-> {
-//              checkUser = usernameInput.getText().toString();
-//          checkPw = passwordInput.getText().toString();
-//          if(checkUser.equals(username) && checkPw.equals(password)){
-//           loginMessage.setText("Login successful!");
-//           loginMessage.setTextFill(Color.GREEN);
-//          }
-//          else{
-//           loginMessage.setText("Incorrect username or password.");
-//           loginMessage.setTextFill(Color.RED);
-//          }
-//          usernameInput.setText("");
-//          passwordInput.setText("");
-//         
-//         });
-//   
-//
-//
-//   bp.setTop(inputPane);
-//        bp.setCenter(gridpane);  
+  bp.setPadding(new Insets(10,50,50,50));
+      HBox inputPane = new HBox();    
+      
+      inputPane.setPadding(new Insets(20,20,20,30));
+    
+   GridPane gridpane = new GridPane();
+    gridpane.setPadding(new Insets(20,20,20,20));
+    gridpane.setHgap(5);
+    gridpane.setVgap(5);
+   
+    Label usernameLabel = new Label("Username"); 
+    TextField usernameInput = new TextField();
+   Label passwordLabel = new Label("Password");
+   PasswordField passwordInput = new PasswordField();
+    Button loginButton = new Button("Login");
+   Label loginMessage = new Label();
+ 
+
+    gridpane.add(usernameLabel, 0,0);
+   gridpane.add(usernameInput, 1,0);
+   gridpane.add(passwordLabel, 0,1);
+   gridpane.add(passwordInput, 1,1);
+   gridpane.add(loginButton,2,1);
+  gridpane.add(loginMessage,1,2);
+  
+  Reflection reflection = new Reflection();
+    reflection.setFraction(0.7f);
+    gridpane.setEffect(reflection);
+    
+    DropShadow dropShadow = new DropShadow();
+        dropShadow.setOffsetX(5);
+      dropShadow.setOffsetY(5);
+      
+      Text text = new Text("MyBudgetApp Login");
+       text.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
+               text.setEffect(dropShadow);
+ inputPane.getChildren().add(text);
+   bp.setId("bp");
+   gridpane.setId("root");
+   loginButton.setId("loginButton");
+ text.setId("text");
+  loginButton.setOnAction(e-> {
+              checkUser = usernameInput.getText().toString();
+         checkPw = passwordInput.getText().toString();
+         
+          if(checkUser.equals(username) && checkPw.equals(password)){
+              loginMessage.setText("Login successful!");
+                 loginMessage.setTextFill(Color.GREEN);
+          }
+        
+              else{
+           loginMessage.setText("Incorrect username or password.");
+           loginMessage.setTextFill(Color.RED);
+          }
+          usernameInput.setText("");
+          passwordInput.setText("");
+         
+  });
+
+   bp.setTop(inputPane);
+        bp.setCenter(gridpane);  
 //         
         //Adding BorderPane to the scene and loading CSS
      Scene scene = new Scene(bp);
