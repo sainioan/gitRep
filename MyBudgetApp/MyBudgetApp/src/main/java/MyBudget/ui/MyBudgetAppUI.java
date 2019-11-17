@@ -59,9 +59,7 @@ public class MyBudgetAppUI extends Application {
     String password = user.getPassword();
     String checkUser, checkPw;
         
-    public static void main(String args){
-    launch(args);
-}
+
     @Override 
     public void start(Stage primarystage) throws Exception {
     primarystage.setTitle("MyBudgetApp");
@@ -155,4 +153,7 @@ public class MyBudgetAppUI extends Application {
      primarystage.setResizable(false);
      primarystage.show();
     }
+        public static void main(String[] args){
+    launch(args);
+}
 }
