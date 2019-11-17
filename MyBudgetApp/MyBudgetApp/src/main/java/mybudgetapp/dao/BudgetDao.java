@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mybudgetapp.domain;
-import mybudgetapp.dao.BudgetDao;
+package mybudgetapp.dao;
+import java.util.List;
+import mybudgetapp.domain.User;
 /**
  *
  * @author anniinasainio
  */
-public class MyBudgetService {
-    BudgetDao budgetDao;
+public interface BudgetDao {
     
-    public MyBudgetService(BudgetDao bd){
-        this.budgetDao = bd;
-    }
 }
