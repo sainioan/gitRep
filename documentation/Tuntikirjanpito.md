@@ -8,3 +8,4 @@
 | 15.11.|   2  | MyBudgetApp luokkien suunnittelua ja luomista |
 | 16.11.|   2  | MyBudgetApp User luokan ja sen testien luominen. Graafisen käyttöliittymän suunnittelua.  |
 | 17.11.|   2  | Graafisen käyttöliittymän käytön opiskelua ja suunnittelua.  |
+| 18.11.|   3  | README tiedoston siistiminen, ohjelman ajamista ja testaamista komentorivilta, editointia  |
