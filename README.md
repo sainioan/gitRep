@@ -1,7 +1,7 @@
 # Projekti (MyBudgetApp)
 
 
-[Vaatimusmäärittely](../master/Vaatimusmaarittely.md)
+[Vaatimusmäärittely](../master/documentation/Vaatimusmaarittely.md)
 
 [Tuntikirjanpito](https://github.com/sainioan/gitRep/tree/master/Tuntikirjanpito.md)
 
