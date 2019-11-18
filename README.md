@@ -3,7 +3,7 @@
 
 [Vaatimusmäärittely](../master/documentation/Vaatimusmaarittely.md)
 
-[Tuntikirjanpito](https://github.com/sainioan/gitRep/tree/master/Tuntikirjanpito.md)
+[Tuntikirjanpito](../master/documentation/Tuntikirjanpito.md)
 
 
   [komentorivi](https://github.com/sainioan/gitRep/tree/master/laskarit/viikko1/komentorivi.txt)
