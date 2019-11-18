@@ -1,13 +1,13 @@
 # Projekti (MyBudgetApp)
 
 
-[Vaatimusmäärittely](https://github.com/sainioan/gitRep/blob/master/Vaatimusmaarittely.md)
+[Vaatimusmäärittely](https://github.com/sainioan/gitRep/tree/master/Vaatimusmaarittely.md)
 
-[Tuntikirjanpito](https://github.com/sainioan/gitRep/blob/master/Tuntikirjanpito.md)
+[Tuntikirjanpito](https://github.com/sainioan/gitRep/tree/master/Tuntikirjanpito.md)
 
 
-  [komentorivi](https://github.com/sainioan/gitRep/blob/master/laskarit/viikko1/komentorivi.txt)
+  [komentorivi](https://github.com/sainioan/gitRep/tree/master/laskarit/viikko1/komentorivi.txt)
 
-  [gitlog ](https://github.com/sainioan/gitRep/blob/master/laskarit/viikko1/gitlog.txt)
+  [gitlog ](https://github.com/sainioan/gitRep/tree/master/laskarit/viikko1/gitlog.txt)
 
 
