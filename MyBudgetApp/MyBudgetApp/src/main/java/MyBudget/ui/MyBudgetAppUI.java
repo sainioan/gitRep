@@ -153,8 +153,8 @@ public class MyBudgetAppUI extends Application {
 
             if (checkUser.equals(username) && checkPw.equals(password)) {
              
-////                loginMessage.setText("Login successful!");
-////                loginMessage.setTextFill(Color.GREEN);
+//                loginMessage.setText("Login successful!");
+//                loginMessage.setTextFill(Color.GREEN);
 
                 // code to be added: open the app
                 primarystage.setScene(MyBudgetScene);
