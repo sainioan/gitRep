@@ -67,11 +67,12 @@ public class MyBudgetAppUI extends Application {
     //   String password = user.getPassword();
     String password = "TU123";
     String checkUser, checkPw;
-    
+
     @Override
     public void init() throws Exception {
-    mybudgetservice = new MyBudgetService(budgetDao);
+        mybudgetservice = new MyBudgetService(budgetDao);
     }
+
     @Override
     public void start(Stage primarystage) throws Exception {
         primarystage.setTitle("MyBudgetApp");
@@ -97,7 +98,7 @@ public class MyBudgetAppUI extends Application {
         menuLabel = new Label(username + " ...logged in.");
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
-        TextField newUsernameInput = new TextField(); 
+        TextField newUsernameInput = new TextField();
         Label newUsernameLabel = new Label("username");
         newUsernameLabel.setPrefWidth(100);
         newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);
@@ -106,16 +107,14 @@ public class MyBudgetAppUI extends Application {
         TextField newPasswordInput = new TextField();
         Label newNameLabel = new Label("name");
         newNameLabel.setPrefWidth(100);
-        newPasswordPane.getChildren().addAll(newUsernameLabel, newPasswordInput); 
+        newPasswordPane.getChildren().addAll(newUsernameLabel, newPasswordInput);
         Label userCreationMessage = new Label();
-        Button logoutButton = new Button("logout");  
-        
-         Button createNewUserButton = new Button("create");
+
+        Button createNewUserButton = new Button("create");
         createNewUserButton.setPadding(new Insets(10));
         
-        ScrollPane todoScollbar = new ScrollPane();   
-        BorderPane mainPane = new BorderPane(todoScollbar);
-         MyBudgetScene = new Scene(mainPane, 300, 250);
+      //  HBox MyBudgetPane = new HBox(10);
+
         gridpane.add(usernameLabel, 0, 0);
         gridpane.add(usernameInput, 1, 0);
         gridpane.add(passwordLabel, 0, 1);
@@ -140,9 +139,6 @@ public class MyBudgetAppUI extends Application {
         gridpane.setId("root");
         loginButton.setId("loginButton");
         text.setId("text");
-        HBox menuPane = new HBox(10);    
-        Region menuSpacer = new Region();
-        HBox.setHgrow(menuSpacer, Priority.ALWAYS);
         loginButton.setOnAction(e -> {
             checkUser = usernameInput.getText().toString();
             checkPw = passwordInput.getText().toString();
@@ -150,8 +146,10 @@ public class MyBudgetAppUI extends Application {
             if (checkUser.equals(username) && checkPw.equals(password)) {
                 loginMessage.setText("Login successful!");
                 loginMessage.setTextFill(Color.GREEN);
-                primarystage.setScene(MyBudgetScene);
+
                 // code to be added: open the app
+                primarystage.setScene(MyBudgetScene);
+
             } else {
                 loginMessage.setText("Incorrect username or password.");
                 loginMessage.setTextFill(Color.RED);
@@ -179,31 +177,47 @@ public class MyBudgetAppUI extends Application {
 //            }
 // 
 //        });  
-         newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane, createNewUserButton); 
-       
-        newUserScene = new Scene(newUserPane, 300, 250);
-        
-        // main scene
-            
-       
-                
-  
-           
-     menuPane.getChildren().addAll(menuLabel, menuSpacer, logoutButton);
-        logoutButton.setOnAction(e->{
-            mybudgetservice.logout();
-            primarystage.setScene(loginScene);
-        }); 
 
+        // main scene
+        try {
+
+            ScrollPane mybudgetScrollbar = new ScrollPane();
+          //  BorderPane mainPane = new BorderPane(mybudgetScrollbar);
+             Button logoutButton = new Button("logout");
+            GridPane mybudgetLayout = new GridPane();
+            
+           mybudgetLayout.add(new Label("Welcome to MyBudgetApp!"), 0, 0);
+           mybudgetLayout.add(logoutButton, 2, 2);
+            VBox mybudgetappPane = new VBox(10);
+            Region menuSpacer = new Region();
+            HBox.setHgrow(menuSpacer, Priority.ALWAYS);
+   
+            MyBudgetScene = new Scene(mybudgetLayout, 300, 250);
+      //      mybudgetappPane.getChildren().addAll(logoutButton, menuLabel, menuSpacer, logoutButton);
+            //mybudgetappPane.getChildren().addAll(logoutButton,  menuSpacer);
+     
+            logoutButton.setOnAction(e -> {
+                mybudgetservice.logout();
+                primarystage.setScene(loginScene);
+
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane, createNewUserButton);
+
+  
         bp.setTop(inputPane);
         bp.setCenter(gridpane);
 //         
         //Adding BorderPane to the scene and loading CSS
         Scene scene = new Scene(bp);
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
-
+             newUserScene = new Scene(newUserPane, 300, 250);
+          
         primarystage.setScene(scene);
-
+        
+        
         primarystage.show();
     }
 
