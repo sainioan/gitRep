@@ -6,6 +6,7 @@
 package MyBudget.ui;
 
 import mybudgetapp.domain.*;
+import java.lang.Object;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import java.time.Duration;
@@ -21,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -35,6 +37,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -56,7 +59,7 @@ public class MyBudgetAppUI extends Application {
     private BudgetDao budgetDao;
     private MyBudgetService mybudgetservice;
     private Scene newUserScene;
-    private Scene loginScene;
+    private Scene loginscene;
     private VBox myBudgetNodes;
     private Label menuLabel;
     private MyBudgetService mbs;
@@ -139,6 +142,12 @@ public class MyBudgetAppUI extends Application {
         gridpane.setId("root");
         loginButton.setId("loginButton");
         text.setId("text");
+        
+        bp.setTop(inputPane);
+        bp.setCenter(gridpane);
+//         
+        //Adding BorderPane to the scene and loading CSS
+        loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
             checkUser = usernameInput.getText().toString();
             checkPw = passwordInput.getText().toString();
@@ -185,20 +194,20 @@ public class MyBudgetAppUI extends Application {
           //  BorderPane mainPane = new BorderPane(mybudgetScrollbar);
              Button logoutButton = new Button("logout");
             GridPane mybudgetLayout = new GridPane();
-            
+       
            mybudgetLayout.add(new Label("Welcome to MyBudgetApp!"), 0, 0);
            mybudgetLayout.add(logoutButton, 2, 2);
             VBox mybudgetappPane = new VBox(10);
             Region menuSpacer = new Region();
             HBox.setHgrow(menuSpacer, Priority.ALWAYS);
    
-            MyBudgetScene = new Scene(mybudgetLayout, 300, 250);
+            MyBudgetScene = new Scene(mybudgetLayout, 500, 350);
       //      mybudgetappPane.getChildren().addAll(logoutButton, menuLabel, menuSpacer, logoutButton);
             //mybudgetappPane.getChildren().addAll(logoutButton,  menuSpacer);
      
             logoutButton.setOnAction(e -> {
-                mybudgetservice.logout();
-                primarystage.setScene(loginScene);
+                //mybudgetservice.logout();
+                primarystage.setScene(loginscene);
 
             });
         } catch (Exception e) {
@@ -207,15 +216,10 @@ public class MyBudgetAppUI extends Application {
         newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane, createNewUserButton);
 
   
-        bp.setTop(inputPane);
-        bp.setCenter(gridpane);
-//         
-        //Adding BorderPane to the scene and loading CSS
-        Scene scene = new Scene(bp);
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
              newUserScene = new Scene(newUserPane, 300, 250);
           
-        primarystage.setScene(scene);
+        primarystage.setScene(loginscene);
         
         
         primarystage.show();
