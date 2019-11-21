@@ -6,6 +6,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <dependencies>
+         <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>1.4.200</version> <!-- ex: 1.2.140 -->
+    <scope>test</scope>
+  </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
