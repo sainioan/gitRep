@@ -10,4 +10,6 @@
 | 17.11.|   2  | Graafisen käyttöliittymän käytön opiskelua ja suunnittelua.  |
 | 18.11.|   3  | README tiedoston siistiminen, ohjelman ajamista ja testaamista komentorivilta, editointia  |
 | 19.11.|   3  | projektin jar:n luominen, graafisen kayttoliittyman debuggausta  |
+| 21.11.|   2  | H2 tutustumista  |
+| 22.11.|   0.25  | Suunnitelman muutos : H2 sijaan SQLiten kayttoonotto, dependencies lisays POM:iin |
 
