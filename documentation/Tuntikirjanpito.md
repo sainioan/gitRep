@@ -12,4 +12,6 @@
 | 19.11.|   3  | projektin jar:n luominen, graafisen kayttoliittyman debuggausta  |
 | 21.11.|   2  | H2 tutustumista  |
 | 22.11.|   0.25  | Suunnitelman muutos : H2 sijaan SQLiten kayttoonotto, dependencies lisays POM:iin |
+| 24.11.|   3  |SQLiten harjoittelua, luokkien expense ja income lisaaminen MyBudgetApp:n, tietokannan rakenteen pohdintaa |
+
 
