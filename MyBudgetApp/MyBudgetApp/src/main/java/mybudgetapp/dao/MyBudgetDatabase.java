@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package mybudgetapp.dao;
+import mybudgetapp.domain.Category;
+import mybudgetapp.domain.Expense;
+import mybudgetapp.domain.Expense;
+import mybudgetapp.domain.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
