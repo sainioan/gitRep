@@ -11,26 +11,29 @@ package mybudgetapp.domain;
  */
 public class Category {
 
-      private String value;
-  private String label;
-  public Category (String value, String label) { 
-    this.value = value;
-    this.label = label;
+  private int id;  
+  private String name;
+  public Category(){
+      
+  }
+  public Category (int id, String name) { 
+    this.id = id;
+    this.name = name;
   }
 
-  public String getValue() {
-    return value;
+  public int getId() {
+    return id;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public String getLabel() {
-    return label;
+  public String getName() {
+    return name;
   }
 
-  public void setLabel(String label) {
-    this.label = label;
+  public void setName(String name) {
+    this.name = name;
   }
 }
