@@ -151,6 +151,34 @@ public class MyBudgetDatabase  {
             System.out.println(e.getMessage());
         }
 
-    }
+    }   private int getLastId(Connection connection) {
+        int id = -1;
+        try {
+            PreparedStatement getLastId = connection.prepareStatement("SELECT last_insert_rowid() AS id;");
+            ResultSet resultSet = getLastId.executeQuery();
 
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+            }
+
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+        
+        ////GET ALL BALANCES, Budgets, or something
+  //  }public List<MyBudget...> getAllBudgets() {
+    //    List<Object> savedSimulations = new ArrayList<>();
+     //   try {
+       //     Connection connection = connect();
+         //   PreparedStatement getAllBudgetsQuery = connection.prepareStatement("SELECT * FROM [TABLE NAME GOES HERE>..];");
+           // ResultSet resultSet = geBudgetQuery.executeQuery();
+
+      //      while (resultSet.next()) {
+      //          Object o = new Object();
+        //        o.setSimulationDetails(resultSet.getInt("id"), resultSet.getString("name"),  resultSet.getDate("startingDate").toLocalDate());
+          //      saveBudgets.add(s);
+//
+    }
 }
