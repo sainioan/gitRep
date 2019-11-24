@@ -5,30 +5,30 @@
  */
 package mybudgetapp.domain;
 import java.util.*;
+import java.util.Date;
+
 /**
  *
  * @author anniinasainio
  */
-public class Expense {
+public class Income {
     private int id;
     private int categoryId;
-    //integer, double, or float
     private double amount;
     private Date date;
-    public Expense(){
+    public Income(){
         
-    }  public Expense(int categoryId, double amount, Date date){
-    
-    this.categoryId = categoryId;
-    this.amount = amount;
-    this.date = date;    
-    } 
-    public Expense(int id, int categoryId, double amount, Date date){
-    this.id = id;
-    this.categoryId = categoryId;
-    this.amount = amount;
-    this.date = date;
-}
+    } public Income(int categoryId, double amount, Date date){
+       this.categoryId = categoryId;
+        this.amount = amount;
+        this.date = date;  
+    }
+    public Income(int id, int categoryId, double amount, Date date){
+        this.id = id;
+        this.categoryId = categoryId;
+        this.amount = amount;
+        this.date = date;
+    }
 
     public int getId() {
         return id;

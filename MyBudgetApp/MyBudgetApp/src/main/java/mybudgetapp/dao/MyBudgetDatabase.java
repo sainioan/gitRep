@@ -20,22 +20,29 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.io.*;
 
 /**
  *
  * @author anniinasainio
  */
 
-public class MyBudgetDatabase {
+public class MyBudgetDatabase  {
 
-    private String dbaddress;
+    private final String dbName;
 
-    public MyBudgetDatabase(String databaseAddress) {
-        this.dbaddress = databaseAddress;
+    public MyBudgetDatabase(String databaseName) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+        this.dbName = databaseName;
     }
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(dbaddress);
+    public Connection connect() throws SQLException {
+        Connection connection = null;
+        try{
+        }catch (Exception e){
+            String url =  "jdbc:sqlite:" + dbName;
+            connection =      DriverManager.getConnection(url);
+        }
+        return connection;
     }
 
     public void disconnect(Connection connection, PreparedStatement stmt, ResultSet rs) throws SQLException {
@@ -61,9 +68,9 @@ public class MyBudgetDatabase {
 
     private void initializeCategory() {
         try {
-            Connection conn = getConnection();
+            Connection connection = connect();
 
-            PreparedStatement createCategoryTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS Category ("
+            PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Category ("
                     + "id integer PRIMARY KEY, "
                     + "name varchar(255), "
                     + "allocated float);"
@@ -71,7 +78,7 @@ public class MyBudgetDatabase {
             createCategoryTable.execute();
             createCategoryTable.close();
 
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
           
        System.out.println(e.getMessage());
@@ -80,9 +87,9 @@ public class MyBudgetDatabase {
 
     private void initializeExpense() {
         try {
-            Connection conn = getConnection();
+            Connection connection = connect();
 
-            PreparedStatement createExpenseTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS Expense ("
+            PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Expense ("
                     + "id integer PRIMARY KEY, "
                     + "category_id integer, "
                     + "name varchar(255), "
@@ -92,7 +99,7 @@ public class MyBudgetDatabase {
             createExpenseTable.execute();
             createExpenseTable.close();
 
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
        System.out.println(e.getMessage());
         }
@@ -100,9 +107,9 @@ public class MyBudgetDatabase {
     }
     private void initializeIncome(){
   try {
-            Connection conn = getConnection();
+            Connection connection = connect();
 
-            PreparedStatement createIncomeTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS Income ("
+            PreparedStatement createIncomeTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Income ("
                     + "id integer PRIMARY KEY, "
                     //+ "category_id integer, "
                     + "name varchar(255), "
@@ -113,7 +120,7 @@ public class MyBudgetDatabase {
             createIncomeTable.execute();
             createIncomeTable.close();
 
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             /* Do nothing */
         }
@@ -121,9 +128,9 @@ public class MyBudgetDatabase {
     }
     private void initializeCurrentBalance() {
         try {
-            Connection conn = getConnection();
+            Connection connection = connect();
 
-            PreparedStatement createCurrentBalanceTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS Current Balance ("
+            PreparedStatement createCurrentBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Current Balance ("
                     + "id integer PRIMARY KEY, "
                     + "category_id integer, "
                     + "expense_id integer, "
@@ -135,7 +142,7 @@ public class MyBudgetDatabase {
             createCurrentBalanceTable.execute();
             createCurrentBalanceTable.close();
 
-            conn.close();
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
