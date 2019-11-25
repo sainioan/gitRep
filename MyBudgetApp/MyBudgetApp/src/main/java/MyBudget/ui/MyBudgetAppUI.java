@@ -96,6 +96,8 @@ public class MyBudgetAppUI extends Application {
         Label passwordLabel = new Label("Password");
         PasswordField passwordInput = new PasswordField();
         Button loginButton = new Button("Login");
+        Button signUpButton = new Button("Sign up");
+       
         Label loginMessage = new Label();
         VBox newUserPane = new VBox(10);
         menuLabel = new Label(username + " ...logged in.");
@@ -108,21 +110,25 @@ public class MyBudgetAppUI extends Application {
         HBox newPasswordPane = new HBox(10);
         newPasswordPane.setPadding(new Insets(10));
         TextField newPasswordInput = new TextField();
+        TextField signUpInput = new TextField();
         Label newNameLabel = new Label("name");
         newNameLabel.setPrefWidth(100);
         newPasswordPane.getChildren().addAll(newUsernameLabel, newPasswordInput);
         Label userCreationMessage = new Label();
 
-        Button createNewUserButton = new Button("create");
-        createNewUserButton.setPadding(new Insets(10));
+       
+      //  SignUpButton.setPadding(new Insets(10));
 
         //  HBox MyBudgetPane = new HBox(10);
+      
         gridpane.add(usernameLabel, 0, 0);
         gridpane.add(usernameInput, 1, 0);
         gridpane.add(passwordLabel, 0, 1);
         gridpane.add(passwordInput, 1, 1);
         gridpane.add(loginButton, 2, 1);
         gridpane.add(loginMessage, 1, 2);
+        gridpane.add(signUpButton, 3,1);
+        gridpane.add(signUpInput, 3, 1);
 
         Reflection reflection = new Reflection();
 // Not sure I want the reflection:   reflection.setFraction(0.7f);
@@ -140,6 +146,7 @@ public class MyBudgetAppUI extends Application {
         bp.setId("bp");
         gridpane.setId("root");
         loginButton.setId("loginButton");
+        signUpButton.setId("signUpButton");
         text.setId("text");
 
         bp.setTop(inputPane);
@@ -167,25 +174,11 @@ public class MyBudgetAppUI extends Application {
             passwordInput.setText("");
 
         });
-//
-//        createNewUserButton.setOnAction(e->{
-//            String username = newUsernameInput.getText();
-//            String name = newNameInput.getText();
-//   
-//            if ( username.length()==2 || name.length()<2 ) {
-//                userCreationMessage.setText("username or name too short");
-//                userCreationMessage.setTextFill(Color.RED);              
-//            } else if ( todoService.createUser(username, name) ){
-//                userCreationMessage.setText("");                
-//                loginMessage.setText("new user created");
-//                loginMessage.setTextFill(Color.GREEN);
-//                primarystage.setScene(loginScene);      
-//            } else {
-//                userCreationMessage.setText("username has to be unique");
-//                userCreationMessage.setTextFill(Color.RED);        
-//            }
-// 
-//        });  
+  signUpButton.setOnAction(e->{
+            usernameInput.setText("");
+            primarystage.setScene(newUserScene);   
+        });  
+        
 
         // main scene
         try {
@@ -213,7 +206,7 @@ public class MyBudgetAppUI extends Application {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane, createNewUserButton);
+        newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane, signUpButton);
 
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
         newUserScene = new Scene(newUserPane, 300, 250);
