@@ -74,9 +74,9 @@ public class MyBudgetDatabase  {
         try {
             Connection connection = connect();
 
-            PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Category ("
-                    + "id integer PRIMARY KEY, "
-                    + "name varchar(255), "
+            PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS category ("
+                    + "id INTEGER NOT NULL PRIMARY KEY, "
+                    + "name VARCHAR(100), "
                     + "allocated float);"
             );
             createCategoryTable.execute();
@@ -93,12 +93,13 @@ public class MyBudgetDatabase  {
         try {
             Connection connection = connect();
 
-            PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Expense ("
-                    + "id integer PRIMARY KEY, "
-                    + "category_id integer, "
-                    + "name varchar(255), "
+            PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
+                    + "id INTEGER NOT NULL PRIMARY KEY, "
+                    + "category_id INTEGER, "
+                    + "name VARCHAR(100), "
                     + "amount float, "
-                    + "FOREIGN KEY (category_id) REFERENCES Category(id));"
+                    + "time DATE,"
+                    + "FOREIGN KEY (category_id) REFERENCES category(id));"
             );
             createExpenseTable.execute();
             createExpenseTable.close();
@@ -113,12 +114,11 @@ public class MyBudgetDatabase  {
   try {
             Connection connection = connect();
 
-            PreparedStatement createIncomeTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Income ("
-                    + "id integer PRIMARY KEY, "
-                    //+ "category_id integer, "
+            PreparedStatement createIncomeTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS income ("
+                    + "id INTEGER PRIMARY KEY, "
                     + "name varchar(255), "
                     + "amount float, "
-                  //  + "FOREIGN KEY (category_id) REFERENCES Category(id)"
+                    + "time DATE, "
                     + ");"
             );
             createIncomeTable.execute();
@@ -134,17 +134,17 @@ public class MyBudgetDatabase  {
         try {
             Connection connection = connect();
 
-            PreparedStatement createCurrentBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Current Balance ("
-                    + "id integer PRIMARY KEY, "
+            PreparedStatement createBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS balance ("
+                    + "id INTEGER NOT NULL PRIMARY KEY, "
                     + "category_id integer, "
                     + "expense_id integer, "
-                    + "name varchar(255), "
+                    + "time DATE, "
                     + "amount float, "
-                    + "FOREIGN KEY (category_id) REFERENCES Category(id),"
-                    + "FOREIGN KEY (expense_id) REFERENCES Expense(id));"
+                    + "FOREIGN KEY (category_id) REFERENCES category(id),"
+                    + "FOREIGN KEY (expense_id) REFERENCES expense(id));"
             );
-            createCurrentBalanceTable.execute();
-            createCurrentBalanceTable.close();
+            createBalanceTable.execute();
+            createBalanceTable.close();
 
             connection.close();
         } catch (SQLException e) {

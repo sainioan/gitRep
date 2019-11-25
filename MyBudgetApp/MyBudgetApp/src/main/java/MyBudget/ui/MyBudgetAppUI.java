@@ -99,21 +99,10 @@ public class MyBudgetAppUI extends Application {
         Button signUpButton = new Button("Sign up");
        
         Label loginMessage = new Label();
-        VBox newUserPane = new VBox(10);
+       
         menuLabel = new Label(username + " ...logged in.");
-        HBox newUsernamePane = new HBox(10);
-        newUsernamePane.setPadding(new Insets(10));
-        TextField newUsernameInput = new TextField();
-        Label newUsernameLabel = new Label("username");
-        newUsernameLabel.setPrefWidth(100);
-        newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);
-        HBox newPasswordPane = new HBox(10);
-        newPasswordPane.setPadding(new Insets(10));
-        TextField newPasswordInput = new TextField();
-        TextField signUpInput = new TextField();
-        Label newNameLabel = new Label("name");
-        newNameLabel.setPrefWidth(100);
-        newPasswordPane.getChildren().addAll(newUsernameLabel, newPasswordInput);
+       
+      
         Label userCreationMessage = new Label();
 
        
@@ -149,7 +138,7 @@ public class MyBudgetAppUI extends Application {
         bp.setTop(inputPane);
         bp.setCenter(gridpane);
 //         
-        //Adding BorderPane to the scene and loading CSS
+        //Adding BorderPane to the scene 
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
             checkUser = usernameInput.getText().toString();
@@ -180,8 +169,6 @@ public class MyBudgetAppUI extends Application {
         // main scene
         try {
 
-           //  ScrollPane mybudgetScrollbar = new ScrollPane();
-            //  BorderPane mainPane = new BorderPane(mybudgetScrollbar);
             Button logoutButton = new Button("logout");
             GridPane mybudgetLayout = new GridPane();
 
@@ -192,26 +179,65 @@ public class MyBudgetAppUI extends Application {
             HBox.setHgrow(menuSpacer, Priority.ALWAYS);
 
             MyBudgetScene = new Scene(mybudgetLayout, 500, 350);
-            //      mybudgetappPane.getChildren().addAll(logoutButton, menuLabel, menuSpacer, logoutButton);
-            //mybudgetappPane.getChildren().addAll(logoutButton,  menuSpacer);
-
+       
             logoutButton.setOnAction(e -> {
-                //mybudgetservice.logout();
+                mybudgetservice.logout();
                 primarystage.setScene(loginscene);
 
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane);
+         // new user scene  
+         VBox newUserPane = new VBox(10);
+         HBox newUsernamePane = new HBox(10);
+         newUsernamePane.setPadding(new Insets(10));
+         Text textNewUser = new Text("MyBudgetApp Sign Upp");
+        textNewUser.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
+      //  textNewUser.setEffect(dropShadow);
+       
+        BorderPane bpNewUser = new BorderPane();
+        bpNewUser.setPadding(new Insets(10, 50, 50, 50));
+        TextField newUsernameInput = new TextField();
+        Label newPassWordLabel = new Label("password");
+        newPassWordLabel.setPrefWidth(100);
+        Label newUsernameLabel = new Label("username");
+        newUsernameLabel.setPrefWidth(100);
+        newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);
+        HBox newPasswordPane = new HBox(10);
+        newPasswordPane.setPadding(new Insets(10));
+        TextField newPasswordInput = new TextField();
+        PasswordField passwordInputNewUser = new PasswordField();
+        GridPane newUserGridPane = new GridPane();
+        newUserGridPane.setPadding(new Insets(20, 20, 20, 20));
+        newUserGridPane.setHgap(5);
+        newUserGridPane.setVgap(5);
+        
+       
+       newUserGridPane.add(newUsernameLabel, 0, 0);
+       newUserGridPane.add(newUsernameInput, 1, 0);
+       newUserGridPane.add(newPassWordLabel, 0, 1); 
+       newUserGridPane.add(passwordInputNewUser, 1, 1); 
+       
+        bpNewUser.setTop(newUsernamePane);
+        bpNewUser.setCenter(newUserGridPane);
+         
+        newUsernamePane.getChildren().addAll(newUserGridPane);
+        newUserPane.getChildren().addAll( newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
 
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
+      
+
         newUserScene = new Scene(newUserPane, 300, 250);
 
         primarystage.setScene(loginscene);
 
         primarystage.show();
+          }
+          @Override
+    public void stop() {
     }
+  
 
     public static void main(String[] args) {
         launch(args);
