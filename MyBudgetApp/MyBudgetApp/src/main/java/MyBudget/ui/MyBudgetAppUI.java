@@ -127,14 +127,11 @@ public class MyBudgetAppUI extends Application {
         gridpane.add(passwordInput, 1, 1);
         gridpane.add(loginButton, 2, 1);
         gridpane.add(loginMessage, 1, 2);
-        gridpane.add(signUpButton, 3,1);
-        gridpane.add(signUpInput, 3, 1);
+        gridpane.add(signUpButton, 2,0);
+       
 
         Reflection reflection = new Reflection();
-// Not sure I want the reflection:   reflection.setFraction(0.7f);
-
-//    gridpane.setEffect(reflection);
-//    
+    
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(5);
         dropShadow.setOffsetY(5);
@@ -142,7 +139,7 @@ public class MyBudgetAppUI extends Application {
         Text text = new Text("MyBudgetApp Login");
         text.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
         text.setEffect(dropShadow);
-        inputPane.getChildren().add(text);
+        inputPane.getChildren().addAll(gridpane, text);
         bp.setId("bp");
         gridpane.setId("root");
         loginButton.setId("loginButton");
@@ -206,7 +203,7 @@ public class MyBudgetAppUI extends Application {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane, signUpButton);
+        newUserPane.getChildren().addAll(userCreationMessage, newPasswordPane, newUsernamePane);
 
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
         newUserScene = new Scene(newUserPane, 300, 250);
