@@ -60,6 +60,7 @@ import java.text.*;
 import mybudgetapp.dao.BudgetDao;
 import mybudgetapp.dao.MyBudgetDatabase;
 import mybudgetapp.dao.DBUserDao;
+import mybudgetapp.dao.UserDao;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
@@ -74,6 +75,7 @@ public class MyBudgetAppUI extends Application {
 
     private Scene MyBudgetScene;
     private BudgetDao budgetDao;
+    private UserDao userDao;
     private MyBudgetService mybudgetservice;
     private Scene newUserScene;
     private Scene loginscene;
@@ -90,7 +92,7 @@ public class MyBudgetAppUI extends Application {
 
     @Override
     public void init() throws Exception {
-        mybudgetservice = new MyBudgetService(budgetDao);
+        mybudgetservice = new MyBudgetService(budgetDao, userDao);
     }
 
     @Override

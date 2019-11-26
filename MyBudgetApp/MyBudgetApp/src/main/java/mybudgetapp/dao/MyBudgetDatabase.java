@@ -35,8 +35,9 @@ public class MyBudgetDatabase  {
 
     private final String dbName;
 
-    public MyBudgetDatabase(String databaseName) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+    public MyBudgetDatabase(String databaseName) throws SQLException {
         this.dbName = databaseName;
+        initializeDatabase();
     }
 
     public Connection connect() throws SQLException {
@@ -60,7 +61,7 @@ public class MyBudgetDatabase  {
         conn.close();
     }
 
-    private void initializeTables() {
+    private void initializeDatabase() {
         // The following methods will create required tables if they do not already exist in the database
 
         initializeCategory();

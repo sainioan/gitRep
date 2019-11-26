@@ -5,7 +5,9 @@
  */
 package mybudgetapp.domain;
 
+import java.sql.SQLException;
 import mybudgetapp.dao.BudgetDao;
+import mybudgetapp.dao.MyBudgetDatabase;
 import mybudgetapp.dao.UserDao;
 
 /**
@@ -14,14 +16,23 @@ import mybudgetapp.dao.UserDao;
  */
 public class MyBudgetService {
 
-    BudgetDao budgetDao;
+    private MyBudgetDatabase mybDatabase;
+    private BudgetDao budgetDao;
     private UserDao userDao;
     private User loggedIn;
 
-    public MyBudgetService(BudgetDao bd) {
-        this.budgetDao = bd;
+    public MyBudgetService() throws SQLException {
+        this.mybDatabase = new MyBudgetDatabase("mybudgetdatabase.db");
     }
 
+    public MyBudgetService(BudgetDao bd, UserDao ud) {
+        this.budgetDao = bd;
+        this.userDao = ud;
+    }
+    // public boolean createBudget()
+    // budgetDao.
+
+    //public boolean createUser()
     public boolean login(String username) {
         User user = userDao.findByUsername(username);
         if (user == null) {
