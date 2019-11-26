@@ -66,11 +66,11 @@ public class MyBudgetService {
         loggedIn = null;
     }
 
-    public boolean createUser(String username, String name) {
+    public boolean createUser(String username, String password) {
         if (userDao.findByUsername(username) != null) {
             return false;
         }
-        User user = new User(username, name);
+        User user = new User(username, password);
         try {
             userDao.create(user);
         } catch (Exception e) {

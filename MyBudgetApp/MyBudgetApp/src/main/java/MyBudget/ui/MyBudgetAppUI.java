@@ -86,10 +86,10 @@ public class MyBudgetAppUI extends Application {
 //   private User user;
     // get username and password from user.
     // String username = user.getUsername();
-    //  String username = "testUser";
+    String username = "testUser";
     //   String password = user.getPassword();
-    //  String password = "TU123";
-    //  String checkUser, checkPw;
+     String password = "TU123";
+     String checkUser, checkPw;
     @Override
     public void init() throws Exception {
         mybudgetService = new MyBudgetService(budgetDao, userDao);
@@ -151,18 +151,23 @@ public class MyBudgetAppUI extends Application {
         //Adding BorderPane to the scene 
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
-
-            String username = usernameInput.getText();
-            String password = passwordInput.getText();
-            //  checkUser = usernameInput.getText().toString();
-            // checkPw = passwordInput.getText().toString();
-
-            if (mybudgetService.login(username, password)) {
-                menuLabel = new Label(username + " ...logged in.");
-//                loginMessage.setText("Login successful!");
+            
+          checkUser = usernameInput.getText().toString();
+          checkPw = passwordInput.getText().toString();
+// Code not working.
+//            String username = usernameInput.getText();
+//            String password = passwordInput.getText();
+//            //  checkUser = usernameInput.getText().toString();
+//            // checkPw = passwordInput.getText().toString();
+//
+//            if (mybudgetService.login(username, password)) {
+//                menuLabel = new Label(username + " ...logged in.");
+////                loginMessage.setText("Login successful!");
 //                loginMessage.setTextFill(Color.GREEN);
 
                 // code to be added: open the app
+                
+                if(checkUser.equals(username)&& checkPw.equals(password)){
                 primarystage.setScene(MyBudgetScene);
 
             } else {
@@ -173,10 +178,11 @@ public class MyBudgetAppUI extends Application {
             passwordInput.setText("");
 
         });
-        signUpButton.setOnAction(e -> {
+        signUpButton.setOnAction(e->{
             usernameInput.setText("");
-            primarystage.setScene(newUserScene);
-        });
+            primarystage.setScene(newUserScene);   
+        });  
+       
 
         // main scene
         try {
@@ -235,7 +241,29 @@ public class MyBudgetAppUI extends Application {
 
         newUsernamePane.getChildren().addAll(newUserGridPane);
         newUserPane.getChildren().addAll(newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
-
+      
+        
+        Button createNewUserButton = new Button("create");
+        createNewUserButton.setPadding(new Insets(10)); 
+        createNewUserButton.setOnAction(e -> {
+          
+            String username = newUsernameInput.getText();
+            String password = passwordInputNewUser.getText();
+              if ( username.length()== 5 || username.length()< 5 ) {
+                userCreationMessage.setText("username or name too short");
+                userCreationMessage.setTextFill(Color.RED);
+              }  else   {
+                 mybudgetService.createUser(username, password);
+                userCreationMessage.setText("");                
+                loginMessage.setText("new user created");
+                loginMessage.setTextFill(Color.GREEN);
+                
+                 primarystage.setScene(loginscene);     
+//            } else {
+//                userCreationMessage.setText("username has to be unique");
+//                userCreationMessage.setTextFill(Color.RED);        
+            }
+        });
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
         backButton.setOnAction(e -> {
             mybudgetService.logout();
