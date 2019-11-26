@@ -14,11 +14,13 @@ Individuals, who have a user account, can sign in with their username and passwo
 
 ### Before Login
 * User can sign up for the app by create a unique username and password.
-  * User name must be unique and at least 5 characters long..
+* User name must be unique and at least 5 characters long..
+* User can cancel the sign up by pressing the "back" button -- done
 * User can login with a username and password
 ### After Login
 * User can logout -- done
 * User can sign in -- 
+
 * User can create daily, motnhy, or annual budgets
 * The user should be able to add income to different categories (salary).
 * The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
