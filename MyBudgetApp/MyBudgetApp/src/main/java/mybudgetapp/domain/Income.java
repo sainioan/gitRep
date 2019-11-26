@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package mybudgetapp.domain;
+
 import java.util.*;
 import java.util.Date;
 
@@ -12,20 +13,25 @@ import java.util.Date;
  * @author anniinasainio
  */
 public class Income {
+
     private int id;
-    private int categoryId;
     private double amount;
     private Date date;
-    public Income(){
-        
-    } public Income(int categoryId, double amount, Date date){
-       this.categoryId = categoryId;
-        this.amount = amount;
-        this.date = date;  
+    private List<Income> totalIncome;
+
+    public Income() {
+
     }
-    public Income(int id, int categoryId, double amount, Date date){
+
+    public Income(int id, double amount, Date date) {
         this.id = id;
-        this.categoryId = categoryId;
+        this.amount = amount;
+        this.date = date;
+
+    }
+
+    public Income(double amount, Date date) {
+
         this.amount = amount;
         this.date = date;
     }
@@ -36,14 +42,6 @@ public class Income {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
     }
 
     public double getAmount() {
@@ -61,4 +59,17 @@ public class Income {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public List<Income> getIncome() {
+        Income i = new Income(getAmount(), getDate());
+        totalIncome.add(i);
+        return totalIncome;
+     //The following method is to get the totalAmountOfIncome   
+    } public double getIncomeTotal(){
+        double total = 0.0;
+        for(Income i : totalIncome){
+            total = total + i.getAmount();
+        }
+        return total;
+    } 
 }

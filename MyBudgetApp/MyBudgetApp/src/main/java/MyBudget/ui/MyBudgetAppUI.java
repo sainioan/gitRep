@@ -6,6 +6,10 @@
 package MyBudget.ui;
 
 import mybudgetapp.domain.*;
+import java.io.*;
+import java.util.*;
+import java.sql.SQLException;
+import com.sun.javafx.charts.Legend;
 import java.lang.Object;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +27,13 @@ import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.Node;
+
+import javafx.scene.input.MouseEvent;
+import javafx.scene.control.DatePicker;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -47,6 +58,12 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import java.text.*;
 import mybudgetapp.dao.BudgetDao;
+import mybudgetapp.dao.MyBudgetDatabase;
+import mybudgetapp.dao.DBUserDao;
+import mybudgetapp.domain.Category;
+import mybudgetapp.domain.Expense;
+import mybudgetapp.domain.Income;
+import mybudgetapp.domain.User;
 import mybudgetapp.domain.MyBudgetService;
 
 /**

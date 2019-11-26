@@ -4,31 +4,38 @@
  * and open the template in the editor.
  */
 package mybudgetapp.domain;
+
 import java.util.*;
+
 /**
  *
  * @author anniinasainio
  */
 public class Expense {
+
     private int id;
     private int categoryId;
-    //integer, double, or float
     private double amount;
     private Date date;
-    public Expense(){
-        
-    }  public Expense(int categoryId, double amount, Date date){
-    
-    this.categoryId = categoryId;
-    this.amount = amount;
-    this.date = date;    
-    } 
-    public Expense(int id, int categoryId, double amount, Date date){
-    this.id = id;
-    this.categoryId = categoryId;
-    this.amount = amount;
-    this.date = date;
-}
+    private List<Expense> expenses;
+
+    public Expense() {
+
+    }
+
+    public Expense(int categoryId, double amount, Date date) {
+
+        this.categoryId = categoryId;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    public Expense(int id, int categoryId, double amount, Date date) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.amount = amount;
+        this.date = date;
+    }
 
     public int getId() {
         return id;
@@ -60,5 +67,17 @@ public class Expense {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<Expense> getExpenses() {
+        Expense e = new Expense(getCategoryId(), getAmount(), getDate());
+        expenses.add(e);
+        return expenses;
+    } public double getExpensesTotal(){
+        double total = 0.0;
+        for(Expense e : expenses){
+            total = total + e.getAmount();
+        }
+        return total;
     }
 }
