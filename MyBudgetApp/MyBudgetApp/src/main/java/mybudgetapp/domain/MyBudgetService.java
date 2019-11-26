@@ -5,6 +5,11 @@
  */
 package mybudgetapp.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.sql.SQLException;
 import mybudgetapp.dao.BudgetDao;
 import mybudgetapp.dao.MyBudgetDatabase;
@@ -29,7 +34,16 @@ public class MyBudgetService {
         this.budgetDao = bd;
         this.userDao = ud;
     }
-    // public boolean createBudget()
+    public boolean createBudget(String content){
+             MyBudget mb = new MyBudget(content, loggedIn);
+        try {   
+            budgetDao.create(mb);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+    
     // budgetDao.
 
     //public boolean createUser()

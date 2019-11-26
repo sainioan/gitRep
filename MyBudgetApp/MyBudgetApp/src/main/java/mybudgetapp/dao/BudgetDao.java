@@ -5,11 +5,16 @@
  */
 package mybudgetapp.dao;
 import java.util.List;
+import mybudgetapp.domain.MyBudget;
 import mybudgetapp.domain.User;
 /**
  *
  * @author anniinasainio
  */
 public interface BudgetDao {
-    
+     MyBudget create(MyBudget mb) throws Exception;
+
+    List<MyBudget> getAll();
+
+    void setDone(int id) throws Exception;
 }
