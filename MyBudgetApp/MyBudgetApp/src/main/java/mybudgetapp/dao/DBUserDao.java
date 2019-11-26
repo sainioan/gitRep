@@ -107,25 +107,7 @@ public DBUserDao (MyBudgetDatabase db){
         conn.close();
         return user;
     }
-    public User findOne(String username) throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM user WHERE username = ?");
-        stmt.setString(1, username);
-        
-        ResultSet rs = stmt.executeQuery();
-        boolean hasOne = rs.next();
-        if (!hasOne) {
-            return null;
-        }
-        password = rs.getString("password");
-        User user = new User(rs.getString("username").trim(), password);
-        
-
-        stmt.close();
-        rs.close();
-        con.close();
-        return user;
-    }
+  
     
 
     public void delete(String username) throws SQLException {
@@ -139,9 +121,14 @@ public DBUserDao (MyBudgetDatabase db){
     }
 
     @Override
-    public User create(User user) throws Exception {
+    public User create(User user) throws SQLException {
+        
         users.add(user);
+        try{
         save();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return user;
     }
 
@@ -157,5 +144,27 @@ public DBUserDao (MyBudgetDatabase db){
     @Override
     public List<User> getAll() {
         return users;
+    }
+
+    @Override
+    public User findOne(String username) throws SQLException {
+        Connection conn = db.connect();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM User WHERE username = ?");
+        stmt.setString(1, username);
+        
+        ResultSet rs = stmt.executeQuery();
+        boolean findOne = rs.next();
+       
+        if (!findOne) {
+            return null;
+        }
+        
+        User user = new User(rs.getString("username"), rs.getString("password"));
+        
+        stmt.close();
+        rs.close();
+        conn.close();
+        
+        return user;
     }
 }

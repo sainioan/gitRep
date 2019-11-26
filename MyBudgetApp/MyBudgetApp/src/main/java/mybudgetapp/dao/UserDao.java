@@ -1,5 +1,6 @@
 package mybudgetapp.dao;
 
+import java.sql.SQLException;
 import mybudgetapp.domain.User;
 import java.util.List;
 
@@ -9,10 +10,10 @@ import java.util.List;
  */
 public interface UserDao {
 
-    User create(User user) throws Exception;
+    User create(User user) throws SQLException;
 
     User findByUsername(String username);
-
+    User findOne(String username) throws SQLException;
     List<User> getAll();
 
 }
