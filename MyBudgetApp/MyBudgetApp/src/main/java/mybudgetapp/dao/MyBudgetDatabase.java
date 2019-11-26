@@ -88,7 +88,24 @@ public class MyBudgetDatabase  {
           
        System.out.println(e.getMessage());
         }
+    }    private void initializeUser() {
+        try {
+            Connection connection = connect();
+
+            PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS user ("
+                    + "id INTEGER NOT NULL PRIMARY KEY, "
+                    + "username VARCHAR(100));"
+            );
+            createCategoryTable.execute();
+            createCategoryTable.close();
+
+            connection.close();
+        } catch (SQLException e) {
+          
+       System.out.println(e.getMessage());
+        }
     }
+
 
     private void initializeExpense() {
         try {

@@ -34,20 +34,20 @@ public class MyBudgetService {
         this.budgetDao = bd;
         this.userDao = ud;
     }
-    public boolean createBudget(String content){
-             MyBudget mb = new MyBudget(content, loggedIn);
-        try {   
+
+    public boolean createBudget(String content) {
+        MyBudget mb = new MyBudget(content, loggedIn);
+        try {
             budgetDao.create(mb);
         } catch (Exception ex) {
             return false;
         }
         return true;
     }
-    
-    // budgetDao.
 
+    // budgetDao.
     //public boolean createUser()
-    public boolean login(String username) {
+    public boolean login(String username, String password) {
         User user = userDao.findByUsername(username);
         if (user == null) {
             return false;
@@ -66,4 +66,18 @@ public class MyBudgetService {
         loggedIn = null;
     }
 
+    public boolean createUser(String username, String name) {
+        if (userDao.findByUsername(username) != null) {
+            return false;
+        }
+        User user = new User(username, name);
+        try {
+            userDao.create(user);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+
+    }
 }

@@ -74,25 +74,25 @@ import mybudgetapp.domain.MyBudgetService;
 public class MyBudgetAppUI extends Application {
 
     private Scene MyBudgetScene;
-    private BudgetDao budgetDao;
-    private UserDao userDao;
-    private MyBudgetService mybudgetservice;
     private Scene newUserScene;
     private Scene loginscene;
+    private BudgetDao budgetDao;
+    private UserDao userDao;
+    private MyBudgetService mybudgetService;
+
     private VBox myBudgetNodes;
-    private Label menuLabel;
-    private MyBudgetService mbs;
+    private Label menuLabel = new Label();
+
 //   private User user;
     // get username and password from user.
     // String username = user.getUsername();
-    String username = "testUser";
+    //  String username = "testUser";
     //   String password = user.getPassword();
-    String password = "TU123";
-    String checkUser, checkPw;
-
+    //  String password = "TU123";
+    //  String checkUser, checkPw;
     @Override
     public void init() throws Exception {
-        mybudgetservice = new MyBudgetService(budgetDao, userDao);
+        mybudgetService = new MyBudgetService(budgetDao, userDao);
     }
 
     @Override
@@ -116,30 +116,21 @@ public class MyBudgetAppUI extends Application {
         PasswordField passwordInput = new PasswordField();
         Button loginButton = new Button("Login");
         Button signUpButton = new Button("Sign up");
-       
+        Button backButton = new Button("Back");
         Label loginMessage = new Label();
-       
-        menuLabel = new Label(username + " ...logged in.");
-       
-      
+
         Label userCreationMessage = new Label();
 
-       
-      //  SignUpButton.setPadding(new Insets(10));
-
-        //  HBox MyBudgetPane = new HBox(10);
-      
         gridpane.add(usernameLabel, 0, 0);
         gridpane.add(usernameInput, 1, 0);
         gridpane.add(passwordLabel, 0, 1);
         gridpane.add(passwordInput, 1, 1);
         gridpane.add(loginButton, 2, 1);
         gridpane.add(loginMessage, 1, 2);
-        gridpane.add(signUpButton, 2,0);
-       
+        gridpane.add(signUpButton, 2, 0);
 
         Reflection reflection = new Reflection();
-    
+
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(5);
         dropShadow.setOffsetY(5);
@@ -160,11 +151,14 @@ public class MyBudgetAppUI extends Application {
         //Adding BorderPane to the scene 
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
-            checkUser = usernameInput.getText().toString();
-            checkPw = passwordInput.getText().toString();
 
-            if (checkUser.equals(username) && checkPw.equals(password)) {
-             
+            String username = usernameInput.getText();
+            String password = passwordInput.getText();
+            //  checkUser = usernameInput.getText().toString();
+            // checkPw = passwordInput.getText().toString();
+
+            if (mybudgetService.login(username, password)) {
+                menuLabel = new Label(username + " ...logged in.");
 //                loginMessage.setText("Login successful!");
 //                loginMessage.setTextFill(Color.GREEN);
 
@@ -179,11 +173,10 @@ public class MyBudgetAppUI extends Application {
             passwordInput.setText("");
 
         });
-  signUpButton.setOnAction(e->{
+        signUpButton.setOnAction(e -> {
             usernameInput.setText("");
-            primarystage.setScene(newUserScene);   
-        });  
-        
+            primarystage.setScene(newUserScene);
+        });
 
         // main scene
         try {
@@ -198,23 +191,23 @@ public class MyBudgetAppUI extends Application {
             HBox.setHgrow(menuSpacer, Priority.ALWAYS);
 
             MyBudgetScene = new Scene(mybudgetLayout, 500, 350);
-       
+
             logoutButton.setOnAction(e -> {
-                mybudgetservice.logout();
+                mybudgetService.logout();
                 primarystage.setScene(loginscene);
 
             });
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-         // new user scene  
-         VBox newUserPane = new VBox(10);
-         HBox newUsernamePane = new HBox(10);
-         newUsernamePane.setPadding(new Insets(10));
-         Text textNewUser = new Text("MyBudgetApp Sign Upp");
+        // new user scene  
+        VBox newUserPane = new VBox(10);
+        HBox newUsernamePane = new HBox(10);
+        newUsernamePane.setPadding(new Insets(10));
+        Text textNewUser = new Text("MyBudgetApp Sign Upp");
         textNewUser.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
-      //  textNewUser.setEffect(dropShadow);
-       
+        //  textNewUser.setEffect(dropShadow);
+
         BorderPane bpNewUser = new BorderPane();
         bpNewUser.setPadding(new Insets(10, 50, 50, 50));
         TextField newUsernameInput = new TextField();
@@ -231,32 +224,34 @@ public class MyBudgetAppUI extends Application {
         newUserGridPane.setPadding(new Insets(20, 20, 20, 20));
         newUserGridPane.setHgap(5);
         newUserGridPane.setVgap(5);
-        
-       
-       newUserGridPane.add(newUsernameLabel, 0, 0);
-       newUserGridPane.add(newUsernameInput, 1, 0);
-       newUserGridPane.add(newPassWordLabel, 0, 1); 
-       newUserGridPane.add(passwordInputNewUser, 1, 1); 
-       
+
+        newUserGridPane.add(newUsernameLabel, 0, 0);
+        newUserGridPane.add(newUsernameInput, 1, 0);
+        newUserGridPane.add(newPassWordLabel, 0, 1);
+        newUserGridPane.add(passwordInputNewUser, 1, 1);
+        newUserGridPane.add(backButton, 1, 2);
         bpNewUser.setTop(newUsernamePane);
         bpNewUser.setCenter(newUserGridPane);
-         
+
         newUsernamePane.getChildren().addAll(newUserGridPane);
-        newUserPane.getChildren().addAll( newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
+        newUserPane.getChildren().addAll(newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
 
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
-      
+        backButton.setOnAction(e -> {
+            mybudgetService.logout();
+            primarystage.setScene(loginscene);
 
+        });
         newUserScene = new Scene(newUserPane, 300, 250);
 
         primarystage.setScene(loginscene);
 
         primarystage.show();
-          }
-          @Override
+    }
+
+    @Override
     public void stop() {
     }
-  
 
     public static void main(String[] args) {
         launch(args);
