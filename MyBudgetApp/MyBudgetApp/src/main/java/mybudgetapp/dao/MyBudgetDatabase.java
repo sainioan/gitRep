@@ -38,6 +38,9 @@ public class MyBudgetDatabase {
     public MyBudgetDatabase(String databaseName) throws SQLException {
         this.dbName = databaseName;
         initializeDatabase();
+    }public MyBudgetDatabase() throws SQLException {
+        this.dbName = "jdbc:sqlite:mybudgetapp.db";;
+        initializeDatabase();
     }
 
     public Connection connect() throws SQLException {

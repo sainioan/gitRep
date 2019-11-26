@@ -67,6 +67,7 @@ import mybudgetapp.domain.Income;
 import mybudgetapp.domain.User;
 import mybudgetapp.domain.MyBudgetService;
 
+
 /**
  *
  * @author ralahtin
@@ -79,20 +80,20 @@ public class MyBudgetAppUI extends Application {
     private BudgetDao budgetDao;
     private UserDao userDao;
     private MyBudgetService mybudgetService;
-
+    private MyBudgetDatabase db;
     private VBox myBudgetNodes;
     private Label menuLabel = new Label();
+  //  private String username;
+  // private String password;
 
 //   private User user;
-    // get username and password from user.
-    // String username = user.getUsername();
-    String username = "testUser";
-    //   String password = user.getPassword();
-     String password = "TU123";
+  String username = "testUser";;
+ String password = "TU123";
      String checkUser, checkPw;
     @Override
     public void init() throws Exception {
         mybudgetService = new MyBudgetService(budgetDao, userDao);
+   //     db = new MyBudgetDatabase();
     }
 
     @Override
@@ -117,6 +118,7 @@ public class MyBudgetAppUI extends Application {
         Button loginButton = new Button("Login");
         Button signUpButton = new Button("Sign up");
         Button backButton = new Button("Back");
+        Button confirmButton = new Button("confirm");
         Label loginMessage = new Label();
 
         Label userCreationMessage = new Label();
@@ -152,8 +154,28 @@ public class MyBudgetAppUI extends Application {
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
             
-          checkUser = usernameInput.getText().toString();
-          checkPw = passwordInput.getText().toString();
+        checkUser = usernameInput.getText().toString();
+         checkPw = passwordInput.getText().toString();
+             this.username = usernameInput.getText();
+             this.password = passwordInput.getText();
+            // this.username = passwordField.getText();
+            if (checkUser.equals(username)&& checkPw.equals(password)) {
+               
+                primarystage.setScene(MyBudgetScene);
+            } else {
+               
+              loginMessage.setText("Incorrect username or password.");
+                loginMessage.setTextFill(Color.RED);
+            }
+//            if (mybudgetService.login(username, password)) {
+//                
+//                primarystage.setScene(MyBudgetScene);
+//               
+//            } else {
+//              loginMessage.setText("Incorrect username or password.");
+//                loginMessage.setTextFill(Color.RED);
+//            }
+        });   
 // Code not working.
 //            String username = usernameInput.getText();
 //            String password = passwordInput.getText();
@@ -167,21 +189,18 @@ public class MyBudgetAppUI extends Application {
 
                 // code to be added: open the app
                 
-                if(checkUser.equals(username)&& checkPw.equals(password)){
-                primarystage.setScene(MyBudgetScene);
+//                if(checkUser.equals(username)&& checkPw.equals(password)){
+//                primarystage.setScene(MyBudgetScene);
+//
+//            } else {
+//                loginMessage.setText("Incorrect username or password.");
+//                loginMessage.setTextFill(Color.RED);
+//            }
+//            usernameInput.setText("");
+//            passwordInput.setText("");
 
-            } else {
-                loginMessage.setText("Incorrect username or password.");
-                loginMessage.setTextFill(Color.RED);
-            }
-            usernameInput.setText("");
-            passwordInput.setText("");
-
-        });
-        signUpButton.setOnAction(e->{
-            usernameInput.setText("");
-            primarystage.setScene(newUserScene);   
-        });  
+//        });
+         
        
 
         // main scene
@@ -236,23 +255,30 @@ public class MyBudgetAppUI extends Application {
         newUserGridPane.add(newPassWordLabel, 0, 1);
         newUserGridPane.add(passwordInputNewUser, 1, 1);
         newUserGridPane.add(backButton, 1, 2);
+        newUserGridPane.add(confirmButton, 0,2);
         bpNewUser.setTop(newUsernamePane);
         bpNewUser.setCenter(newUserGridPane);
 
         newUsernamePane.getChildren().addAll(newUserGridPane);
         newUserPane.getChildren().addAll(newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
       
-        
+         signUpButton.setOnAction(e->{
+            
+            primarystage.setScene(newUserScene);
+            newUsernameInput.setText("");  
+            passwordInputNewUser.setText("");
+        });
         Button createNewUserButton = new Button("create");
         createNewUserButton.setPadding(new Insets(10)); 
         createNewUserButton.setOnAction(e -> {
           
             String username = newUsernameInput.getText();
             String password = passwordInputNewUser.getText();
-              if ( username.length()== 5 || username.length()< 5 ) {
+              if ( username.length()< 5 ) {
                 userCreationMessage.setText("username or name too short");
                 userCreationMessage.setTextFill(Color.RED);
               }  else   {
+                  
                  mybudgetService.createUser(username, password);
                 userCreationMessage.setText("");                
                 loginMessage.setText("new user created");
@@ -268,6 +294,10 @@ public class MyBudgetAppUI extends Application {
         backButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
+
+        });
+        confirmButton.setOnAction(e -> {
+           primarystage.setScene(loginscene);
 
         });
         newUserScene = new Scene(newUserPane, 300, 250);

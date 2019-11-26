@@ -4,23 +4,26 @@
  * and open the template in the editor.
  */
 package mybudgetapp.domain;
+
 import javafx.beans.property.*;
+
 /**
  *
  * @author ralahtin
  */
 public class User {
 
-private String username;
-private String password;
+    private String username;
+    private String password;
 
-public User(){
-    
-}
-public User(String username, String password){
-    this.password = password;
-    this.username = username;
-}
+    public User() {
+
+    }
+
+    public User(String username, String password) {
+        this.password = password;
+        this.username = username;
+    }
 
     public String getPassword() {
         return password;
@@ -29,21 +32,21 @@ public User(String username, String password){
     public void setPassword(String password) {
         this.password = password;
     }
-    
-   
+
     public String getUsername() {
         return username;
-    } public void setUsername(String username){
+    }
+
+    public void setUsername(String username) {
         this.username = username;
     }
 
-     @Override
-    public boolean equals(Object obj){
-        if(! (obj instanceof User)){
-        return false;
-    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof User)) {
+            return false;
+        }
         User other = (User) obj;
         return username.equals(other.username);
     }
 }
-
