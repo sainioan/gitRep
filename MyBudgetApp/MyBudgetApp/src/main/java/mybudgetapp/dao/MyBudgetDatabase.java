@@ -96,7 +96,6 @@ public class MyBudgetDatabase  {
             PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
                     + "id INTEGER NOT NULL PRIMARY KEY, "
                     + "category_id INTEGER, "
-                    + "name VARCHAR(100), "
                     + "amount float, "
                     + "time DATE,"
                     + "FOREIGN KEY (category_id) REFERENCES category(id));"
@@ -116,7 +115,6 @@ public class MyBudgetDatabase  {
 
             PreparedStatement createIncomeTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS income ("
                     + "id INTEGER PRIMARY KEY, "
-                    + "name varchar(255), "
                     + "amount float, "
                     + "time DATE, "
                     + ");"
@@ -136,12 +134,12 @@ public class MyBudgetDatabase  {
 
             PreparedStatement createBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS balance ("
                     + "id INTEGER NOT NULL PRIMARY KEY, "
-                    + "category_id integer, "
-                    + "expense_id integer, "
-                    + "time DATE, "
+                 //    + "expense_id integer, "
                     + "amount float, "
-                    + "FOREIGN KEY (category_id) REFERENCES category(id),"
-                    + "FOREIGN KEY (expense_id) REFERENCES expense(id));"
+                    + "time DATE, "
+                   // + "FOREIGN KEY (category_id) REFERENCES category(id),"
+                  //  + "FOREIGN KEY (expense_id) REFERENCES expense(id)"
+                    + ");"
             );
             createBalanceTable.execute();
             createBalanceTable.close();
@@ -166,19 +164,57 @@ public class MyBudgetDatabase  {
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
-        
-        ////GET ALL BALANCES, Budgets, or something
-  //  }public List<MyBudget...> getAllBudgets() {
-    //    List<Object> savedSimulations = new ArrayList<>();
-     //   try {
-       //     Connection connection = connect();
-         //   PreparedStatement getAllBudgetsQuery = connection.prepareStatement("SELECT * FROM [TABLE NAME GOES HERE>..];");
-           // ResultSet resultSet = geBudgetQuery.executeQuery();
-
-      //      while (resultSet.next()) {
-      //          Object o = new Object();
-        //        o.setSimulationDetails(resultSet.getInt("id"), resultSet.getString("name"),  resultSet.getDate("startingDate").toLocalDate());
-          //      saveBudgets.add(s);
-//
     }
-}
+public void saveExpense(Connection connection, int categoryid, double amount, LocalDate time) {
+    float fAmount = (float)amount;    
+    try {
+            PreparedStatement saveDetailsStatement = connection.prepareStatement(
+                    "INSERT INTO expense (category_id, amount, time) VALUES (?, ?, ?);"
+            );
+
+            saveDetailsStatement.setInt(1,categoryid );
+            saveDetailsStatement.setFloat(2,fAmount);
+            saveDetailsStatement.setDate(3, Date.valueOf(time));
+           
+
+            saveDetailsStatement.executeUpdate();
+            saveDetailsStatement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+public void saveIncome(Connection connection, double amount, LocalDate time) {
+    float fAmount = (float)amount;    
+    try {
+            PreparedStatement saveDetailsStatement = connection.prepareStatement(
+                    "INSERT INTO income (amount, time) VALUES (?, ?);"
+            );
+
+            saveDetailsStatement.setFloat(1,fAmount);
+            saveDetailsStatement.setDate(2, Date.valueOf(time));
+           
+
+            saveDetailsStatement.executeUpdate();
+            saveDetailsStatement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }public void saveBalance(Connection connection, double amount, LocalDate time) {
+    float fAmount = (float)amount;    
+    try {
+            PreparedStatement saveDetailsStatement = connection.prepareStatement(
+                    "INSERT INTO expense (amount, time) VALUES ( ?, ?);"
+            );
+            saveDetailsStatement.setFloat(1,fAmount);
+            saveDetailsStatement.setDate(2, Date.valueOf(time));
+           
+
+            saveDetailsStatement.executeUpdate();
+            saveDetailsStatement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
+
+    }
+
