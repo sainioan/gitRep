@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package mybudgetapp.dao;
+
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Expense;
@@ -30,8 +31,7 @@ import java.io.*;
  *
  * @author anniinasainio
  */
-
-public class MyBudgetDatabase  {
+public class MyBudgetDatabase {
 
     private final String dbName;
 
@@ -42,10 +42,10 @@ public class MyBudgetDatabase  {
 
     public Connection connect() throws SQLException {
         Connection connection = null;
-        try{
-        }catch (Exception e){
-            String url =  "jdbc:sqlite:" + dbName;
-            connection =      DriverManager.getConnection(url);
+        try {
+        } catch (Exception e) {
+            String url = "jdbc:sqlite:" + dbName;
+            connection = DriverManager.getConnection(url);
         }
         return connection;
     }
@@ -61,17 +61,18 @@ public class MyBudgetDatabase  {
         conn.close();
     }
 
-    private void initializeDatabase() {
+    public void initializeDatabase() {
         // The following methods will create required tables if they do not already exist in the database
 
         initializeCategory();
         initializeExpense();
         initializeIncome();
         initializeCurrentBalance();
-        
+        initializeUser();
+
     }
 
-    private void initializeCategory() {
+    public void initializeCategory() {
         try {
             Connection connection = connect();
 
@@ -85,29 +86,31 @@ public class MyBudgetDatabase  {
 
             connection.close();
         } catch (SQLException e) {
-          
-       System.out.println(e.getMessage());
+
+            System.out.println(e.getMessage());
         }
-    }    private void initializeUser() {
+    }
+
+    public void initializeUser() {
         try {
             Connection connection = connect();
 
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS user ("
                     + "id INTEGER NOT NULL PRIMARY KEY, "
-                    + "username VARCHAR(100));"
+                    + "username VARCHAR(100)"
+                    + "password VARCHAR(100));"
             );
             createCategoryTable.execute();
             createCategoryTable.close();
 
             connection.close();
         } catch (SQLException e) {
-          
-       System.out.println(e.getMessage());
+
+            System.out.println(e.getMessage());
         }
     }
 
-
-    private void initializeExpense() {
+    public void initializeExpense() {
         try {
             Connection connection = connect();
 
@@ -123,12 +126,13 @@ public class MyBudgetDatabase  {
 
             connection.close();
         } catch (SQLException e) {
-       System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
-            
+
     }
-    private void initializeIncome(){
-  try {
+
+    public void initializeIncome() {
+        try {
             Connection connection = connect();
 
             PreparedStatement createIncomeTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS income ("
@@ -144,19 +148,20 @@ public class MyBudgetDatabase  {
         } catch (SQLException e) {
             /* Do nothing */
         }
-            
+
     }
-    private void initializeCurrentBalance() {
+
+    public void initializeCurrentBalance() {
         try {
             Connection connection = connect();
 
             PreparedStatement createBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS balance ("
                     + "id INTEGER NOT NULL PRIMARY KEY, "
-                 //    + "expense_id integer, "
+                    //    + "expense_id integer, "
                     + "amount float, "
                     + "time DATE, "
-                   // + "FOREIGN KEY (category_id) REFERENCES category(id),"
-                  //  + "FOREIGN KEY (expense_id) REFERENCES expense(id)"
+                    // + "FOREIGN KEY (category_id) REFERENCES category(id),"
+                    //  + "FOREIGN KEY (expense_id) REFERENCES expense(id)"
                     + ");"
             );
             createBalanceTable.execute();
@@ -167,7 +172,9 @@ public class MyBudgetDatabase  {
             System.out.println(e.getMessage());
         }
 
-    }   private int getLastId(Connection connection) {
+    }
+
+    public int getLastId(Connection connection) {
         int id = -1;
         try {
             PreparedStatement getLastId = connection.prepareStatement("SELECT last_insert_rowid() AS id;");
@@ -183,17 +190,17 @@ public class MyBudgetDatabase  {
         }
         return id;
     }
-public void saveExpense(Connection connection, int categoryid, double amount, LocalDate time) {
-    float fAmount = (float)amount;    
-    try {
+
+    public void saveExpense(Connection connection, int categoryid, double amount, LocalDate time) {
+        float fAmount = (float) amount;
+        try {
             PreparedStatement saveDetailsStatement = connection.prepareStatement(
                     "INSERT INTO expense (category_id, amount, time) VALUES (?, ?, ?);"
             );
 
-            saveDetailsStatement.setInt(1,categoryid );
-            saveDetailsStatement.setFloat(2,fAmount);
+            saveDetailsStatement.setInt(1, categoryid);
+            saveDetailsStatement.setFloat(2, fAmount);
             saveDetailsStatement.setDate(3, Date.valueOf(time));
-           
 
             saveDetailsStatement.executeUpdate();
             saveDetailsStatement.close();
@@ -201,38 +208,38 @@ public void saveExpense(Connection connection, int categoryid, double amount, Lo
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-public void saveIncome(Connection connection, double amount, LocalDate time) {
-    float fAmount = (float)amount;    
-    try {
+
+    public void saveIncome(Connection connection, double amount, LocalDate time) {
+        float fAmount = (float) amount;
+        try {
             PreparedStatement saveDetailsStatement = connection.prepareStatement(
                     "INSERT INTO income (amount, time) VALUES (?, ?);"
             );
 
-            saveDetailsStatement.setFloat(1,fAmount);
+            saveDetailsStatement.setFloat(1, fAmount);
             saveDetailsStatement.setDate(2, Date.valueOf(time));
-           
 
             saveDetailsStatement.executeUpdate();
             saveDetailsStatement.close();
         } catch (SQLException ex) {
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }public void saveBalance(Connection connection, double amount, LocalDate time) {
-    float fAmount = (float)amount;    
-    try {
+    }
+
+    public void saveBalance(Connection connection, double amount, LocalDate time) {
+        float fAmount = (float) amount;
+        try {
             PreparedStatement saveDetailsStatement = connection.prepareStatement(
                     "INSERT INTO expense (amount, time) VALUES ( ?, ?);"
             );
-            saveDetailsStatement.setFloat(1,fAmount);
+            saveDetailsStatement.setFloat(1, fAmount);
             saveDetailsStatement.setDate(2, Date.valueOf(time));
-           
 
             saveDetailsStatement.executeUpdate();
             saveDetailsStatement.close();
         } catch (SQLException ex) {
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } 
-
     }
 
+}
