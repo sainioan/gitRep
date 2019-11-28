@@ -12,7 +12,7 @@ import mybudgetapp.domain.User;
  * @author anniinasainio
  */
 public interface BudgetDao {
-     MyBudget create(MyBudget mb) throws Exception;
+     MyBudget create() throws Exception;
 
     List<MyBudget> getAll();
 

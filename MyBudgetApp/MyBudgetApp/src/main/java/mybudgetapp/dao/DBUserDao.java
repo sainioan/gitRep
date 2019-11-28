@@ -29,15 +29,18 @@ public class DBUserDao implements UserDao {
 
     private List<User> users;
     private String database;
-    private  MyBudgetDatabase db;
+    private MyBudgetDatabase db;
     private String password;
 
     String selectStmt = "SELECT * FROM user";
-public DBUserDao (MyBudgetDatabase db){
-    this.db = db;
-}
+
+    public DBUserDao(MyBudgetDatabase db) {
+        this.db = db;
+    }
+
     public DBUserDao(String database) throws SQLException {
         Connection conn = db.connect();
+        System.out.println("testing " + conn);
         users = new ArrayList<>();
         this.database = database;
         db = new MyBudgetDatabase(database);
@@ -55,11 +58,12 @@ public DBUserDao (MyBudgetDatabase db){
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    } 
+    }
+
     public List<User> findAll() throws SQLException {
         Connection con = db.connect();
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM UserAccount");
-        List<User> users = new ArrayList<>();
+        users = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
@@ -73,11 +77,10 @@ public DBUserDao (MyBudgetDatabase db){
         con.close();
         return users;
     }
-    
 
     public void save() throws Exception {
         Connection connection = db.connect();
-
+        System.out.println("test " + connection);
         try {
             for (User user : users) {
                 PreparedStatement saveDetailsStatement = connection.prepareStatement(
@@ -96,20 +99,6 @@ public DBUserDao (MyBudgetDatabase db){
 
     }
 
-    public User saveOrUpdate(User user) throws SQLException {
-        Connection conn = db.connect();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO user (username, password) VALUES (?,?)");
-        stmt.setString(1, user.getUsername());
-        stmt.setString(2, user.getPassword());
-
-        stmt.executeUpdate();
-        stmt.close();
-        conn.close();
-        return user;
-    }
-  
-    
-
     public void delete(String username) throws SQLException {
         Connection conn = db.connect();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM user WHERE username = (?)");
@@ -122,11 +111,12 @@ public DBUserDao (MyBudgetDatabase db){
 
     @Override
     public User create(User user) throws SQLException {
-        
+
         users.add(user);
-        try{
-        save();
-        } catch (Exception e){
+        
+        try {
+            save();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return user;
@@ -134,11 +124,17 @@ public DBUserDao (MyBudgetDatabase db){
 
     @Override
     public User findByUsername(String username) {
-        return users.stream()
-                .filter(u -> u.getUsername()
-                .equals(username))
-                .findFirst()
-                .orElse(null);
+     try{
+        for (User u : this.users) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+     } catch (Exception e){
+         System.out.println(e.getMessage());
+     }
+        return null;
+
     }
 
     @Override
@@ -151,20 +147,20 @@ public DBUserDao (MyBudgetDatabase db){
         Connection conn = db.connect();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM User WHERE username = ?");
         stmt.setString(1, username);
-        
+
         ResultSet rs = stmt.executeQuery();
         boolean findOne = rs.next();
-       
+
         if (!findOne) {
             return null;
         }
-        
+
         User user = new User(rs.getString("username"), rs.getString("password"));
-        
+
         stmt.close();
         rs.close();
         conn.close();
-        
+
         return user;
     }
 }

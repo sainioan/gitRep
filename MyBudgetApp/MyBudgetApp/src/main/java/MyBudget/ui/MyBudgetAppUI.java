@@ -60,7 +60,8 @@ import java.text.*;
 import mybudgetapp.dao.BudgetDao;
 import mybudgetapp.dao.MyBudgetDatabase;
 import mybudgetapp.dao.DBUserDao;
-import mybudgetapp.dao.UserDao;
+import mybudgetapp.dao.DBUserDao;
+import mybudgetapp.dao.DBBudgetDao;    
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
@@ -77,27 +78,30 @@ public class MyBudgetAppUI extends Application {
     private Scene MyBudgetScene;
     private Scene newUserScene;
     private Scene loginscene;
-    private BudgetDao budgetDao;
-    private UserDao userDao;
+    private DBBudgetDao dbbudgetDao;
+    private DBUserDao dbuserDao;
     private MyBudgetService mybudgetService;
     private MyBudgetDatabase db;
     private VBox myBudgetNodes;
     private Label menuLabel = new Label();
-  //  private String username;
-  // private String password;
+    private String username;
+   private String password;
+   private String usernameSU;
+   private String passwordSU;
 
 //   private User user;
-  String username = "testUser";;
- String password = "TU123";
+ // String username = "testUser";;
+ // String password = "TU123";
      String checkUser, checkPw;
     @Override
     public void init() throws Exception {
-        mybudgetService = new MyBudgetService(budgetDao, userDao);
+        mybudgetService = new MyBudgetService(dbbudgetDao, dbuserDao);
    //     db = new MyBudgetDatabase();
     }
 
     @Override
     public void start(Stage primarystage) throws Exception {
+        init();
         primarystage.setTitle("MyBudgetApp");
 
         BorderPane bp = new BorderPane();
@@ -235,7 +239,11 @@ public class MyBudgetAppUI extends Application {
 
         BorderPane bpNewUser = new BorderPane();
         bpNewUser.setPadding(new Insets(10, 50, 50, 50));
+        
         TextField newUsernameInput = new TextField();
+        PasswordField newPasswordInput = new PasswordField();
+        Label errorMessage = new Label();
+        Label errorMessage2 = new Label();
         Label newPassWordLabel = new Label("password");
         newPassWordLabel.setPrefWidth(100);
         Label newUsernameLabel = new Label("username");
@@ -243,8 +251,6 @@ public class MyBudgetAppUI extends Application {
         newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);
         HBox newPasswordPane = new HBox(10);
         newPasswordPane.setPadding(new Insets(10));
-        TextField newPasswordInput = new TextField();
-        PasswordField passwordInputNewUser = new PasswordField();
         GridPane newUserGridPane = new GridPane();
         newUserGridPane.setPadding(new Insets(20, 20, 20, 20));
         newUserGridPane.setHgap(5);
@@ -253,9 +259,11 @@ public class MyBudgetAppUI extends Application {
         newUserGridPane.add(newUsernameLabel, 0, 0);
         newUserGridPane.add(newUsernameInput, 1, 0);
         newUserGridPane.add(newPassWordLabel, 0, 1);
-        newUserGridPane.add(passwordInputNewUser, 1, 1);
+        newUserGridPane.add(newPasswordInput, 1, 1);
         newUserGridPane.add(backButton, 1, 2);
         newUserGridPane.add(confirmButton, 0,2);
+        newUserGridPane.add(errorMessage, 2,2);
+        newUserGridPane.add(errorMessage2, 2,1);
         bpNewUser.setTop(newUsernamePane);
         bpNewUser.setCenter(newUserGridPane);
 
@@ -265,42 +273,60 @@ public class MyBudgetAppUI extends Application {
          signUpButton.setOnAction(e->{
             
             primarystage.setScene(newUserScene);
-            newUsernameInput.setText("");  
-            passwordInputNewUser.setText("");
+         //   newUsernameInput.setText("");  
+         //   passwordInputNewUser.setText("");
+//             usernameSU = newUsernameInput.getText();
+//             System.out.println(newUsernameInput.getText());
+//             passwordSU = newPasswordInput.getText();
+//            
         });
-        Button createNewUserButton = new Button("create");
-        createNewUserButton.setPadding(new Insets(10)); 
-        createNewUserButton.setOnAction(e -> {
-          
-            String username = newUsernameInput.getText();
-            String password = passwordInputNewUser.getText();
-              if ( username.length()< 5 ) {
-                userCreationMessage.setText("username or name too short");
-                userCreationMessage.setTextFill(Color.RED);
-              }  else   {
-                  
-                 mybudgetService.createUser(username, password);
-                userCreationMessage.setText("");                
-                loginMessage.setText("new user created");
-                loginMessage.setTextFill(Color.GREEN);
-                
-                 primarystage.setScene(loginscene);     
-//            } else {
-//                userCreationMessage.setText("username has to be unique");
-//                userCreationMessage.setTextFill(Color.RED);        
-            }
-        });
+  
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
         backButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
 
         });
-        confirmButton.setOnAction(e -> {
-           primarystage.setScene(loginscene);
+     confirmButton.setOnAction(e -> {
+         
+     //    System.out.println(newUsernameInput.getText());
+      //   System.out.println(newPasswordInput.getText());
+         usernameSU = newUsernameInput.getText();
+         passwordSU = newPasswordInput.getText();
+         
+         User user = new User(usernameSU, passwordSU);
+         String usernamerror = user.validateUsername();
+         errorMessage.setText(usernamerror);
+         errorMessage.setTextFill(Color.RED);
+         String passworderror = user.validatePassword();
+         errorMessage2.setText(passworderror);
+         errorMessage2.setTextFill(Color.RED);
+         mybudgetService.createUser(usernameSU, passwordSU);
+         
+            });
+         
+     
+//              System.out.println("kn" + username);
+//              if ( username.length()< 5 ) {
+//                userCreationMessage.setText("username or password too short");
+//                userCreationMessage.setTextFill(Color.RED);
+//              }  else   {
+//                  
+//                 mybudgetService.createUser(username, password);
+//                userCreationMessage.setText("");                
+//                loginMessage.setText("new user created");
+//                loginMessage.setTextFill(Color.GREEN);
+//                
+//                 primarystage.setScene(loginscene);     
+////            } else {
+////                userCreationMessage.setText("username has to be unique");
+////                userCreationMessage.setTextFill(Color.RED);  
+//
+//            }
+//       
 
-        });
-        newUserScene = new Scene(newUserPane, 300, 250);
+
+        newUserScene = new Scene(newUserPane, 300, 300);
 
         primarystage.setScene(loginscene);
 

@@ -41,6 +41,30 @@ public class User {
         this.username = username;
     }
 
+    public String validateUsername() {
+        String s = "";
+
+        if (username.length() < 5) {
+
+            s = "username or password too short";
+            return s;
+        } else {
+            return s;
+
+        }
+    }
+    public String validatePassword() {
+        String s = "";
+
+        if (password.length() < 5) {
+
+            s = "username or password too short";
+            return s;
+        } else {
+            return s;
+
+        }
+    }
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof User)) {

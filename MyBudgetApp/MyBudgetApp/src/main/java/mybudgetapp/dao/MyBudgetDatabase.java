@@ -37,18 +37,22 @@ public class MyBudgetDatabase {
 
     public MyBudgetDatabase(String databaseName) throws SQLException {
         this.dbName = databaseName;
-        initializeDatabase();
-    }public MyBudgetDatabase() throws SQLException {
-        this.dbName = "jdbc:sqlite:mybudgetapp.db";;
-        initializeDatabase();
+        
     }
+
+    public MyBudgetDatabase() throws SQLException {
+        this.dbName = "mybudgetapp.db";
+     }
 
     public Connection connect() throws SQLException {
         Connection connection = null;
         try {
-        } catch (Exception e) {
+
             String url = "jdbc:sqlite:" + dbName;
             connection = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
         }
         return connection;
     }
@@ -228,15 +232,15 @@ public class MyBudgetDatabase {
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void saveBalance(Connection connection, double amount, LocalDate time) {
-        float fAmount = (float) amount;
+     
+    public void saveUser(Connection connection, String username, String password) {
+      
         try {
             PreparedStatement saveDetailsStatement = connection.prepareStatement(
-                    "INSERT INTO expense (amount, time) VALUES ( ?, ?);"
+                    "INSERT INTO user (username, password) VALUES ( ?, ?);"
             );
-            saveDetailsStatement.setFloat(1, fAmount);
-            saveDetailsStatement.setDate(2, Date.valueOf(time));
+            saveDetailsStatement.setString(1, username);
+            saveDetailsStatement.setString(2, password);
 
             saveDetailsStatement.executeUpdate();
             saveDetailsStatement.close();

@@ -5,6 +5,7 @@
  */
 package mybudgetapp.domain;
 
+import java.time.LocalDate;
 import mybudgetapp.domain.User;
 
 /**
@@ -14,21 +15,21 @@ import mybudgetapp.domain.User;
 public class MyBudget {
 
     private int id;
-    private String content;
+    private String description;
     private boolean done;
     private User user;
-
+    private double amount;
+    private LocalDate date;
     public MyBudget(int id, String content, boolean done, User user) {
         this.id = id;
-        this.content = content;
+        this.description = content;
         this.done = done;
         this.user = user;
     }
 
-    public MyBudget(String content, User user) {
-        this.content = content;
-        this.user = user;
-        this.done = false;
+    public MyBudget(String description, double amount) {
+        this.description = description;
+        this.amount = amount;
 
     }
 
@@ -37,7 +38,7 @@ public class MyBudget {
     }
 
     public String getContent() {
-        return content;
+        return description;
     } public User getUser() {
         return user;
     }

@@ -23,11 +23,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import mybudgetapp.dao.BudgetDao;
+import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.MyBudgetDatabase;
 import mybudgetapp.dao.UserDao;
 import mybudgetapp.domain.User;
-
 
 /**
  *
@@ -36,26 +36,32 @@ import mybudgetapp.domain.User;
 public class MyBudgetService {
 
     private MyBudgetDatabase mybDatabase;
-    private BudgetDao budgetDao;
+    private DBBudgetDao DBbudgetDao;
     private DBUserDao dbuserDao;
-    private UserDao userDao;
+   // private UserDao userDao;
     private User loggedIn;
     private String username;
     private String password;
 
     public MyBudgetService() throws SQLException {
-        this.mybDatabase = new MyBudgetDatabase("mybudgetdatabase.db");
+
+      //  this.mybDatabase = new MyBudgetDatabase("mybudgetdatabase.db");
+       this.mybDatabase.initializeDatabase();
+        
+        dbuserDao = new DBUserDao(mybDatabase);
     }
 
-    public MyBudgetService(BudgetDao bd, UserDao ud) {
-        this.budgetDao = bd;
-        this.userDao = ud;
+    public MyBudgetService(DBBudgetDao bd, DBUserDao ud) {
+        this.DBbudgetDao = bd;
+      
+        
+        dbuserDao = new DBUserDao(mybDatabase);
     }
 
-    public boolean createBudget(String content) {
-        MyBudget mb = new MyBudget(content, loggedIn);
+    public boolean createBudget(String content, double amount) {
+        MyBudget mb = new MyBudget(content, amount);
         try {
-            budgetDao.create(mb);
+            DBbudgetDao.create();
         } catch (Exception ex) {
             return false;
         }
@@ -65,7 +71,7 @@ public class MyBudgetService {
     // budgetDao.
     //public boolean createUser()
     public boolean login(String username, String password) {
-        User user = userDao.findByUsername(username);
+        User user = dbuserDao.findByUsername(username);
         if (user == null) {
             return false;
         }
@@ -84,19 +90,31 @@ public class MyBudgetService {
     }
 
     public boolean createUser(String username, String password) {
+        User user = new User(username, password);
+        if (!user.validateUsername().isEmpty()) {
+            return false;
+        }
+        if (!user.validatePassword().isEmpty()) {
+            return false;
+        }
+
+        System.out.println("test" + user.getUsername());
+
         if (dbuserDao.findByUsername(username) != null) {
             return false;
         }
-        User user = new User(username, password);
+
         try {
-            userDao.create(user);
+            dbuserDao.create(user);
         } catch (Exception e) {
             return false;
         }
 
         return true;
 
-    } public Boolean checkUsername(String username) {
+    }
+
+    public Boolean checkUsername(String username) {
         this.username = username;
         try {
             if (validateUsernameInput(username) && dbuserDao.findOne(username.trim()) != null) {
@@ -106,18 +124,10 @@ public class MyBudgetService {
             Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    } public Boolean createUser(String newUsername) {
-        try {
-            if (validateUsernameInput(newUsername) && dbuserDao.findOne(newUsername) == null) {
-                dbuserDao.saveOrUpdate(new User(newUsername, password));
-                return true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    } public Boolean validateUsernameInput(String username) {
+    }
+
+    public Boolean validateUsernameInput(String username) {
         return ((username != null) && username.matches("[A-Za-z0-9_]+") && username.length() >= 5);
     }
-    
+
 }
