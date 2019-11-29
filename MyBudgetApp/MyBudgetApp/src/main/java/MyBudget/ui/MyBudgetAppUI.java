@@ -88,9 +88,6 @@ public class MyBudgetAppUI extends Application {
    private String usernameSU;
    private String passwordSU;
 
-//   private User user;
- // String username = "testUser";;
- // String password = "TU123";
      String checkUser, checkPw;
     @Override
     public void init() throws Exception {
@@ -162,8 +159,6 @@ public class MyBudgetAppUI extends Application {
          checkPw = passwordInput.getText();
              this.username = usernameInput.getText();
              this.password = passwordInput.getText();
-            // this.username = passwordField.getText();
-          //  if (checkUser.equals(username)&& checkPw.equals(password)) {
                if (mybudgetService.login(username, password)) {
                 primarystage.setScene(MyBudgetScene);
             } else {
@@ -171,40 +166,9 @@ public class MyBudgetAppUI extends Application {
               loginMessage.setText("Incorrect username or password.");
                 loginMessage.setTextFill(Color.RED);
             }
-//            {
-//                
-//                primarystage.setScene(MyBudgetScene);
-//               
-//            } else {
-//              loginMessage.setText("Incorrect username or password.");
-//                loginMessage.setTextFill(Color.RED);
-//            }
+
         });   
-// Code not working.
-//            String username = usernameInput.getText();
-//            String password = passwordInput.getText();
-//            //  checkUser = usernameInput.getText().toString();
-//            // checkPw = passwordInput.getText().toString();
-//
-//            if (mybudgetService.login(username, password)) {
-//                menuLabel = new Label(username + " ...logged in.");
-////                loginMessage.setText("Login successful!");
-//                loginMessage.setTextFill(Color.GREEN);
 
-                // code to be added: open the app
-                
-//                if(checkUser.equals(username)&& checkPw.equals(password)){
-//                primarystage.setScene(MyBudgetScene);
-//
-//            } else {
-//                loginMessage.setText("Incorrect username or password.");
-//                loginMessage.setTextFill(Color.RED);
-//            }
-//            usernameInput.setText("");
-//            passwordInput.setText("");
-
-//        });
-         
        
 
         // main scene
@@ -297,26 +261,10 @@ public class MyBudgetAppUI extends Application {
          mybudgetService.createUser(usernameSU, passwordSU);
          primarystage.setScene(loginscene);
             });
-         
-     
-//                userCreationMessage.setTextFill(Color.RED);
-//              }  else   {
-//                  
-//                 mybudgetService.createUser(username, password);
-//                userCreationMessage.setText("");                
-//                loginMessage.setText("new user created");
-//                loginMessage.setTextFill(Color.GREEN);
-//                
-//                 primarystage.setScene(loginscene);     
-////            } else {
-////                userCreationMessage.setText("username has to be unique");
-////                userCreationMessage.setTextFill(Color.RED);  
-//
-//            }
-//       
+      
 
 
-        newUserScene = new Scene(newUserPane, 300, 300);
+        newUserScene = new Scene(newUserPane, 400, 400);
 
         primarystage.setScene(loginscene);
 
