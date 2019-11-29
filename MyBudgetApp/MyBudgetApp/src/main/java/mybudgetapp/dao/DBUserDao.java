@@ -36,6 +36,28 @@ public class DBUserDao implements UserDao {
 
     public DBUserDao(MyBudgetDatabase db) {
         this.db = db;
+        
+        users = new ArrayList<>();
+        this.database = database;
+      
+        db.initializeDatabase();
+        Statement stmt = null;
+        try {
+            Connection conn = db.connect();
+            System.out.println("testing " + conn);
+            db = new MyBudgetDatabase(database);
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectStmt);
+            while (rs.next()) {
+                User user = new User();
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                users.add(user);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    
     }
 
     public DBUserDao(String database) throws SQLException {
@@ -58,24 +80,6 @@ public class DBUserDao implements UserDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public List<User> findAll() throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM UserAccount");
-        users = new ArrayList<>();
-
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            User user = new User(rs.getString("username"), rs.getString("password"));
-            user.setUsername(rs.getString("userBudget"));
-            user.setPassword(rs.getString("password"));
-            users.add(user);
-        }
-        stmt.close();
-        rs.close();
-        con.close();
-        return users;
     }
 
     public void save() throws Exception {
@@ -113,7 +117,7 @@ public class DBUserDao implements UserDao {
     public User create(User user) throws SQLException {
 
         users.add(user);
-        
+
         try {
             save();
         } catch (Exception e) {
@@ -124,28 +128,42 @@ public class DBUserDao implements UserDao {
 
     @Override
     public User findByUsername(String username) {
-     try{
-        for (User u : this.users) {
-            if (u.getUsername().equals(username)) {
-                return u;
+        try {
+            for (User u : this.users) {
+                if (u.getUsername().equals(username)) {
+                    return u;
+                }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-     } catch (Exception e){
-         System.out.println(e.getMessage());
-     }
         return null;
 
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll() throws SQLException {
+        Connection con = db.connect();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM user");
+        users = new ArrayList<>();
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            User user = new User(rs.getString("username"), rs.getString("password"));
+            user.setUsername(rs.getString("userBudget"));
+            user.setPassword(rs.getString("password"));
+            users.add(user);
+        }
+        stmt.close();
+        rs.close();
+        con.close();
         return users;
     }
 
     @Override
     public User findOne(String username) throws SQLException {
         Connection conn = db.connect();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM User WHERE username = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM user WHERE username = ?");
         stmt.setString(1, username);
 
         ResultSet rs = stmt.executeQuery();

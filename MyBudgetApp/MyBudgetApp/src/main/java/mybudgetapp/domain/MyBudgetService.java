@@ -43,8 +43,8 @@ public class MyBudgetService {
     private String username;
     private String password;
 
-    public MyBudgetService() throws SQLException {
-
+    public MyBudgetService(MyBudgetDatabase db) throws SQLException {
+       this.mybDatabase = db;
       //  this.mybDatabase = new MyBudgetDatabase("mybudgetdatabase.db");
        this.mybDatabase.initializeDatabase();
         

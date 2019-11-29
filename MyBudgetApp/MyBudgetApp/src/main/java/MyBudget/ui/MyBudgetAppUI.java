@@ -81,7 +81,6 @@ public class MyBudgetAppUI extends Application {
     private DBBudgetDao dbbudgetDao;
     private DBUserDao dbuserDao;
     private MyBudgetService mybudgetService;
-    private MyBudgetDatabase db;
     private VBox myBudgetNodes;
     private Label menuLabel = new Label();
     private String username;
@@ -95,7 +94,8 @@ public class MyBudgetAppUI extends Application {
      String checkUser, checkPw;
     @Override
     public void init() throws Exception {
-        mybudgetService = new MyBudgetService(dbbudgetDao, dbuserDao);
+        MyBudgetDatabase database = new MyBudgetDatabase("mybudgetapp.db");
+        mybudgetService = new MyBudgetService(database);
    //     db = new MyBudgetDatabase();
     }
 

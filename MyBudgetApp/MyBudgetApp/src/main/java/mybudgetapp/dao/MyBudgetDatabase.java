@@ -47,7 +47,7 @@ public class MyBudgetDatabase {
     public Connection connect() throws SQLException {
         Connection connection = null;
         try {
-
+ Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:" + dbName;
             connection = DriverManager.getConnection(url);
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class MyBudgetDatabase {
         initializeCategory();
         initializeExpense();
         initializeIncome();
-        initializeCurrentBalance();
+        initializeBalance();
         initializeUser();
 
     }
@@ -82,11 +82,10 @@ public class MyBudgetDatabase {
     public void initializeCategory() {
         try {
             Connection connection = connect();
-
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS category ("
-                    + "id INTEGER NOT NULL PRIMARY KEY, "
-                    + "name VARCHAR(100), "
-                    + "allocated float);"
+                    + "id INTEGER PRIMARY KEY, "
+                    + "name VARCHAR(100));" 
+                   
             );
             createCategoryTable.execute();
             createCategoryTable.close();
@@ -102,10 +101,12 @@ public class MyBudgetDatabase {
         try {
             Connection connection = connect();
 
+//   
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS user ("
-                    + "id INTEGER NOT NULL PRIMARY KEY, "
-                    + "username VARCHAR(100)"
-                    + "password VARCHAR(100));"
+                    + "id INTEGER PRIMARY KEY, "
+                    + "username VARCHAR(100),"
+                    + "password VARCHAR(100)"
+                    + ");"
             );
             createCategoryTable.execute();
             createCategoryTable.close();
@@ -119,14 +120,23 @@ public class MyBudgetDatabase {
 
     public void initializeExpense() {
         try {
+           
             Connection connection = connect();
-
+// //Prep        PreparedStatement createFoodDateTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS fooddate ("
+//                + "food_id INTEGER,"
+//                + "date_id INTEGER ,"
+//                + "amount INTEGER, "
+//                + "PRIMARY KEY(food_id, date_id),"
+//                + "FOREIGN KEY(food_id) REFERENCES food(id),"
+//                + "FOREIGN KEY(date_id) REFERENCES date(id)"
+//                + ");"
             PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
-                    + "id INTEGER NOT NULL PRIMARY KEY, "
+                    + "id INTEGER PRIMARY KEY, "
                     + "category_id INTEGER, "
                     + "amount float, "
                     + "time DATE,"
-                    + "FOREIGN KEY (category_id) REFERENCES category(id));"
+                    + "FOREIGN KEY(category_id) REFERENCES category(id)"
+                    + ");"
             );
             createExpenseTable.execute();
             createExpenseTable.close();
@@ -145,7 +155,7 @@ public class MyBudgetDatabase {
             PreparedStatement createIncomeTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS income ("
                     + "id INTEGER PRIMARY KEY, "
                     + "amount float, "
-                    + "time DATE, "
+                    + "time DATE"
                     + ");"
             );
             createIncomeTable.execute();
@@ -158,18 +168,15 @@ public class MyBudgetDatabase {
 
     }
 
-    public void initializeCurrentBalance() {
+    public void initializeBalance() {
         try {
             Connection connection = connect();
 
             PreparedStatement createBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS balance ("
-                    + "id INTEGER NOT NULL PRIMARY KEY, "
-                    //    + "expense_id integer, "
+                    + "id INTEGER PRIMARY KEY,"
                     + "amount float, "
-                    + "time DATE, "
-                    // + "FOREIGN KEY (category_id) REFERENCES category(id),"
-                    //  + "FOREIGN KEY (expense_id) REFERENCES expense(id)"
-                    + ");"
+                    + "time DATE);"
+               
             );
             createBalanceTable.execute();
             createBalanceTable.close();
