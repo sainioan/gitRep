@@ -13,7 +13,7 @@ Individuals, who have a user account, can sign in with their username and passwo
 
 
 ### Before Login
-* User can sign up for the app by create a unique username and password.
+* User can sign up for the app by create a unique username and password -- done
 * Username must be unique and at least 5 characters long -- done
 * User can cancel the sign up by pressing the "back" button -- done
 * User can login with a username and password
