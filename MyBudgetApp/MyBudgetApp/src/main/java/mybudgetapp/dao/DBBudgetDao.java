@@ -32,9 +32,7 @@ public class DBBudgetDao implements BudgetDao {
         return new ArrayList<MyBudget>();
     }
 
-    public void setDone(int id) throws Exception{
-        
-    }
+ 
 
     @Override
     public MyBudget create() throws Exception {

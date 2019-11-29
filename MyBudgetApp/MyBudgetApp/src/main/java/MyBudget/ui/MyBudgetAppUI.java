@@ -123,7 +123,7 @@ public class MyBudgetAppUI extends Application {
         Label loginMessage = new Label();
 
         Label userCreationMessage = new Label();
-
+        bp.setPrefSize(500,250);
         gridpane.add(usernameLabel, 0, 0);
         gridpane.add(usernameInput, 1, 0);
         gridpane.add(passwordLabel, 0, 1);
@@ -264,7 +264,7 @@ public class MyBudgetAppUI extends Application {
       
 
 
-        newUserScene = new Scene(newUserPane, 400, 400);
+        newUserScene = new Scene(newUserPane, 500, 250);
 
         primarystage.setScene(loginscene);
 

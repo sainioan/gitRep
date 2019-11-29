@@ -16,5 +16,4 @@ public interface BudgetDao {
 
     List<MyBudget> getAll();
 
-    void setDone(int id) throws Exception;
 }
