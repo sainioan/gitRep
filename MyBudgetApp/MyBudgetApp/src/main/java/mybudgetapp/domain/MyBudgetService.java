@@ -68,8 +68,6 @@ public class MyBudgetService {
         return true;
     }
 
-    // budgetDao.
-    //public boolean createUser()
     public boolean login(String username, String password) {
         User user = dbuserDao.findByUsername(username);
         if (user == null) {

@@ -96,7 +96,7 @@ public class MyBudgetAppUI extends Application {
     public void init() throws Exception {
         MyBudgetDatabase database = new MyBudgetDatabase("mybudgetapp.db");
         mybudgetService = new MyBudgetService(database);
-   //     db = new MyBudgetDatabase();
+ 
     }
 
     @Override
@@ -158,20 +158,20 @@ public class MyBudgetAppUI extends Application {
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
             
-        checkUser = usernameInput.getText().toString();
-         checkPw = passwordInput.getText().toString();
+        checkUser = usernameInput.getText();
+         checkPw = passwordInput.getText();
              this.username = usernameInput.getText();
              this.password = passwordInput.getText();
             // this.username = passwordField.getText();
-            if (checkUser.equals(username)&& checkPw.equals(password)) {
-               
+          //  if (checkUser.equals(username)&& checkPw.equals(password)) {
+               if (mybudgetService.login(username, password)) {
                 primarystage.setScene(MyBudgetScene);
             } else {
                
               loginMessage.setText("Incorrect username or password.");
                 loginMessage.setTextFill(Color.RED);
             }
-//            if (mybudgetService.login(username, password)) {
+//            {
 //                
 //                primarystage.setScene(MyBudgetScene);
 //               
@@ -273,12 +273,7 @@ public class MyBudgetAppUI extends Application {
          signUpButton.setOnAction(e->{
             
             primarystage.setScene(newUserScene);
-         //   newUsernameInput.setText("");  
-         //   passwordInputNewUser.setText("");
-//             usernameSU = newUsernameInput.getText();
-//             System.out.println(newUsernameInput.getText());
-//             passwordSU = newPasswordInput.getText();
-//            
+         
         });
   
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
@@ -289,8 +284,6 @@ public class MyBudgetAppUI extends Application {
         });
      confirmButton.setOnAction(e -> {
          
-     //    System.out.println(newUsernameInput.getText());
-      //   System.out.println(newPasswordInput.getText());
          usernameSU = newUsernameInput.getText();
          passwordSU = newPasswordInput.getText();
          
@@ -302,13 +295,10 @@ public class MyBudgetAppUI extends Application {
          errorMessage2.setText(passworderror);
          errorMessage2.setTextFill(Color.RED);
          mybudgetService.createUser(usernameSU, passwordSU);
-         
+         primarystage.setScene(loginscene);
             });
          
      
-//              System.out.println("kn" + username);
-//              if ( username.length()< 5 ) {
-//                userCreationMessage.setText("username or password too short");
 //                userCreationMessage.setTextFill(Color.RED);
 //              }  else   {
 //                  

@@ -122,14 +122,7 @@ public class MyBudgetDatabase {
         try {
            
             Connection connection = connect();
-// //Prep        PreparedStatement createFoodDateTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS fooddate ("
-//                + "food_id INTEGER,"
-//                + "date_id INTEGER ,"
-//                + "amount INTEGER, "
-//                + "PRIMARY KEY(food_id, date_id),"
-//                + "FOREIGN KEY(food_id) REFERENCES food(id),"
-//                + "FOREIGN KEY(date_id) REFERENCES date(id)"
-//                + ");"
+
             PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
                     + "id INTEGER PRIMARY KEY, "
                     + "category_id INTEGER, "
