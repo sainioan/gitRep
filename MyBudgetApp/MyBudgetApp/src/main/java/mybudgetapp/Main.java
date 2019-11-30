@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package mybudgetapp;
-import  MyBudget.ui.MyBudgetAppUI;
+import  mybudget.ui.MyBudgetAppUI;
 
 /**
  *
