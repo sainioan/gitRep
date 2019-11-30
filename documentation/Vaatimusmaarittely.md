@@ -17,6 +17,7 @@ Individuals, who have a user account, can sign in with their username and passwo
 * Username must be unique and at least 5 characters long -- done
 * User can cancel the sign up by pressing the "back" button -- done
 * User can login with a username and password -- done
+
 ### After Login
 * User can logout -- done
 * User can create daily, monthy, or annual budgets
