@@ -105,7 +105,8 @@ public class MyBudgetDatabase {
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS user ("
                     + "id INTEGER PRIMARY KEY, "
                     + "username VARCHAR(100),"
-                    + "password VARCHAR(100)"
+                    + "password VARCHAR(100),"
+                    + "UNIQUE(username, password)"
                     + ");"
             );
             createCategoryTable.execute();

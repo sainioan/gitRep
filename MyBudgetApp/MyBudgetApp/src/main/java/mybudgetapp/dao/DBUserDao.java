@@ -82,13 +82,14 @@ public class DBUserDao implements UserDao {
         }
     }
 
-    public void save() throws Exception {
+    public void save(User user) throws Exception {
         Connection connection = db.connect();
         System.out.println("test " + connection);
         try {
-            for (User user : users) {
+            
+                
                 PreparedStatement saveDetailsStatement = connection.prepareStatement(
-                        "INSERT INTO user (username, password) VALUES (?, ?);"
+                        "INSERT OR REPLACE INTO user (username, password) VALUES (?, ?);"
                 );
 
                 saveDetailsStatement.setString(1, user.getUsername());
@@ -96,7 +97,7 @@ public class DBUserDao implements UserDao {
 
                 saveDetailsStatement.executeUpdate();
                 saveDetailsStatement.close();
-            }
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -119,7 +120,7 @@ public class DBUserDao implements UserDao {
         users.add(user);
 
         try {
-            save();
+            save(user);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

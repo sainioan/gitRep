@@ -96,7 +96,6 @@ public class MyBudgetService {
             return false;
         }
 
-        System.out.println("test" + user.getUsername());
 
         if (dbuserDao.findByUsername(username) != null) {
             return false;
