@@ -61,13 +61,12 @@ import mybudgetapp.dao.BudgetDao;
 import mybudgetapp.dao.MyBudgetDatabase;
 import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.DBUserDao;
-import mybudgetapp.dao.DBBudgetDao;    
+import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
 import mybudgetapp.domain.User;
 import mybudgetapp.domain.MyBudgetService;
-
 
 /**
  *
@@ -88,12 +87,13 @@ public class MyBudgetAppUI extends Application {
     private String usernameSU;
     private String passwordSU;
 
-     String checkUser, checkPw;
+    String checkUser, checkPw;
+
     @Override
     public void init() throws Exception {
         MyBudgetDatabase database = new MyBudgetDatabase("mybudgetapp.db");
         mybudgetService = new MyBudgetService(database);
- 
+
     }
 
     @Override
@@ -123,7 +123,7 @@ public class MyBudgetAppUI extends Application {
         Label loginMessage = new Label();
 
         Label userCreationMessage = new Label();
-        bp.setPrefSize(500,250);
+        bp.setPrefSize(500, 250);
         gridpane.add(usernameLabel, 0, 0);
         gridpane.add(usernameInput, 1, 0);
         gridpane.add(passwordLabel, 0, 1);
@@ -131,8 +131,6 @@ public class MyBudgetAppUI extends Application {
         gridpane.add(loginButton, 2, 1);
         gridpane.add(loginMessage, 1, 2);
         gridpane.add(signUpButton, 2, 0);
-
-        Reflection reflection = new Reflection();
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(5);
@@ -154,37 +152,51 @@ public class MyBudgetAppUI extends Application {
         //Adding BorderPane to the scene 
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
-            
-        checkUser = usernameInput.getText();
-         checkPw = passwordInput.getText();
-             this.username = usernameInput.getText();
-             this.password = passwordInput.getText();
-               if (mybudgetService.login(username, password)) {
+
+            checkUser = usernameInput.getText();
+            checkPw = passwordInput.getText();
+            this.username = usernameInput.getText();
+            this.password = passwordInput.getText();
+            if (mybudgetService.login(username, password)) {
                 primarystage.setScene(MyBudgetScene);
             } else {
-               
-              loginMessage.setText("Incorrect username or password.");
+
+                loginMessage.setText("Incorrect username or password.");
                 loginMessage.setTextFill(Color.RED);
             }
 
-        });   
-
-       
+        });
 
         // main scene
         try {
-
+            
+            
+        BorderPane bpMain = new BorderPane();
+        bpMain.setPadding(new Insets(10, 50, 50, 50));
+            VBox mybudgetPane = new VBox(10);
+            
+            Label welcome = new Label("Welcome to MyBudgetApp!");
             Button logoutButton = new Button("logout");
+            Button createCategoryButton = new Button("New Expense Category");
+      
+            TextField newCategoryInput = new TextField();
+            
             GridPane mybudgetLayout = new GridPane();
-
-            mybudgetLayout.add(new Label("Welcome to MyBudgetApp!"), 0, 0);
-            mybudgetLayout.add(logoutButton, 2, 2);
-            VBox mybudgetappPane = new VBox(10);
-            Region menuSpacer = new Region();
-            HBox.setHgrow(menuSpacer, Priority.ALWAYS);
-
-            MyBudgetScene = new Scene(mybudgetLayout, 500, 350);
-
+            mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
+            mybudgetLayout.setHgap(5);
+            mybudgetLayout.setVgap(5);;
+            
+            mybudgetLayout.add(welcome, 0, 0);
+            mybudgetLayout.add(logoutButton, 2, 0);
+            mybudgetLayout.add(newCategoryInput, 2, 2);
+            mybudgetLayout.add(createCategoryButton, 0, 2);
+            mybudgetPane.getChildren().addAll(mybudgetLayout);
+            mybudgetLayout.setId("root");
+            MyBudgetScene = new Scene(mybudgetPane, 1000, 1500);
+//  createCategoryButton.setOnAction(e -> {
+//                mybudgetService.
+//
+//            });
             logoutButton.setOnAction(e -> {
                 mybudgetService.logout();
                 primarystage.setScene(loginscene);
@@ -197,13 +209,12 @@ public class MyBudgetAppUI extends Application {
         VBox newUserPane = new VBox(10);
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
-        Text textNewUser = new Text("MyBudgetApp Sign Upp");
+        Text textNewUser = new Text("MyBudgetApp Sign Up");
         textNewUser.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
-        //  textNewUser.setEffect(dropShadow);
 
         BorderPane bpNewUser = new BorderPane();
         bpNewUser.setPadding(new Insets(10, 50, 50, 50));
-        
+
         TextField newUsernameInput = new TextField();
         PasswordField newPasswordInput = new PasswordField();
         Label errorMessage = new Label();
@@ -212,7 +223,6 @@ public class MyBudgetAppUI extends Application {
         newPassWordLabel.setPrefWidth(100);
         Label newUsernameLabel = new Label("username");
         newUsernameLabel.setPrefWidth(100);
-        newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);
         HBox newPasswordPane = new HBox(10);
         newPasswordPane.setPadding(new Insets(10));
         GridPane newUserGridPane = new GridPane();
@@ -225,47 +235,45 @@ public class MyBudgetAppUI extends Application {
         newUserGridPane.add(newPassWordLabel, 0, 1);
         newUserGridPane.add(newPasswordInput, 1, 1);
         newUserGridPane.add(backButton, 1, 2);
-        newUserGridPane.add(confirmButton, 0,2);
-        newUserGridPane.add(errorMessage, 0,3);
-        newUserGridPane.add(errorMessage2, 0,4);
+        newUserGridPane.add(confirmButton, 0, 2);
+        newUserGridPane.add(errorMessage, 0, 3);
+        newUserGridPane.add(errorMessage2, 0, 4);
         bpNewUser.setTop(newUsernamePane);
         bpNewUser.setCenter(newUserGridPane);
+        textNewUser.setId("text");
+        newUsernamePane.getChildren().addAll(newUserGridPane );
+        newUserPane.getChildren().addAll(textNewUser,newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
 
-        newUsernamePane.getChildren().addAll(newUserGridPane);
-        newUserPane.getChildren().addAll(newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
-      
-         signUpButton.setOnAction(e->{
-            
+        signUpButton.setOnAction(e -> {
+
             primarystage.setScene(newUserScene);
-         
+
         });
-  
+
         // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
         backButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
 
         });
-     confirmButton.setOnAction(e -> {
-         
-         usernameSU = newUsernameInput.getText();
-         passwordSU = newPasswordInput.getText();
-         
-         User user = new User(usernameSU, passwordSU);
-         String usernameerror = user.validateUsername();
-         errorMessage.setText(usernameerror);
-         errorMessage.setTextFill(Color.RED);
-         String passworderror = user.validatePassword();
-         errorMessage2.setText(passworderror);
-         errorMessage2.setTextFill(Color.RED);
-         mybudgetService.createUser(usernameSU, passwordSU);
-         if (usernameerror.equals("")&& (passworderror.equals(""))){
-          primarystage.setScene(loginscene);   
-         }
-       
-            });
-      
+        confirmButton.setOnAction(e -> {
 
+            usernameSU = newUsernameInput.getText();
+            passwordSU = newPasswordInput.getText();
+
+            User user = new User(usernameSU, passwordSU);
+            String usernameerror = user.validateUsername();
+            errorMessage.setText(usernameerror);
+            errorMessage.setTextFill(Color.RED);
+            String passworderror = user.validatePassword();
+            errorMessage2.setText(passworderror);
+            errorMessage2.setTextFill(Color.RED);
+            mybudgetService.createUser(usernameSU, passwordSU);
+            if (usernameerror.equals("") && (passworderror.equals(""))) {
+                primarystage.setScene(loginscene);
+            }
+
+        });
 
         newUserScene = new Scene(newUserPane, 500, 250);
 
