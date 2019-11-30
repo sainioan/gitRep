@@ -16,6 +16,8 @@
 | 25.11.|   2  |javafx:n graafisen layoutin opiskelua, ja kehittämistä MyBudgetApp sovelluksessa, repositorion siistimistä|
 | 26.11.|   4  |uusien luokkien luomista, testin luominen luokkaan expense, lisää nappeja javafx:n, tietokannan pohdintaa|
 | 28.11.|   3.5  |debuggausta ja graafisen käyttöliittymän siistimistä|
+| 29.11.|   3  |debuggausta ja daon siistimistä|
+
 
 
 
