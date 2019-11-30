@@ -19,7 +19,7 @@ Individuals, who have a user account, can sign in with their username and passwo
 * User can login with a username and password -- done
 ### After Login
 * User can logout -- done
-* User can create daily, motnhy, or annual budgets
+* User can create daily, monthy, or annual budgets
 * The user should be able to add income to different categories (salary).
 * The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
 * The user should be able to add/remove new or old categories of expenses.
