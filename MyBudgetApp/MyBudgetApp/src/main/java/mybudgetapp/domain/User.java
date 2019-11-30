@@ -46,7 +46,7 @@ public class User {
 
         if (username.length() < 5) {
 
-            s = "username or password too short";
+            s = "username too short";
             return s;
         } else {
             return s;
@@ -58,7 +58,7 @@ public class User {
 
         if (password.length() < 5) {
 
-            s = "username or password too short";
+            s = "password too short";
             return s;
         } else {
             return s;

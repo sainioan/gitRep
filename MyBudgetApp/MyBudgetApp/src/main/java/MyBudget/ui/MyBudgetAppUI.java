@@ -84,9 +84,9 @@ public class MyBudgetAppUI extends Application {
     private VBox myBudgetNodes;
     private Label menuLabel = new Label();
     private String username;
-   private String password;
-   private String usernameSU;
-   private String passwordSU;
+    private String password;
+    private String usernameSU;
+    private String passwordSU;
 
      String checkUser, checkPw;
     @Override
@@ -226,8 +226,8 @@ public class MyBudgetAppUI extends Application {
         newUserGridPane.add(newPasswordInput, 1, 1);
         newUserGridPane.add(backButton, 1, 2);
         newUserGridPane.add(confirmButton, 0,2);
-        newUserGridPane.add(errorMessage, 2,2);
-        newUserGridPane.add(errorMessage2, 2,1);
+        newUserGridPane.add(errorMessage, 0,3);
+        newUserGridPane.add(errorMessage2, 0,4);
         bpNewUser.setTop(newUsernamePane);
         bpNewUser.setCenter(newUserGridPane);
 
@@ -252,14 +252,17 @@ public class MyBudgetAppUI extends Application {
          passwordSU = newPasswordInput.getText();
          
          User user = new User(usernameSU, passwordSU);
-         String usernamerror = user.validateUsername();
-         errorMessage.setText(usernamerror);
+         String usernameerror = user.validateUsername();
+         errorMessage.setText(usernameerror);
          errorMessage.setTextFill(Color.RED);
          String passworderror = user.validatePassword();
          errorMessage2.setText(passworderror);
          errorMessage2.setTextFill(Color.RED);
          mybudgetService.createUser(usernameSU, passwordSU);
-         primarystage.setScene(loginscene);
+         if (usernameerror.equals("")&& (passworderror.equals(""))){
+          primarystage.setScene(loginscene);   
+         }
+       
             });
       
 
