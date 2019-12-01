@@ -6,10 +6,18 @@
 package mybudgetapp.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mybudgetapp.domain.Balance;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.MyBudget;
@@ -26,36 +34,55 @@ public class DBBudgetDao implements BudgetDao {
     private boolean done;
     private MyBudgetDatabase db;
     private double amount;
+    private String database;
+    private List<Category> categories;
+    String selectStmt = "SELECT*FROM category";
 
     //private User user;
     public DBBudgetDao(MyBudgetDatabase db) {
-
-    }
-
-    public DBBudgetDao() {
-
-    }
-
-    public void save(User user) throws Exception {
-        Connection connection = db.connect();
-
-        try {
-
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT OR REPLACE INTO user (username, password) VALUES (?, ?);"
-            );
-
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-
-            statement.executeUpdate();
-            statement.close();
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+    this.db = db;
+    categories = new ArrayList<>();
+    db.initializeDatabase();
+     Statement stmt = null;
+      try {
+            Connection conn = db.connect();
+            System.out.println("testing " + conn);
+            db = new MyBudgetDatabase(database);
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectStmt);
+            while (rs.next()) {
+                Category category = new Category();
+                category.setName(rs.getString("name"));
+                categories.add(category);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
+    
+    
     }
+
+    public DBBudgetDao(String database) throws SQLException {
+ Connection conn = db.connect();
+        System.out.println("testing " + conn);
+        categories = new ArrayList<>();
+        this.database = database;
+        db = new MyBudgetDatabase(database);
+        db.initializeDatabase();
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectStmt);
+            while (rs.next()) {
+                Category category = new Category();
+                category.setName(rs.getString("name"));
+                categories.add(category);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public void saveCategory(Category category) throws Exception {
         Connection connection = db.connect();
@@ -71,34 +98,84 @@ public class DBBudgetDao implements BudgetDao {
             System.out.println(e.getMessage());
         }
     }
-    public void saveBalance(Balance balance) throws Exception {
-        Connection connection = db.connect();
-        System.out.println("Balance test" + connection);
-        try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSER OR REPLACE INTO Balance (name) VALUES (?);"
-            );
-            statement.setString(1, balance.getName());
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    public void saveBalance(Balance balance) throws Exception {
+//        Connection connection = db.connect();
+//        System.out.println("Balance test" + connection);
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(
+//                    "INSER OR REPLACE INTO Balance (name) VALUES (?);"
+//            );
+//            statement.setFloat(1, balance.getAmount());
+//            statement.executeUpdate();
+//            statement.close();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
-    {
+    public List<Category> getAllCategories() throws SQLException {
+         Connection con = db.connect();
+         String sql = "SELECT*FROM category";
+//        PreparedStatement stmt = con.prepareStatement("sql");
+//        categories = new ArrayList<>();
+
+//        ResultSet rs = stmt.executeQuery();
+//        while (rs.next()) {
+//            Category category = new Category(rs.getString("name"));
+//            user.setName(rs.getString("name"));
+//            categories.add(category);
+//        }
+//        stmt.close();
+//        rs.close();
+//        con.close();
+//        return users;
+//    }
+
+        return categories;
     }
 
     @Override
 
     public List<MyBudget> getAll() {
         return new ArrayList<MyBudget>();
-    }
+        
+//         @Override
+//    public List<User> getAll() throws SQLException {
+//        Connection con = db.connect();
+//        PreparedStatement stmt = con.prepareStatement(selectStmt);
+//        users = new ArrayList<>();
+//
+//        ResultSet rs = stmt.executeQuery();
+//        while (rs.next()) {
+//            User user = new User(rs.getString("username"), rs.getString("password"));
+//            user.setUsername(rs.getString("userBudget"));
+//            user.setPassword(rs.getString("password"));
+//            users.add(user);
+//        }
+//        stmt.close();
+//        rs.close();
+//        con.close();
+//        return users;
+//    }
+
+    } 
 
     @Override
-    public MyBudget create() throws Exception {
+    public MyBudget createBudget() throws Exception {
 
         return new MyBudget(description, amount);
+    } 
+
+    public Category create(Category category) throws SQLException {
+
+        categories.add(category);
+
+        try {
+            saveCategory(category);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return category;
     }
 
 }

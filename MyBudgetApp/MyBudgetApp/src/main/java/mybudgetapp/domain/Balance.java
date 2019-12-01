@@ -5,6 +5,7 @@
  */
 package mybudgetapp.domain;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -20,6 +21,7 @@ public class Balance {
     private User user;
     private Expense e;
     private Income i;
+    private LocalDate date;
     
     
 
@@ -41,6 +43,8 @@ public class Balance {
 
         this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();
 
+    } public LocalDate getDate(){
+        return date;
     }
 
     public int getId() {

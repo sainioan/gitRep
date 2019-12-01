@@ -5,8 +5,6 @@
  */
 package mybudgetapp.dao;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -82,7 +80,7 @@ public class DBUserDao implements UserDao {
         }
     }
 
-    public void save(User user) throws Exception {
+    public void saveUser(User user) throws Exception {
         Connection connection = db.connect();
         System.out.println("test " + connection);
         try {
@@ -120,7 +118,7 @@ public class DBUserDao implements UserDao {
         users.add(user);
 
         try {
-            save(user);
+            saveUser(user);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -145,7 +143,7 @@ public class DBUserDao implements UserDao {
     @Override
     public List<User> getAll() throws SQLException {
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM user");
+        PreparedStatement stmt = con.prepareStatement(selectStmt);
         users = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();

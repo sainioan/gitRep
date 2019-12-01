@@ -38,33 +38,45 @@ public class MyBudgetService {
     private MyBudgetDatabase mybDatabase;
     private DBBudgetDao DBbudgetDao;
     private DBUserDao dbuserDao;
-   // private UserDao userDao;
+    // private UserDao userDao;
     private User loggedIn;
     private String username;
     private String password;
     private LocalDate date;
+
     public MyBudgetService(MyBudgetDatabase db) throws SQLException {
-       this.mybDatabase = db;
-       this.mybDatabase.initializeDatabase();
-       dbuserDao = new DBUserDao(mybDatabase);
-       this.date = LocalDate.now();
+        this.mybDatabase = db;
+        this.mybDatabase.initializeDatabase();
+        dbuserDao = new DBUserDao(mybDatabase);
+        this.date = LocalDate.now();
 ////       
 //        this.food = new Food(-1, "default");
 //        this.date = LocalDate.now();
     }
 
     public MyBudgetService() {
-       
-      
+
         this.mybDatabase.initializeDatabase();
         dbuserDao = new DBUserDao(mybDatabase);
-        
+
     }
 
+    public boolean createCategory(String description) {
+        Category category = new Category(description);
+        try {
+            DBbudgetDao.create(category);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+//content = some description of the budget
     public boolean createBudget(String content, double amount) {
         MyBudget mb = new MyBudget(content, amount);
         try {
-            DBbudgetDao.create();
+            DBbudgetDao.createBudget();
         } catch (Exception ex) {
             return false;
         }
@@ -98,7 +110,6 @@ public class MyBudgetService {
         if (!user.validatePassword().isEmpty()) {
             return false;
         }
-
 
         if (dbuserDao.findByUsername(username) != null) {
             return false;

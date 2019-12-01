@@ -237,14 +237,14 @@ public class MyBudgetDatabase {
     public void saveUser(Connection connection, String username, String password) {
       
         try {
-            PreparedStatement saveDetailsStatement = connection.prepareStatement(
+            PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO user (username, password) VALUES ( ?, ?);"
             );
-            saveDetailsStatement.setString(1, username);
-            saveDetailsStatement.setString(2, password);
+            statement.setString(1, username);
+            statement.setString(2, password);
 
-            saveDetailsStatement.executeUpdate();
-            saveDetailsStatement.close();
+            statement.executeUpdate();
+            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }

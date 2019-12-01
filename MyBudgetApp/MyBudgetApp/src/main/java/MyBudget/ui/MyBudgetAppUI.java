@@ -86,6 +86,7 @@ public class MyBudgetAppUI extends Application {
     private String password;
     private String usernameSU;
     private String passwordSU;
+    private String category;
 
     String checkUser, checkPw;
 
@@ -169,48 +170,59 @@ public class MyBudgetAppUI extends Application {
 
         // main scene
         try {
-            
-            
-        BorderPane bpMain = new BorderPane();
-        bpMain.setPadding(new Insets(10, 50, 50, 50));
+
+            BorderPane bpMain = new BorderPane();
+            bpMain.setPadding(new Insets(10, 50, 50, 50));
             VBox mybudgetPane = new VBox(10);
-            
+
             Label welcome = new Label("Welcome to MyBudgetApp!");
             Label createErrorMsg = new Label();
             Button signoutButton = new Button("Sign out");
-            Button createCategoryButton = new Button("New expense category");
-      
+            Button createCategoryButton = new Button("Save expense category");
+
             TextField newCategoryInput = new TextField();
-            
+
             GridPane mybudgetLayout = new GridPane();
             mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
             mybudgetLayout.setHgap(5);
             mybudgetLayout.setVgap(5);;
-            
+
             mybudgetLayout.add(welcome, 0, 0);
             mybudgetLayout.add(signoutButton, 2, 0);
             mybudgetLayout.add(newCategoryInput, 2, 2);
             mybudgetLayout.add(createCategoryButton, 0, 2);
+            mybudgetLayout.add(createErrorMsg, 3, 0);
             mybudgetPane.getChildren().addAll(mybudgetLayout);
             mybudgetLayout.setId("root");
             MyBudgetScene = new Scene(mybudgetPane, 1000, 1500);
-//  createCategoryButton.setOnAction(e -> {
-// if(newCategoryInput.getText().isEmpty()){
-// createErrorMsg.setTextFill(Color.RED);
-// createErrorMsg.setTextl("Type the name of the category");
-//        }
-//                mybudgetService.
-//
-//            });
+// create new category
+           
+      
             signoutButton.setOnAction(e -> {
                 mybudgetService.logout();
                 primarystage.setScene(loginscene);
 
             });
+            
+             createCategoryButton.setOnAction(e -> {
+//                if (newCategoryInput.getText().isEmpty()) {
+//                    
+//                    createErrorMsg.setTextFill(Color.RED);
+//                    createErrorMsg.setText("Type the name of the category");
+//                   
+//
+//                } else {
+
+                category = newCategoryInput.getText();
+                Category newCategory = new Category(category);
+                mybudgetService.createCategory(category);
+//                }
+            });
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         // new user scene  
+        
         VBox newUserPane = new VBox(10);
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
@@ -246,8 +258,8 @@ public class MyBudgetAppUI extends Application {
         bpNewUser.setTop(newUsernamePane);
         bpNewUser.setCenter(newUserGridPane);
         textNewUser.setId("text");
-        newUsernamePane.getChildren().addAll(newUserGridPane );
-        newUserPane.getChildren().addAll(textNewUser,newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
+        newUsernamePane.getChildren().addAll(newUserGridPane);
+        newUserPane.getChildren().addAll(textNewUser, newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
 
         signUpButton.setOnAction(e -> {
 
@@ -279,6 +291,7 @@ public class MyBudgetAppUI extends Application {
             }
 
         });
+        
 
         newUserScene = new Scene(newUserPane, 500, 250);
 
