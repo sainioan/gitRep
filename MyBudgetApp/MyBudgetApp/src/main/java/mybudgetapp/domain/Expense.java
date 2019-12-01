@@ -5,6 +5,7 @@
  */
 package mybudgetapp.domain;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -16,21 +17,21 @@ public class Expense {
     private int id;
     private int categoryId;
     private double amount;
-    private Date date;
+    private LocalDate date;
     private List<Expense> expenses;
 
     public Expense() {
 
     }
 
-    public Expense(int categoryId, double amount, Date date) {
+    public Expense(int categoryId, double amount, LocalDate date) {
 
         this.categoryId = categoryId;
         this.amount = amount;
         this.date = date;
     }
 
-    public Expense(int id, int categoryId, double amount, Date date) {
+    public Expense(int id, int categoryId, double amount, LocalDate date) {
         this.id = id;
         this.categoryId = categoryId;
         this.amount = amount;
@@ -61,11 +62,11 @@ public class Expense {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

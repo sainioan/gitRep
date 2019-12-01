@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mybudget.ui;
+package MyBudget.ui;
 
 import mybudgetapp.domain.*;
 import java.io.*;
@@ -119,7 +119,7 @@ public class MyBudgetAppUI extends Application {
         Button loginButton = new Button("Login");
         Button signUpButton = new Button("Sign up");
         Button backButton = new Button("Back");
-        Button confirmButton = new Button("confirm");
+        Button confirmButton = new Button("Confirm");
         Label loginMessage = new Label();
 
         Label userCreationMessage = new Label();
@@ -176,8 +176,9 @@ public class MyBudgetAppUI extends Application {
             VBox mybudgetPane = new VBox(10);
             
             Label welcome = new Label("Welcome to MyBudgetApp!");
-            Button logoutButton = new Button("logout");
-            Button createCategoryButton = new Button("New Expense Category");
+            Label createErrorMsg = new Label();
+            Button signoutButton = new Button("Sign out");
+            Button createCategoryButton = new Button("New expense category");
       
             TextField newCategoryInput = new TextField();
             
@@ -187,17 +188,21 @@ public class MyBudgetAppUI extends Application {
             mybudgetLayout.setVgap(5);;
             
             mybudgetLayout.add(welcome, 0, 0);
-            mybudgetLayout.add(logoutButton, 2, 0);
+            mybudgetLayout.add(signoutButton, 2, 0);
             mybudgetLayout.add(newCategoryInput, 2, 2);
             mybudgetLayout.add(createCategoryButton, 0, 2);
             mybudgetPane.getChildren().addAll(mybudgetLayout);
             mybudgetLayout.setId("root");
             MyBudgetScene = new Scene(mybudgetPane, 1000, 1500);
 //  createCategoryButton.setOnAction(e -> {
+// if(newCategoryInput.getText().isEmpty()){
+// createErrorMsg.setTextFill(Color.RED);
+// createErrorMsg.setTextl("Type the name of the category");
+//        }
 //                mybudgetService.
 //
 //            });
-            logoutButton.setOnAction(e -> {
+            signoutButton.setOnAction(e -> {
                 mybudgetService.logout();
                 primarystage.setScene(loginscene);
 

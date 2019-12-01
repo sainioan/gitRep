@@ -42,20 +42,23 @@ public class MyBudgetService {
     private User loggedIn;
     private String username;
     private String password;
-
+    private LocalDate date;
     public MyBudgetService(MyBudgetDatabase db) throws SQLException {
        this.mybDatabase = db;
-      //  this.mybDatabase = new MyBudgetDatabase("mybudgetdatabase.db");
        this.mybDatabase.initializeDatabase();
-        
-        dbuserDao = new DBUserDao(mybDatabase);
+       dbuserDao = new DBUserDao(mybDatabase);
+       this.date = LocalDate.now();
+////       
+//        this.food = new Food(-1, "default");
+//        this.date = LocalDate.now();
     }
 
-    public MyBudgetService(DBBudgetDao bd, DBUserDao ud) {
-        this.DBbudgetDao = bd;
+    public MyBudgetService() {
+       
       
-        
+        this.mybDatabase.initializeDatabase();
         dbuserDao = new DBUserDao(mybDatabase);
+        
     }
 
     public boolean createBudget(String content, double amount) {

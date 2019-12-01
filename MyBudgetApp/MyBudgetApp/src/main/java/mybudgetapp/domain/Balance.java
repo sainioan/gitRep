@@ -20,11 +20,12 @@ public class Balance {
     private User user;
     private Expense e;
     private Income i;
+    
+    
+
     public Balance() {
 
     }
-
-  
 
     public Balance(double incomeTotal, double expenseTotal) {
 
@@ -36,11 +37,10 @@ public class Balance {
         return balance;
     }
 
-
     public void setBalance() {
-        
+
         this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();
-       
+
     }
 
     public int getId() {

@@ -16,14 +16,13 @@ public class MyBudget {
 
     private int id;
     private String description;
-    private boolean done;
     private User user;
     private double amount;
     private LocalDate date;
-    public MyBudget(int id, String content, boolean done, User user) {
+
+    public MyBudget(int id, String content, User user) {
         this.id = id;
         this.description = content;
-        this.done = done;
         this.user = user;
     }
 
@@ -33,19 +32,50 @@ public class MyBudget {
 
     }
 
+    public MyBudget(String description, double amount, LocalDate date) {
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getContent() {
-        return description;
-    } public User getUser() {
+
+    public User getUser() {
         return user;
     }
 
     public int getId() {
         return id;
-    } @Override
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof MyBudget)) {
             return false;
