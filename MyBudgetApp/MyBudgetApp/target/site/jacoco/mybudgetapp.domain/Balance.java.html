@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Balance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBudgetApp</a> &gt; <a href="index.source.html" class="el_package">mybudgetapp.domain</a> &gt; <span class="el_source">Balance.java</span></div><h1>Balance.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mybudgetapp.domain;
+
+import java.time.LocalDate;
+import java.util.*;
+
+/**
+ *
+ * @author anniinasainio
+ */
+public class Balance {
+
+    private double balance;
+    private int id;
+    private double incomeTotal;
+    private double expenseTotal;
+    private User user;
+    private Expense e;
+    private Income i;
+    private LocalDate date;
+
+<span class="nc" id="L26">    public Balance() {</span>
+
+<span class="nc" id="L28">    }</span>
+
+<span class="nc" id="L30">    public Balance(double incomeTotal, double expenseTotal) {</span>
+
+<span class="nc" id="L32">        this.incomeTotal = incomeTotal;</span>
+<span class="nc" id="L33">        this.expenseTotal = expenseTotal;</span>
+<span class="nc" id="L34">    }</span>
+
+    public double getBalance() {
+<span class="fc" id="L37">        return balance;</span>
+    }
+
+    public void setBalance() {
+
+<span class="nc" id="L42">        this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();</span>
+
+<span class="nc" id="L44">    }</span>
+
+    public LocalDate getDate() {
+<span class="nc" id="L47">        return date;</span>
+    }
+
+    public int getId() {
+<span class="nc" id="L51">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="nc" id="L55">        this.id = id;</span>
+<span class="nc" id="L56">    }</span>
+
+    public double getIncomeTotal() {
+<span class="nc" id="L59">        return incomeTotal;</span>
+    }
+
+    public void setIncomeTotal(double incomeTotal) {
+<span class="nc" id="L63">        this.incomeTotal = incomeTotal;</span>
+<span class="nc" id="L64">    }</span>
+
+    public double getExpenseTotal() {
+<span class="nc" id="L67">        return expenseTotal;</span>
+    }
+
+    public void setExpenseTotal(double expenseTotal) {
+<span class="nc" id="L71">        this.expenseTotal = expenseTotal;</span>
+<span class="nc" id="L72">    }</span>
+
+<span class="nc" id="L74">    public Balance(int id) {</span>
+<span class="nc" id="L75">        this.id = id;</span>
+<span class="nc" id="L76">    }</span>
+
+<span class="nc" id="L78">    public Balance(int id, double incomeTotal, double expenseTotal) {</span>
+<span class="nc" id="L79">        this.id = id;</span>
+<span class="nc" id="L80">        this.incomeTotal = incomeTotal;</span>
+<span class="nc" id="L81">        this.expenseTotal = expenseTotal;</span>
+<span class="nc" id="L82">    }</span>
+
+<span class="fc" id="L84">    public Balance(double balance) {</span>
+<span class="fc" id="L85">        this.balance = balance;</span>
+<span class="fc" id="L86">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

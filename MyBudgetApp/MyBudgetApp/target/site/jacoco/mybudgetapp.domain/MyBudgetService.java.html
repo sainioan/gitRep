@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyBudgetService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBudgetApp</a> &gt; <a href="index.source.html" class="el_package">mybudgetapp.domain</a> &gt; <span class="el_source">MyBudgetService.java</span></div><h1>MyBudgetService.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mybudgetapp.domain;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.sql.SQLException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+import mybudgetapp.dao.BudgetDao;
+import mybudgetapp.dao.DBBudgetDao;
+import mybudgetapp.dao.DBUserDao;
+import mybudgetapp.dao.MyBudgetDatabase;
+import mybudgetapp.dao.UserDao;
+import mybudgetapp.domain.User;
+
+/**
+ *
+ * @author anniinasainio
+ */
+public class MyBudgetService {
+
+    private MyBudgetDatabase mybDatabase;
+    private DBBudgetDao dbbudgetDao;
+    private DBUserDao dbuserDao;
+    // private UserDao userDao;
+    private User loggedIn;
+    private String username;
+    private String password;
+    private LocalDate date;
+
+<span class="fc" id="L47">    public MyBudgetService(MyBudgetDatabase db) throws SQLException {</span>
+<span class="fc" id="L48">        this.mybDatabase = db;</span>
+<span class="fc" id="L49">        this.mybDatabase.initializeDatabase();</span>
+<span class="fc" id="L50">        dbuserDao = new DBUserDao(mybDatabase);</span>
+<span class="fc" id="L51">        dbbudgetDao = new DBBudgetDao(mybDatabase);</span>
+<span class="fc" id="L52">        this.date = LocalDate.now();</span>
+////       
+//        this.food = new Food(-1, &quot;default&quot;);
+//        this.date = LocalDate.now();
+<span class="fc" id="L56">    }</span>
+
+<span class="nc" id="L58">    public MyBudgetService() {</span>
+
+<span class="nc" id="L60">        this.mybDatabase.initializeDatabase();</span>
+<span class="nc" id="L61">        dbuserDao = new DBUserDao(mybDatabase);</span>
+
+<span class="nc" id="L63">    }</span>
+
+    public boolean createCategory(String description) {
+<span class="nc" id="L66">        Category category = new Category(description);</span>
+        try {
+<span class="nc" id="L68">            dbbudgetDao.create(category);</span>
+<span class="nc" id="L69">        } catch (Exception e) {</span>
+<span class="nc" id="L70">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L71">            return false;</span>
+<span class="nc" id="L72">        }</span>
+<span class="nc" id="L73">        return true;</span>
+    }
+
+//content = some description of the budget
+    public boolean createBudget(String content, double amount) {
+<span class="nc" id="L78">        MyBudget mb = new MyBudget(content, amount);</span>
+        try {
+<span class="nc" id="L80">            dbbudgetDao.createBudget();</span>
+<span class="nc" id="L81">        } catch (Exception ex) {</span>
+<span class="nc" id="L82">            return false;</span>
+<span class="nc" id="L83">        }</span>
+<span class="nc" id="L84">        return true;</span>
+    }
+
+    public boolean login(String username, String password) {
+<span class="fc" id="L88">        User user = dbuserDao.findByUsername(username);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (user == null) {</span>
+<span class="fc" id="L90">            return false;</span>
+        }
+
+<span class="nc" id="L93">        loggedIn = user;</span>
+
+<span class="nc" id="L95">        return true;</span>
+    }
+
+    public User getLoggedUser() {
+<span class="fc" id="L99">        return loggedIn;</span>
+    }
+
+    public void logout() {
+<span class="fc" id="L103">        loggedIn = null;</span>
+<span class="fc" id="L104">    }</span>
+
+    public boolean createUser(String username, String password) {
+<span class="nc" id="L107">        User user = new User(username, password);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (!user.validateUsername().isEmpty()) {</span>
+<span class="nc" id="L109">            return false;</span>
+        }
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (!user.validatePassword().isEmpty()) {</span>
+<span class="nc" id="L112">            return false;</span>
+        }
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (dbuserDao.findByUsername(username) != null) {</span>
+<span class="nc" id="L116">            return false;</span>
+        }
+
+        try {
+<span class="nc" id="L120">            dbuserDao.create(user);</span>
+<span class="nc" id="L121">        } catch (Exception e) {</span>
+<span class="nc" id="L122">            return false;</span>
+<span class="nc" id="L123">        }</span>
+
+<span class="nc" id="L125">        return true;</span>
+
+    }
+
+    public Boolean checkUsername(String username) {
+<span class="nc" id="L130">        this.username = username;</span>
+        try {
+<span class="nc bnc" id="L132" title="All 4 branches missed.">            if (validateUsernameInput(username) &amp;&amp; dbuserDao.findOne(username.trim()) != null) {</span>
+<span class="nc" id="L133">                return true;</span>
+            }
+<span class="nc" id="L135">        } catch (Exception ex) {</span>
+<span class="nc" id="L136">            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L137">        }</span>
+<span class="nc" id="L138">        return false;</span>
+    }
+
+    public Boolean validateUsernameInput(String username) {
+<span class="nc bnc" id="L142" title="All 6 branches missed.">        return ((username != null) &amp;&amp; username.matches(&quot;[A-Za-z0-9_]+&quot;) &amp;&amp; username.length() &gt;= 5);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
