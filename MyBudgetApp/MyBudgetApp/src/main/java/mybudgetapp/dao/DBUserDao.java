@@ -42,7 +42,7 @@ public class DBUserDao implements UserDao {
         Statement stmt = null;
         try {
             Connection conn = db.connect();
-            System.out.println("testing " + conn);
+       //     System.out.println("testing " + conn);
             db = new MyBudgetDatabase(database);
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(selectStmt);
