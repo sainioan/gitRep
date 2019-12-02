@@ -13,17 +13,18 @@ Individuals, who have a user account, can sign in with their username and passwo
 
 
 ### Before Login
-* User can sign up for the app by create a unique username and password -- done
-* Username must be unique and at least 5 characters long -- done
-* User can cancel the sign up by pressing the "back" button -- done
-* User can login with a username and password -- done
+* User can sign up for the app by create a unique username and password. -- done
+* Username must be unique and at least 5 characters long. -- done
+* User can cancel the sign up by pressing the "back" button. -- done
+* User can login with a username and password. -- done
 
 ### After Login
-* User can logout -- done
-* User can create daily, monthy, or annual budgets
+* User can logout. -- done
+* User can create daily, monthy, or annual budgets.
 * The user should be able to add income to different categories (salary).
 * The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
-* The user should be able to add/remove new or old categories of expenses.
+* The user should be able to add new categories of expenses. -- done
+* The user should be able remove old categories of expenses.
 * The user should be able to create/edit/remove budgets.
 * The user should be able to remove his/her account.
 * The user should be able to view his/her balance.
