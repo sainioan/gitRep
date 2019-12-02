@@ -36,7 +36,7 @@ import mybudgetapp.domain.User;
 public class MyBudgetService {
 
     private MyBudgetDatabase mybDatabase;
-    private DBBudgetDao DBbudgetDao;
+    private DBBudgetDao dbbudgetDao;
     private DBUserDao dbuserDao;
     // private UserDao userDao;
     private User loggedIn;
@@ -48,6 +48,7 @@ public class MyBudgetService {
         this.mybDatabase = db;
         this.mybDatabase.initializeDatabase();
         dbuserDao = new DBUserDao(mybDatabase);
+        dbbudgetDao = new DBBudgetDao(mybDatabase);
         this.date = LocalDate.now();
 ////       
 //        this.food = new Food(-1, "default");
@@ -64,7 +65,7 @@ public class MyBudgetService {
     public boolean createCategory(String description) {
         Category category = new Category(description);
         try {
-            DBbudgetDao.create(category);
+            dbbudgetDao.create(category);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -76,7 +77,7 @@ public class MyBudgetService {
     public boolean createBudget(String content, double amount) {
         MyBudget mb = new MyBudget(content, amount);
         try {
-            DBbudgetDao.createBudget();
+            dbbudgetDao.createBudget();
         } catch (Exception ex) {
             return false;
         }

@@ -169,7 +169,7 @@ public class MyBudgetAppUI extends Application {
         });
 
         // main scene
-        try {
+       // try {
 
             BorderPane bpMain = new BorderPane();
             bpMain.setPadding(new Insets(10, 50, 50, 50));
@@ -218,9 +218,9 @@ public class MyBudgetAppUI extends Application {
                 mybudgetService.createCategory(category);
 //                }
             });
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+       // } catch (Exception e) {
+      //      System.out.println(e.getMessage());
+     //   }
         // new user scene  
         
         VBox newUserPane = new VBox(10);
