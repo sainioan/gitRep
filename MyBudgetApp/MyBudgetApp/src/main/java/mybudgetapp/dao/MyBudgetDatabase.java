@@ -9,7 +9,6 @@ import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.User;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,22 +36,20 @@ public class MyBudgetDatabase {
 
     public MyBudgetDatabase(String databaseName) throws SQLException {
         this.dbName = databaseName;
-        
     }
 
     public MyBudgetDatabase() throws SQLException {
         this.dbName = "mybudgetapp.db";
-     }
+    }
 
     public Connection connect() throws SQLException {
         Connection connection = null;
         try {
- Class.forName("org.sqlite.JDBC");
+            Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:" + dbName;
             connection = DriverManager.getConnection(url);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
         }
         return connection;
     }
@@ -70,13 +67,11 @@ public class MyBudgetDatabase {
 
     public void initializeDatabase() {
         // The following methods will create required tables if they do not already exist in the database
-
         initializeCategory();
         initializeExpense();
         initializeIncome();
         initializeBalance();
         initializeUser();
-
     }
 
     public void initializeCategory() {
@@ -84,15 +79,13 @@ public class MyBudgetDatabase {
             Connection connection = connect();
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS category ("
                     + "id INTEGER PRIMARY KEY, "
-                    + "name VARCHAR(100));" 
-                   
+                    + "name VARCHAR(100));"
             );
             createCategoryTable.execute();
             createCategoryTable.close();
 
             connection.close();
         } catch (SQLException e) {
-
             System.out.println(e.getMessage());
         }
     }
@@ -101,7 +94,6 @@ public class MyBudgetDatabase {
         try {
             Connection connection = connect();
 
-//   
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS user ("
                     + "id INTEGER PRIMARY KEY, "
                     + "username VARCHAR(100),"
@@ -114,14 +106,13 @@ public class MyBudgetDatabase {
 
             connection.close();
         } catch (SQLException e) {
-
             System.out.println(e.getMessage());
         }
     }
 
     public void initializeExpense() {
         try {
-           
+
             Connection connection = connect();
 
             PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
@@ -159,7 +150,6 @@ public class MyBudgetDatabase {
         } catch (SQLException e) {
             /* Do nothing */
         }
-
     }
 
     public void initializeBalance() {
@@ -170,16 +160,13 @@ public class MyBudgetDatabase {
                     + "id INTEGER PRIMARY KEY,"
                     + "amount float, "
                     + "time DATE);"
-               
             );
             createBalanceTable.execute();
             createBalanceTable.close();
-
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     public int getLastId(Connection connection) {
@@ -191,7 +178,6 @@ public class MyBudgetDatabase {
             while (resultSet.next()) {
                 id = resultSet.getInt("id");
             }
-
             return id;
         } catch (SQLException ex) {
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
@@ -233,9 +219,9 @@ public class MyBudgetDatabase {
             Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
+
     public void saveUser(Connection connection, String username, String password) {
-      
+
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO user (username, password) VALUES ( ?, ?);"

@@ -1,0 +1,6 @@
+#surefire
+#Mon Dec 02 16:00:25 EET 2019
+maven.ext.class.path=/Applications/tmcbeans.app/Contents/Resources/tmcbeans/java/maven-nblib/netbeans-eventspy.jar
+user.dir=/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp
+localRepository=/Users/anniinasainio/.m2/repository
+basedir=/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp

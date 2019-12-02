@@ -53,6 +53,7 @@ public class User {
 
         }
     }
+
     public String validatePassword() {
         String s = "";
 
@@ -65,6 +66,7 @@ public class User {
 
         }
     }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof User)) {
@@ -73,8 +75,9 @@ public class User {
         User other = (User) obj;
         return username.equals(other.username);
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.username;
     }
 }

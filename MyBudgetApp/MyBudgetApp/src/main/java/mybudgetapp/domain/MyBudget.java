@@ -66,7 +66,6 @@ public class MyBudget {
         this.id = id;
     }
 
-
     public User getUser() {
         return user;
     }

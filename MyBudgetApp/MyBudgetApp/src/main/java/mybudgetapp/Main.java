@@ -4,15 +4,17 @@
  * and open the template in the editor.
  */
 package mybudgetapp;
-import  MyBudget.ui.MyBudgetAppUI;
+
+import MyBudget.ui.MyBudgetAppUI;
 
 /**
  *
  * @author ralahtin
  */
 public class Main {
-   public static void main(String[] args){
-       MyBudgetAppUI.main(args);
-      
-   }
+
+    public static void main(String[] args) {
+        MyBudgetAppUI.main(args);
+
+    }
 }

@@ -74,9 +74,11 @@ public class Expense {
         Expense e = new Expense(getCategoryId(), getAmount(), getDate());
         expenses.add(e);
         return expenses;
-    } public double getExpensesTotal(){
+    }
+
+    public double getExpensesTotal() {
         double total = 0.0;
-        for(Expense e : expenses){
+        for (Expense e : expenses) {
             total = total + e.getAmount();
         }
         return total;

@@ -22,8 +22,6 @@ public class Balance {
     private Expense e;
     private Income i;
     private LocalDate date;
-    
-    
 
     public Balance() {
 
@@ -43,7 +41,9 @@ public class Balance {
 
         this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();
 
-    } public LocalDate getDate(){
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 

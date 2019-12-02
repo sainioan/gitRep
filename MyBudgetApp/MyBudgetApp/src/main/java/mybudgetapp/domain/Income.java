@@ -64,12 +64,14 @@ public class Income {
         Income i = new Income(getAmount(), getDate());
         totalIncome.add(i);
         return totalIncome;
-     //The following method is to get the totalAmountOfIncome   
-    } public double getIncomeTotal(){
+        //The following method is to get the totalAmountOfIncome   
+    }
+
+    public double getIncomeTotal() {
         double total = 0.0;
-        for(Income i : totalIncome){
+        for (Income i : totalIncome) {
             total = total + i.getAmount();
         }
         return total;
-    } 
+    }
 }

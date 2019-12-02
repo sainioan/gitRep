@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.logging.Level;
@@ -40,11 +39,11 @@ public class DBBudgetDao implements BudgetDao {
 
     //private User user;
     public DBBudgetDao(MyBudgetDatabase db) {
-    this.db = db;
-    categories = new ArrayList<>();
-    db.initializeDatabase();
-     Statement stmt = null;
-      try {
+        this.db = db;
+        categories = new ArrayList<>();
+        db.initializeDatabase();
+        Statement stmt = null;
+        try {
             Connection conn = db.connect();
             System.out.println("testing " + conn);
             db = new MyBudgetDatabase(database);
@@ -58,12 +57,11 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    
-    
+
     }
 
     public DBBudgetDao(String database) throws SQLException {
- Connection conn = db.connect();
+        Connection conn = db.connect();
         System.out.println("testing " + conn);
         categories = new ArrayList<>();
         this.database = database;
@@ -82,7 +80,6 @@ public class DBBudgetDao implements BudgetDao {
             System.out.println(e.getMessage());
         }
     }
-
 
     public void saveCategory(Category category) throws Exception {
         Connection connection = db.connect();
@@ -114,8 +111,8 @@ public class DBBudgetDao implements BudgetDao {
 //    }
 
     public List<Category> getAllCategories() throws SQLException {
-         Connection con = db.connect();
-         String sql = "SELECT*FROM category";
+        Connection con = db.connect();
+        String sql = "SELECT*FROM category";
 //        PreparedStatement stmt = con.prepareStatement("sql");
 //        categories = new ArrayList<>();
 
@@ -130,7 +127,6 @@ public class DBBudgetDao implements BudgetDao {
 //        con.close();
 //        return users;
 //    }
-
         return categories;
     }
 
@@ -138,7 +134,7 @@ public class DBBudgetDao implements BudgetDao {
 
     public List<MyBudget> getAll() {
         return new ArrayList<MyBudget>();
-        
+
 //         @Override
 //    public List<User> getAll() throws SQLException {
 //        Connection con = db.connect();
@@ -157,14 +153,13 @@ public class DBBudgetDao implements BudgetDao {
 //        con.close();
 //        return users;
 //    }
-
-    } 
+    }
 
     @Override
     public MyBudget createBudget() throws Exception {
 
         return new MyBudget(description, amount);
-    } 
+    }
 
     public Category create(Category category) throws SQLException {
 

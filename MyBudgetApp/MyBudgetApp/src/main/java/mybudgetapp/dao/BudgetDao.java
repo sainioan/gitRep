@@ -4,14 +4,17 @@
  * and open the template in the editor.
  */
 package mybudgetapp.dao;
+
 import java.util.List;
 import mybudgetapp.domain.MyBudget;
 import mybudgetapp.domain.User;
+
 /**
  *
  * @author anniinasainio
  */
 public interface BudgetDao {
+
     MyBudget createBudget() throws Exception;
 
     List<MyBudget> getAll();

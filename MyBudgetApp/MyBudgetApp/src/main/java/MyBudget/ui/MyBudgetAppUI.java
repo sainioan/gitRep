@@ -215,10 +215,10 @@ public class MyBudgetAppUI extends Application {
                 category = newCategoryInput.getText();
                 Category newCategory = new Category(category);
                 mybudgetService.createCategory(category);
-                createConfirmationMsg.setText("Category '"+ category + "' created successfully");
+                createConfirmationMsg.setText("Category '" + category + "' created successfully");
                 createConfirmationMsg.setTextFill(Color.GREEN);
                 newCategoryInput.setText("");
-                
+
             }
         });
         // } catch (Exception e) {

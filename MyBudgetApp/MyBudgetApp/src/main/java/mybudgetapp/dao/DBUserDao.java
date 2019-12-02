@@ -34,15 +34,15 @@ public class DBUserDao implements UserDao {
 
     public DBUserDao(MyBudgetDatabase db) {
         this.db = db;
-        
+
         users = new ArrayList<>();
         this.database = database;
-      
+
         db.initializeDatabase();
         Statement stmt = null;
         try {
             Connection conn = db.connect();
-       //     System.out.println("testing " + conn);
+            //     System.out.println("testing " + conn);
             db = new MyBudgetDatabase(database);
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(selectStmt);
@@ -55,7 +55,7 @@ public class DBUserDao implements UserDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    
+
     }
 
     public DBUserDao(String database) throws SQLException {
@@ -84,18 +84,17 @@ public class DBUserDao implements UserDao {
         Connection connection = db.connect();
         System.out.println("test " + connection);
         try {
-            
-                
-                PreparedStatement saveDetailsStatement = connection.prepareStatement(
-                        "INSERT OR REPLACE INTO user (username, password) VALUES (?, ?);"
-                );
 
-                saveDetailsStatement.setString(1, user.getUsername());
-                saveDetailsStatement.setString(2, user.getPassword());
+            PreparedStatement saveDetailsStatement = connection.prepareStatement(
+                    "INSERT OR REPLACE INTO user (username, password) VALUES (?, ?);"
+            );
 
-                saveDetailsStatement.executeUpdate();
-                saveDetailsStatement.close();
-            
+            saveDetailsStatement.setString(1, user.getUsername());
+            saveDetailsStatement.setString(2, user.getPassword());
+
+            saveDetailsStatement.executeUpdate();
+            saveDetailsStatement.close();
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
