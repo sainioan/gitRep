@@ -62,7 +62,7 @@ public class DBBudgetDao implements BudgetDao {
 
     public DBBudgetDao(String database) throws SQLException {
         Connection conn = db.connect();
-        System.out.println("testing " + conn);
+    
         categories = new ArrayList<>();
         this.database = database;
         db = new MyBudgetDatabase(database);

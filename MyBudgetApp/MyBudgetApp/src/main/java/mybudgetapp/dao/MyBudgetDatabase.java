@@ -32,7 +32,7 @@ import java.io.*;
  */
 public class MyBudgetDatabase {
 
-    private final String dbName;
+    private String dbName;
 
     public MyBudgetDatabase(String databaseName) throws SQLException {
         this.dbName = databaseName;
@@ -65,13 +65,20 @@ public class MyBudgetDatabase {
         conn.close();
     }
 
-    public void initializeDatabase() {
+    public boolean initializeDatabase() {
         // The following methods will create required tables if they do not already exist in the database
-        initializeCategory();
-        initializeExpense();
-        initializeIncome();
-        initializeBalance();
-        initializeUser();
+        try {
+            initializeCategory();
+            initializeExpense();
+            initializeIncome();
+            initializeBalance();
+            initializeUser();
+        } catch (Throwable t) {
+
+            System.out.println(t.getMessage());
+            return false;
+        }
+        return true;
     }
 
     public void initializeCategory() {
@@ -125,7 +132,6 @@ public class MyBudgetDatabase {
             );
             createExpenseTable.execute();
             createExpenseTable.close();
-
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
