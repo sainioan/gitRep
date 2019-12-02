@@ -18,7 +18,7 @@
 | 28.11.|   3.5  |debuggausta ja graafisen käyttöliittymän siistimistä|
 | 29.11.|   3  |debuggausta ja daon siistimistä|
 | 1.12.|   3  |graafisen käyttöliittymän editointia, category taulun aktivoimisyritys, debuggausta|
-| 2.12.|   0.5  |graafisen käyttöliittymän editointia,debuggausta category taulun aktivoiminen onnistuneesti|
+| 2.12.|   1  |graafisen käyttöliittymän editointia,debuggausta category taulun aktivoiminen onnistuneesti, checkstyle.xml |
 
 
 
