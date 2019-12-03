@@ -28,6 +28,7 @@ public class DBUserDaoTest {
     User user;
     DBUserDao dao;
     MyBudgetDatabase db;
+    List<User> users;
 
     @Before
     public void setUp() throws SQLException, Exception {
@@ -39,6 +40,7 @@ public class DBUserDaoTest {
         dao = new DBUserDao(db);
         user = new User("tester", "password123");
         dao.saveUser(user);
+        users.add(user);
     }
 
     @After
@@ -50,24 +52,17 @@ public class DBUserDaoTest {
         stmt.close();
         connection.close();
     }
-
 //    @Test
-//    public void findByUsernameReturnsUser() throws SQLException, Exception {
-//        Connection connection = db.connect();
-//
-//        assertEquals(true, dao.saveUser(user));
-//
-//        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM User WHERE username = 'tester'");
-//
-//        ResultSet rs = stmt.executeQuery();
-//        User user = new User(rs.getString("username"), rs.getString("name"));
-//
-//        stmt.close();
-//        rs.close();
-//
-//        connection.close();
-//
-//        assertEquals(user, dao.findByUsername("tester"));
+//    public void findByUsernameReturnsUser() throws Exception, NullPointerException {
+//        try{
+//        User newUser = new User("tester", "abc123");
+//        dao.create(newUser);
+//        users.add(newUser);
+//        User user = dao.findByUsername("tester");
+//        assertEquals("tester", newUser.getUsername());
+//        assertEquals("abc123", newUser.getPassword());
+//        } catch (Throwable t){
+//            System.out.println(t.getMessage());
+//        }
 //    }
-
 }
