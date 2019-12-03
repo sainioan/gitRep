@@ -11,7 +11,6 @@ import java.util.*;
 import java.sql.SQLException;
 import com.sun.javafx.charts.Legend;
 import java.lang.Object;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import java.time.Duration;
 import java.time.LocalDate;
