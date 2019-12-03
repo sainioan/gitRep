@@ -41,4 +41,20 @@ public class BalanceTest {
         }
     }
 
+    @Test
+    public void constructorWorks() {
+        try {
+            assertEquals(2500.0, balance.getBalance(), DELTA);
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void setIdworks() {
+        balance.setId(5);
+        assertEquals(5, balance.getId());
+
+    }
+
 }

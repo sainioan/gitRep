@@ -19,17 +19,30 @@ import static org.junit.Assert.*;
  */
 public class CategoryTest {
 
-    Category category = new Category("testCategory");
+    Category category;
+    Category category2;
 
     public CategoryTest() {
     }
 
     @Before
     public void setUp() {
+        category = new Category("testCategory");
+        category2 = new Category(1, "testCategory");
     }
 
     @After
     public void tearDown() {
+    }
+
+    @Test
+    public void constructorWorks() {
+        try {
+            assertEquals("testCategory", category.getName());
+            assertEquals(1, category2.getId());
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
     }
 
     @Test

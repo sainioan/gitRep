@@ -65,7 +65,6 @@ public class MyBudgetServiceTest {
 
         assertEquals(null, mbs.getLoggedUser());
     }
-
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //

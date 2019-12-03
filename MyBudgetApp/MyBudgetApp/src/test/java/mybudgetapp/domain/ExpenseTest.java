@@ -34,6 +34,24 @@ public class ExpenseTest {
         e = new Expense(1, 500.0, LocalDate.now());
     }
 
+    @Test
+    public void constructorWorks() {
+        try {
+            assertEquals(500.0, e.getAmount(), DELTA);
+            assertEquals(1, e.getId());
+            assertEquals(LocalDate.now(), e.getDate());
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void setIdworks() {
+        e.setId(5);
+        assertEquals(5, e.getId());
+
+    }
+
     public void getAmountWorks() {
 
         assertEquals(500.0, e.getAmount(), DELTA);

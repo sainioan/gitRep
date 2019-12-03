@@ -36,6 +36,17 @@ public class MyBudgetTest {
     }
 
     @Test
+    public void constructorWorks() {
+        try {
+            assertEquals(1000.0, mb.getAmount(), DELTA);
+            assertEquals(1, mb.getId());
+            assertEquals("barbaros", mb.getDescription());
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
     public void notEqualWhenDifferentId() {
         try {
             MyBudget m1 = new MyBudget("week", 0.0);

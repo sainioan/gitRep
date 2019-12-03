@@ -18,13 +18,14 @@ import static org.junit.Assert.*;
  */
 public class UserTest {
 
-    User user = new User("Mamiko", "AtOIC2020");
+    User user;
 
     public UserTest() {
     }
 
     @Before
     public void setUp() {
+        user = new User("Mamiko", "AtOIC2020");
     }
 
     @Test
@@ -51,5 +52,15 @@ public class UserTest {
     @Test
     public void users_Password_IsCorrect() {
         assertEquals("AtOIC2020", user.getPassword());
+    }
+
+    @Test
+    public void constructorWorks() {
+        try {
+            assertEquals("Mamiko", user.getUsername());
+            assertEquals("AtOIC2020", user.getPassword());
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
     }
 }
