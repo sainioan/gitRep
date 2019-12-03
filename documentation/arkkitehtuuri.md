@@ -10,3 +10,7 @@ The program uses a three-tier architecture, and the package structure of the cod
 ## Application Logic
 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/Sovelluslogiikka.png">
+
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp Login Sequence Diagram.png">
+
