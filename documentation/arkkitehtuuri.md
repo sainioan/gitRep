@@ -1,4 +1,4 @@
-# Architecture of the program
+# Architecture of the Program
 
 ## Structure
 
