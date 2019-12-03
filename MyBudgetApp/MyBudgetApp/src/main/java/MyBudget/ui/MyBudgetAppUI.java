@@ -26,7 +26,6 @@ import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.Node;
-
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.DatePicker;
 import javafx.scene.chart.BarChart;
