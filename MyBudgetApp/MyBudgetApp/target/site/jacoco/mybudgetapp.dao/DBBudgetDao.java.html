@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DBBudgetDao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBudgetApp</a> &gt; <a href="index.source.html" class="el_package">mybudgetapp.dao</a> &gt; <span class="el_source">DBBudgetDao.java</span></div><h1>DBBudgetDao.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mybudgetapp.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mybudgetapp.domain.Balance;
+import mybudgetapp.domain.Category;
+import mybudgetapp.domain.MyBudget;
+import mybudgetapp.domain.User;
+
+/**
+ *
+ * @author anniinasainio
+ */
+public class DBBudgetDao implements BudgetDao {
+
+    private int id;
+    private String description;
+    private boolean done;
+    private MyBudgetDatabase db;
+    private double amount;
+    private String database;
+    private List&lt;Category&gt; categories;
+<span class="pc" id="L38">    String selectStmt = &quot;SELECT*FROM category&quot;;</span>
+
+    //private User user;
+<span class="fc" id="L41">    public DBBudgetDao(MyBudgetDatabase db) {</span>
+<span class="fc" id="L42">        this.db = db;</span>
+<span class="fc" id="L43">        categories = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">        db.initializeDatabase();</span>
+<span class="fc" id="L45">        Statement stmt = null;</span>
+        try {
+<span class="fc" id="L47">            Connection conn = db.connect();</span>
+<span class="fc" id="L48">            System.out.println(&quot;testing &quot; + conn);</span>
+<span class="fc" id="L49">            db = new MyBudgetDatabase(database);</span>
+<span class="fc" id="L50">            stmt = conn.createStatement();</span>
+<span class="fc" id="L51">            ResultSet rs = stmt.executeQuery(selectStmt);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L53">                Category category = new Category();</span>
+<span class="nc" id="L54">                category.setName(rs.getString(&quot;name&quot;));</span>
+<span class="nc" id="L55">                categories.add(category);</span>
+<span class="nc" id="L56">            }</span>
+<span class="nc" id="L57">        } catch (Exception e) {</span>
+<span class="nc" id="L58">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L59">        }</span>
+
+<span class="fc" id="L61">    }</span>
+
+<span class="nc" id="L63">    public DBBudgetDao(String database) throws SQLException {</span>
+<span class="nc" id="L64">        Connection conn = db.connect();</span>
+    
+<span class="nc" id="L66">        categories = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L67">        this.database = database;</span>
+<span class="nc" id="L68">        db = new MyBudgetDatabase(database);</span>
+<span class="nc" id="L69">        db.initializeDatabase();</span>
+<span class="nc" id="L70">        Statement stmt = null;</span>
+        try {
+<span class="nc" id="L72">            stmt = conn.createStatement();</span>
+<span class="nc" id="L73">            ResultSet rs = stmt.executeQuery(selectStmt);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L75">                Category category = new Category();</span>
+<span class="nc" id="L76">                category.setName(rs.getString(&quot;name&quot;));</span>
+<span class="nc" id="L77">                categories.add(category);</span>
+<span class="nc" id="L78">            }</span>
+<span class="nc" id="L79">        } catch (Exception e) {</span>
+<span class="nc" id="L80">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L81">        }</span>
+<span class="nc" id="L82">    }</span>
+
+    public void saveCategory(Category category) throws Exception {
+<span class="nc" id="L85">        Connection connection = db.connect();</span>
+<span class="nc" id="L86">        System.out.println(&quot;category test &quot; + connection);</span>
+        try {
+<span class="nc" id="L88">            PreparedStatement statement = connection.prepareStatement(</span>
+                    &quot;INSERT OR REPLACE INTO category (name) VALUES (?);&quot;
+            );
+<span class="nc" id="L91">            statement.setString(1, category.getName());</span>
+<span class="nc" id="L92">            statement.executeUpdate();</span>
+<span class="nc" id="L93">            statement.close();</span>
+<span class="nc" id="L94">        } catch (Exception e) {</span>
+<span class="nc" id="L95">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L96">        }</span>
+<span class="nc" id="L97">    }</span>
+//    public void saveBalance(Balance balance) throws Exception {
+//        Connection connection = db.connect();
+//        System.out.println(&quot;Balance test&quot; + connection);
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(
+//                    &quot;INSER OR REPLACE INTO Balance (name) VALUES (?);&quot;
+//            );
+//            statement.setFloat(1, balance.getAmount());
+//            statement.executeUpdate();
+//            statement.close();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+
+    public List&lt;Category&gt; getAllCategories() throws SQLException {
+<span class="nc" id="L114">        Connection con = db.connect();</span>
+<span class="nc" id="L115">        String sql = &quot;SELECT*FROM category&quot;;</span>
+//        PreparedStatement stmt = con.prepareStatement(&quot;sql&quot;);
+//        categories = new ArrayList&lt;&gt;();
+
+//        ResultSet rs = stmt.executeQuery();
+//        while (rs.next()) {
+//            Category category = new Category(rs.getString(&quot;name&quot;));
+//            user.setName(rs.getString(&quot;name&quot;));
+//            categories.add(category);
+//        }
+//        stmt.close();
+//        rs.close();
+//        con.close();
+//        return users;
+//    }
+<span class="nc" id="L130">        return categories;</span>
+    }
+
+    @Override
+
+    public List&lt;MyBudget&gt; getAll() {
+<span class="nc" id="L136">        return new ArrayList&lt;MyBudget&gt;();</span>
+
+//         @Override
+//    public List&lt;User&gt; getAll() throws SQLException {
+//        Connection con = db.connect();
+//        PreparedStatement stmt = con.prepareStatement(selectStmt);
+//        users = new ArrayList&lt;&gt;();
+//
+//        ResultSet rs = stmt.executeQuery();
+//        while (rs.next()) {
+//            User user = new User(rs.getString(&quot;username&quot;), rs.getString(&quot;password&quot;));
+//            user.setUsername(rs.getString(&quot;userBudget&quot;));
+//            user.setPassword(rs.getString(&quot;password&quot;));
+//            users.add(user);
+//        }
+//        stmt.close();
+//        rs.close();
+//        con.close();
+//        return users;
+//    }
+    }
+
+    @Override
+    public MyBudget createBudget() throws Exception {
+
+<span class="nc" id="L161">        return new MyBudget(description, amount);</span>
+    }
+
+    public Category create(Category category) throws SQLException {
+
+<span class="nc" id="L166">        categories.add(category);</span>
+
+        try {
+<span class="nc" id="L169">            saveCategory(category);</span>
+<span class="nc" id="L170">        } catch (Exception e) {</span>
+<span class="nc" id="L171">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L172">        }</span>
+<span class="nc" id="L173">        return category;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
