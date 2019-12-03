@@ -5,5 +5,7 @@
 
 [Tuntikirjanpito](../master/documentation/Tuntikirjanpito.md)
 
+[Arkkitehtuurikuvaus](../master/documentation/arkkitehtuuri.md)
+
 
 
