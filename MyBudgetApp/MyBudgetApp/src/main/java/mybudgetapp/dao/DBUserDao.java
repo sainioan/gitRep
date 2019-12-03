@@ -80,7 +80,7 @@ public class DBUserDao implements UserDao {
         }
     }
 
-    public void saveUser(User user) throws Exception {
+    public boolean saveUser(User user) throws Exception {
         Connection connection = db.connect();
         System.out.println("test " + connection);
         try {
@@ -97,8 +97,9 @@ public class DBUserDao implements UserDao {
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            return false;
         }
-
+        return true;
     }
 
     public void delete(String username) throws SQLException {
