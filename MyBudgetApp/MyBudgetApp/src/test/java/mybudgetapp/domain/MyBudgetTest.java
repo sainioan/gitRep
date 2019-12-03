@@ -28,26 +28,34 @@ public class MyBudgetTest {
     @Before
     public void setUp() {
         mb = new MyBudget("barbados", 1000.0);
-  
+
     }
-    
+
     @After
     public void tearDown() {
     }
 
     @Test
     public void notEqualWhenDifferentId() {
-        try{
-        MyBudget m1 = new MyBudget("week", 0.0);
-        MyBudget m2 = new MyBudget("vacay", 1000.00);
-        assertFalse(m1.equals(m2));
-        } catch (Throwable t){
+        try {
+            MyBudget m1 = new MyBudget("week", 0.0);
+            MyBudget m2 = new MyBudget("vacay", 1000.00);
+            assertFalse(m1.equals(m2));
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void getAmountWorks() {
+        try {
+            assertEquals(1000.0, mb.getAmount(), DELTA);
+        } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
     }
 
 }
-
 
 // TODO add test methods here.
 // The methods must be annotated with annotation @Test. For example:
