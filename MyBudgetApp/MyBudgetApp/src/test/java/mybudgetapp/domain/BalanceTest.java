@@ -40,7 +40,12 @@ public class BalanceTest {
             System.out.println(t.getMessage());
         }
     }
-
+    @Test
+    public void notEqualWhenDifferentId() {
+        Balance b1 = new Balance(1, 0.0, DELTA);
+        Balance b2 = new Balance(2, 1000000.0, DELTA);
+        assertFalse(b1.equals(b2));
+    }
     @Test
     public void constructorWorks() {
         try {

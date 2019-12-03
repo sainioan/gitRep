@@ -46,6 +46,24 @@ public class IncomeTest {
     }
 
     @Test
+    public void equalWhenSameId() {
+        try {
+            Income i1 = new Income(1, 0.0, LocalDate.now());
+            Income i2 = new Income(1, 0.0, LocalDate.now());
+            assertTrue(i1.equals(i2));
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void notEqualWhenDifferentId() {
+        Income t1 = new Income(1, 60.0, null);
+        Income t2 = new Income(2, 13.0, null);
+        assertFalse(t1.equals(t2));
+    }
+
+    @Test
     public void setIdworks() {
         i.setId(5);
         assertEquals(5, i.getId());
