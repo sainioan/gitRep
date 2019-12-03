@@ -5,6 +5,8 @@
  */
 package mybudgetapp.domain;
 
+import javafx.beans.property.*;
+
 /**
  *
  * @author anniinasainio
@@ -42,5 +44,10 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
