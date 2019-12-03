@@ -7,5 +7,7 @@
 
 [Arkkitehtuurikuvaus](../master/documentation/arkkitehtuuri.md)
 
+[Viikko5 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko5)
+
 
 
