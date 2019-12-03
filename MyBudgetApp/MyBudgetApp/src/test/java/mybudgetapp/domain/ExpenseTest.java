@@ -66,4 +66,11 @@ public class ExpenseTest {
             System.out.println(t.getMessage());
         }
     }
+
+    @Test
+    public void notEqualWhenDifferentId() {
+        Expense e1 = new Expense(1, 500.0, LocalDate.now());
+        Expense e2 = new Expense(2, 500.0, LocalDate.now());
+        assertFalse(e1.equals(e2));
+    }
 }
