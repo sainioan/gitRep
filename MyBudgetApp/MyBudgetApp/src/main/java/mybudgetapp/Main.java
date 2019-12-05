@@ -5,7 +5,7 @@
  */
 package mybudgetapp;
 
-import MyBudget.ui.MyBudgetAppUI;
+import mybudget.MyBudgetAppUI;
 
 /**
  *

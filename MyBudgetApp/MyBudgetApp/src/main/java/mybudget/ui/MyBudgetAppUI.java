@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MyBudget.ui;
+package mybudget;
 
 //import mybudgetapp.dao.BudgetDao;
 import javafx.application.Application;

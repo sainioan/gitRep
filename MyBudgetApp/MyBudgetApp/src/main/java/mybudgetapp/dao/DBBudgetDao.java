@@ -45,7 +45,6 @@ public class DBBudgetDao implements BudgetDao {
         Statement stmt = null;
         try {
             Connection conn = db.connect();
-            System.out.println("testing " + conn);
             db = new MyBudgetDatabase(database);
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(selectStmt);
@@ -129,14 +128,14 @@ public class DBBudgetDao implements BudgetDao {
 //    }
         return categories;
     }
-
+    
     @Override
-
-    public List<MyBudget> getAll() {
+    
+    public List<MyBudget> getAll() throws SQLException  {
         return new ArrayList<MyBudget>();
 
 //         @Override
-//    public List<User> getAll() throws SQLException {
+//    public List<User> getAll()  {
 //        Connection con = db.connect();
 //        PreparedStatement stmt = con.prepareStatement(selectStmt);
 //        users = new ArrayList<>();
@@ -156,7 +155,7 @@ public class DBBudgetDao implements BudgetDao {
     }
 
     @Override
-    public MyBudget createBudget() throws Exception {
+    public MyBudget createBudget() throws SQLException {
 
         return new MyBudget(description, amount);
     }
