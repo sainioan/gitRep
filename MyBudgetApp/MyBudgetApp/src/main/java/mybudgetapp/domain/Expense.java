@@ -19,6 +19,7 @@ public class Expense {
     private double amount;
     private LocalDate date;
     private List<Expense> expenses;
+    private User user;
 
     public Expense() {
 
@@ -29,6 +30,22 @@ public class Expense {
         this.categoryId = categoryId;
         this.amount = amount;
         this.date = date;
+    }
+
+    public Expense(User user, double amount, LocalDate date) {
+
+        this.user = user;
+        this.categoryId = categoryId;
+        this.amount = amount;
+        this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Expense(int id, int categoryId, double amount, LocalDate date) {

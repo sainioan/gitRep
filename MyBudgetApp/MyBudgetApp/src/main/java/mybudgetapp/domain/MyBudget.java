@@ -38,6 +38,13 @@ public class MyBudget {
         this.date = date;
     }
 
+    public MyBudget(User user, String description, double amount, LocalDate date) {
+        this.user = user;
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+    }
+
     public String getDescription() {
         return description;
     }

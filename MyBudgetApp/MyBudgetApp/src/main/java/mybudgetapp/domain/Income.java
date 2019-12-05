@@ -18,6 +18,7 @@ public class Income {
     private double amount;
     private LocalDate date;
     private List<Income> totalIncome;
+    private User user;
 
     public Income() {
 
@@ -28,6 +29,12 @@ public class Income {
         this.amount = amount;
         this.date = date;
 
+    }
+
+    public Income(User user, double amount, LocalDate date) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
     }
 
     public Income(double amount, LocalDate date) {
@@ -42,6 +49,22 @@ public class Income {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Income> getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(List<Income> totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public double getAmount() {

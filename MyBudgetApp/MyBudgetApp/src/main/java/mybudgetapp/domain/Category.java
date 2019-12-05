@@ -15,6 +15,7 @@ public class Category {
 
     private int id;
     private String name;
+    private User user;
 
     public Category() {
 
@@ -28,6 +29,20 @@ public class Category {
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Category(User user, int id, String name) {
+        this.user = user;
+        this.id = id;
+        this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getId() {

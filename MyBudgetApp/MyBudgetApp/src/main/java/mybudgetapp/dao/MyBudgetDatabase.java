@@ -85,8 +85,10 @@ public class MyBudgetDatabase {
         try {
             Connection connection = connect();
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS category ("
-                    + "id INTEGER PRIMARY KEY, "
-                    + "name VARCHAR(100));"
+                    + "id INTEGER PRIMARY KEY,"
+                    + "user_username VARCHAR(100), "
+                    + "name VARCHAR(100),"
+                    + "FOREIGN KEY (user_username) REFERENCES user(username));"
             );
             createCategoryTable.execute();
             createCategoryTable.close();
@@ -124,9 +126,11 @@ public class MyBudgetDatabase {
 
             PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
                     + "id INTEGER PRIMARY KEY, "
+                    + "user_username VARCHAR(100),"
                     + "category_id INTEGER, "
                     + "amount float, "
                     + "time DATE,"
+                    + "FOREIGN KEY (user_username) REFERENCES User(username),"
                     + "FOREIGN KEY(category_id) REFERENCES category(id)"
                     + ");"
             );
@@ -145,8 +149,10 @@ public class MyBudgetDatabase {
 
             PreparedStatement createIncomeTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS income ("
                     + "id INTEGER PRIMARY KEY, "
+                    + "user_username VARCHAR(100),"
                     + "amount float, "
-                    + "time DATE"
+                    + "time DATE,"
+                    + "FOREIGN KEY (user_username) REFERENCES User(username)"
                     + ");"
             );
             createIncomeTable.execute();
@@ -164,8 +170,10 @@ public class MyBudgetDatabase {
 
             PreparedStatement createBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS balance ("
                     + "id INTEGER PRIMARY KEY,"
+                    + "user_username VARCHAR(100),"
                     + "amount float, "
-                    + "time DATE);"
+                    + "time DATE,"
+                    + "FOREIGN KEY (user_username) REFERENCES User(username));"
             );
             createBalanceTable.execute();
             createBalanceTable.close();

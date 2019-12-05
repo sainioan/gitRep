@@ -33,6 +33,36 @@ public class Balance {
         this.expenseTotal = expenseTotal;
     }
 
+    public Balance(User user, double incomeTotal, double expenseTotal) {
+        this.user = user;
+        this.incomeTotal = incomeTotal;
+        this.expenseTotal = expenseTotal;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Expense getE() {
+        return e;
+    }
+
+    public void setE(Expense e) {
+        this.e = e;
+    }
+
+    public Income getI() {
+        return i;
+    }
+
+    public void setI(Income i) {
+        this.i = i;
+    }
+
     public double getBalance() {
         return balance;
     }
