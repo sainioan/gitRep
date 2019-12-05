@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mybudget;
+package mybudget.ui;
 
 //import mybudgetapp.dao.BudgetDao;
 import javafx.application.Application;
@@ -39,7 +39,7 @@ import mybudgetapp.domain.MyBudgetService;
  */
 public class MyBudgetAppUI extends Application {
 
-    private Scene MyBudgetScene;
+    private Scene myBudgetScene;
     private Scene newUserScene;
     private Scene loginscene;
     private DBBudgetDao dbbudgetDao;
@@ -124,7 +124,7 @@ public class MyBudgetAppUI extends Application {
             this.username = usernameInput.getText();
             this.password = passwordInput.getText();
             if (mybudgetService.login(username, password)) {
-                primarystage.setScene(MyBudgetScene);
+                primarystage.setScene(myBudgetScene);
             } else {
 
                 loginMessage.setText("Incorrect username or password.");
@@ -160,7 +160,7 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(createErrorMsg, 3, 0);
         mybudgetPane.getChildren().addAll(mybudgetLayout);
         mybudgetLayout.setId("root");
-        MyBudgetScene = new Scene(mybudgetPane, 1000, 1500);
+        myBudgetScene = new Scene(mybudgetPane, 1000, 1500);
 // create new category
 
         signoutButton.setOnAction(e -> {
