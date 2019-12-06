@@ -58,7 +58,7 @@ public class MyBudgetAppUI extends Application {
     @Override
     public void init() throws Exception {
         MyBudgetDatabase database = new MyBudgetDatabase("mybudgetapp.db");
-        mybudgetService = new MyBudgetService(database);
+        mybudgetService = new MyBudgetService(database, username);
 
     }
 

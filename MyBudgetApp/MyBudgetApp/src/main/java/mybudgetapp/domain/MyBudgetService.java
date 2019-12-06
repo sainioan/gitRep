@@ -51,9 +51,16 @@ public class MyBudgetService {
         dbuserDao = new DBUserDao(mybDatabase);
         dbbudgetDao = new DBBudgetDao(mybDatabase);
         this.date = LocalDate.now();
-////       
-//        this.food = new Food(-1, "default");
-//        this.date = LocalDate.now();
+
+    }
+
+    public MyBudgetService(MyBudgetDatabase db, String username) throws SQLException {
+        this.username = loggedIn.getUsername();
+        this.mybDatabase = db;
+        this.mybDatabase.initializeDatabase();
+        dbuserDao = new DBUserDao(mybDatabase);
+        dbbudgetDao = new DBBudgetDao(mybDatabase);
+        this.date = LocalDate.now();
     }
 
     public MyBudgetService() {
