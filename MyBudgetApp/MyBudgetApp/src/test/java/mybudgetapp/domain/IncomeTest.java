@@ -37,7 +37,7 @@ public class IncomeTest {
     @Test
     public void constructorWorks() {
         try {
-            assertEquals(500.0, i.getAmount(), DELTA);
+            assertEquals(2500.0, i.getAmount(), DELTA);
             assertEquals(1, i.getId());
             assertEquals(LocalDate.now(), i.getDate());
         } catch (Throwable t) {

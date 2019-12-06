@@ -85,7 +85,7 @@ public class DBBudgetDao implements BudgetDao {
       
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT OR REPLACE INTO category (user_name, name) VALUES (?,?);"
+                    "INSERT OR REPLACE INTO category (categoryUser, name) VALUES (?,?);"
             );
             statement.setString(1, category.getUserName());
             statement.setString(2, category.getName());

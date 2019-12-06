@@ -39,7 +39,7 @@ public class MyBudgetDatabase {
     }
 
     public MyBudgetDatabase() throws SQLException {
-        this.dbName = "mybudgetapp.db";
+        this.dbName = "myBudget.db";
     }
 
     public Connection connect() throws SQLException {
@@ -86,9 +86,9 @@ public class MyBudgetDatabase {
             Connection connection = connect();
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS category ("
                     + "id INTEGER PRIMARY KEY,"
-                    + "user_username VARCHAR(100), "
+                    + "categoryUser varchar, "
                     + "name VARCHAR(100),"
-                    + "FOREIGN KEY (user_username) REFERENCES user(username));"
+                    + "FOREIGN KEY (categoryUser) REFERENCES user(username));"
             );
             createCategoryTable.execute();
             createCategoryTable.close();
