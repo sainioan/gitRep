@@ -161,14 +161,14 @@ public class MyBudgetAppUI extends Application {
         mybudgetPane.getChildren().addAll(mybudgetLayout);
         mybudgetLayout.setId("root");
         myBudgetScene = new Scene(mybudgetPane, 1000, 1500);
-// create new category
+
 
         signoutButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
 
         });
-
+// create new category
         createCategoryButton.setOnAction(e -> {
             if (newCategoryInput.getText().isEmpty()) {
 
@@ -178,7 +178,7 @@ public class MyBudgetAppUI extends Application {
             } else {
 
                 category = newCategoryInput.getText();
-                Category newCategory = new Category(category);
+                Category newCategory = new Category(this.username, category);
                 mybudgetService.createCategory(category);
                 createConfirmationMsg.setText("Category '" + category + "' created successfully");
                 createConfirmationMsg.setTextFill(Color.GREEN);

@@ -82,12 +82,13 @@ public class DBBudgetDao implements BudgetDao {
 
     public void saveCategory(Category category) throws Exception {
         Connection connection = db.connect();
-        System.out.println("category test " + connection);
+      
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT OR REPLACE INTO category (name) VALUES (?);"
+                    "INSERT OR REPLACE INTO category (user_name, name) VALUES (?,?);"
             );
-            statement.setString(1, category.getName());
+            statement.setString(1, category.getUserName());
+            statement.setString(2, category.getName());
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
