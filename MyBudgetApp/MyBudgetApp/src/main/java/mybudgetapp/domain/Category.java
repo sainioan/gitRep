@@ -16,6 +16,7 @@ public class Category {
     private int id;
     private String name;
     private User user;
+    private String username;
 
     public Category() {
 
@@ -31,17 +32,17 @@ public class Category {
         this.name = name;
     }
 
-    public Category(User user, int id, String name) {
-        this.user = user;
+    public Category(String username, int id, String name) {
+        this.username = username;
         this.id = id;
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return username;
     }
 
-    public void setUser(User user) {
+    public void setUserName(String username) {
         this.user = user;
     }
 

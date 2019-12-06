@@ -55,7 +55,7 @@ public class MyBudgetService {
     }
 
     public MyBudgetService(MyBudgetDatabase db, String username) throws SQLException {
-        this.username = loggedIn.getUsername();
+        this.username = username;
         this.mybDatabase = db;
         this.mybDatabase.initializeDatabase();
         dbuserDao = new DBUserDao(mybDatabase);
