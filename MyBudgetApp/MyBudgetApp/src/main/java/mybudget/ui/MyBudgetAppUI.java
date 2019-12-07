@@ -119,15 +119,15 @@ public class MyBudgetAppUI extends Application {
         //Adding BorderPane to the scene 
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
-            
+
             username = usernameInput.getText();
             password = passwordInput.getText();
 //
 //            checkUser = usernameInput.getText();
 //            checkPw = passwordInput.getText();
             if (mybudgetService.login(username, password)) {
-            user = mybudgetService.getLoggedUser();
-            primarystage.setScene(myBudgetScene);
+                user = mybudgetService.getLoggedUser();
+                primarystage.setScene(myBudgetScene);
             } else {
 
                 loginMessage.setText("Incorrect username or password.");
@@ -233,7 +233,7 @@ public class MyBudgetAppUI extends Application {
 
         });
 
-            backButton.setOnAction(e -> {
+        backButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
 

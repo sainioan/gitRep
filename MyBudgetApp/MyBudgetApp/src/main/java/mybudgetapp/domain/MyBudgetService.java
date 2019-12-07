@@ -99,7 +99,7 @@ public class MyBudgetService {
         }
 
         loggedIn = user;
-    //    System.out.println(user);
+        //    System.out.println(user);
         return true;
     }
 
@@ -114,7 +114,7 @@ public class MyBudgetService {
 
     public boolean createUser(String username, String password) {
         User user = new User(username, password);
-     //   System.out.println(user);
+        //   System.out.println(user);
         if (!user.validateUsername().isEmpty()) {
             return false;
         }
@@ -137,7 +137,7 @@ public class MyBudgetService {
     }
 
 //   The method here is not used!! comment on december 7
-   // public Boolean checkUsername(String username) {
+    // public Boolean checkUsername(String username) {
 //        this.username = username;
 //        try {
 //            if (validateUsernameInput(username) && dbuserDao.findOne(username.trim()) != null) {

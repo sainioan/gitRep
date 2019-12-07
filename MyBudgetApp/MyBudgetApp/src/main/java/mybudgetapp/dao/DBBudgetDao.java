@@ -27,7 +27,7 @@ import mybudgetapp.domain.User;
  * @author anniinasainio
  */
 public class DBBudgetDao implements BudgetDao {
-
+    
     private int id;
     private String description;
     private boolean done;
@@ -57,12 +57,12 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
+        
     }
-
+    
     public DBBudgetDao(String database) throws SQLException {
         Connection conn = db.connect();
-    
+        
         categories = new ArrayList<>();
         this.database = database;
         db = new MyBudgetDatabase(database);
@@ -80,10 +80,10 @@ public class DBBudgetDao implements BudgetDao {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void saveCategory(Category category) throws Exception {
         Connection connection = db.connect();
-      
+        
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT OR REPLACE INTO category (categoryUser, name) VALUES (?,?);"
@@ -133,7 +133,7 @@ public class DBBudgetDao implements BudgetDao {
     
     @Override
     
-    public List<MyBudget> getAll() throws SQLException  {
+    public List<MyBudget> getAll() throws SQLException {
         return new ArrayList<MyBudget>();
 
 //         @Override
@@ -155,17 +155,17 @@ public class DBBudgetDao implements BudgetDao {
 //        return users;
 //    }
     }
-
+    
     @Override
     public MyBudget createBudget() throws SQLException {
-
+        
         return new MyBudget(description, amount);
     }
-
+    
     public Category create(Category category) throws SQLException {
-
+        
         categories.add(category);
-
+        
         try {
             saveCategory(category);
         } catch (Exception e) {
@@ -173,5 +173,5 @@ public class DBBudgetDao implements BudgetDao {
         }
         return category;
     }
-
+    
 }
