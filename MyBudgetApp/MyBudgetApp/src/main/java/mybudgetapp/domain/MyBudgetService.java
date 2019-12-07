@@ -39,7 +39,6 @@ public class MyBudgetService {
     private MyBudgetDatabase mybDatabase;
     private DBBudgetDao dbbudgetDao;
     private DBUserDao dbuserDao;
-    // private UserDao userDao;
     private User loggedIn;
     private String username;
     private String password;
@@ -147,6 +146,25 @@ public class MyBudgetService {
 
     }
 
+    public ObservableList<String> createChoices() throws SQLException {
+        ObservableList<String> items = FXCollections.observableArrayList();
+        List<Category> categories = dbbudgetDao.getAllCategories(loggedIn);
+        ArrayList<String> categorynames = new ArrayList<>();
+       
+        for (Category c : categories) {
+            String name = c.getName();
+            categorynames.add(name);
+        }
+        for (String s : categorynames) {
+            items.add(s.trim());
+        }
+        System.out.println(categories);
+        items.add("create new");
+        System.out.println(items);
+        return items;
+
+    }
+
 //   The method here is not used!! comment on december 7
     // public Boolean checkUsername(String username) {
 //        this.username = username;
@@ -159,7 +177,6 @@ public class MyBudgetService {
 //        }
 //        return false;
 //    }
-//
     public Boolean validateUsernameInput(String username) {
         return ((username != null) && username.matches("[A-Za-z0-9_]+") && username.length() >= 5);
     }

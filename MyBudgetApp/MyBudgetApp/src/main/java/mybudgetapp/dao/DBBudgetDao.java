@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -28,7 +29,7 @@ import mybudgetapp.domain.User;
  * @author anniinasainio
  */
 public class DBBudgetDao implements BudgetDao {
-    
+
     private int id;
     private String description;
     private boolean done;
@@ -37,9 +38,7 @@ public class DBBudgetDao implements BudgetDao {
     private String database;
     private List<Category> categories;
     private List<Expense> expenses;
-    String selectStmt = "SELECT*FROM category";
 
-    //private User user;
     public DBBudgetDao(MyBudgetDatabase db) {
         this.db = db;
         categories = new ArrayList<>();
@@ -49,7 +48,7 @@ public class DBBudgetDao implements BudgetDao {
             Connection conn = db.connect();
             db = new MyBudgetDatabase(database);
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectStmt);
+            ResultSet rs = stmt.executeQuery("Select*FROM category");
             while (rs.next()) {
                 Category category = new Category();
                 category.setUserName(rs.getString("categoryUser"));
@@ -59,12 +58,12 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
-    
+
     public DBBudgetDao(String database) throws SQLException {
         Connection conn = db.connect();
-        
+
         categories = new ArrayList<>();
         this.database = database;
         db = new MyBudgetDatabase(database);
@@ -72,7 +71,7 @@ public class DBBudgetDao implements BudgetDao {
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectStmt);
+            ResultSet rs = stmt.executeQuery("Select*From category");
             while (rs.next()) {
                 Category category = new Category();
                 category.setUserName(rs.getString("categoryUser"));
@@ -83,10 +82,10 @@ public class DBBudgetDao implements BudgetDao {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void saveCategory(Category category) throws SQLException, Exception {
         Connection connection = db.connect();
-        
+
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT OR REPLACE INTO category (categoryUser, name) VALUES (?,?);"
@@ -99,10 +98,11 @@ public class DBBudgetDao implements BudgetDao {
             System.out.println(e.getMessage());
         }
     }
+
     public void saveExpense(Expense expense) throws SQLException, Exception {
 
         Connection connection = db.connect();
-        
+
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT OR REPLACE INTO expense (user_username, category_name, amount, time) VALUES (?,?,?,?);"
@@ -111,7 +111,7 @@ public class DBBudgetDao implements BudgetDao {
             statement.setString(2, expense.getCategoryName());
             statement.setDouble(3, expense.getAmount());
             statement.setDate(4, Date.valueOf(expense.getDate()));
-            
+
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -133,61 +133,49 @@ public class DBBudgetDao implements BudgetDao {
 //        }
 //    }
 
-    public List<Category> getAllCategories() throws SQLException {
+    public List<Category> getAllCategories(User user) throws SQLException {
+        try{
         Connection con = db.connect();
-        String sql = "SELECT*FROM category";
-//        PreparedStatement stmt = con.prepareStatement("sql");
-//        categories = new ArrayList<>();
+        String sql = "SELECT*FROM category where user = ?";
+        String categoryUser = user.getUsername();
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setString(1, categoryUser);
+        ResultSet rs = stmt.executeQuery();
+        categories = new ArrayList<>();
+        while (rs.next()) {
+            Category category = new Category(rs.getString("categoryUser").trim(), rs.getString("name"));
+            category.setId(rs.getInt("id"));
+            categories.add(category);
 
-//        ResultSet rs = stmt.executeQuery();
-//        while (rs.next()) {
-//            Category category = new Category(rs.getString("name"));
-//            user.setName(rs.getString("name"));
-//            categories.add(category);
-//        }
-//        stmt.close();
-//        rs.close();
-//        con.close();
-//        return users;
-//    }
-        return categories;
-    }
-    
-    @Override
-    
-    public List<MyBudget> getAll() throws SQLException {
+            stmt.close();
+            rs.close();
+            con.close();
+        }
+        } catch (Throwable t){
+            System.out.println(t.getMessage());
+        }
+
+    System.out.println (categories.toString
+    ());
+    return categories ;
+}
+
+@Override
+        public List<MyBudget> getAll() throws SQLException {
         return new ArrayList<MyBudget>();
 
-//         @Override
-//    public List<User> getAll()  {
-//        Connection con = db.connect();
-//        PreparedStatement stmt = con.prepareStatement(selectStmt);
-//        users = new ArrayList<>();
-//
-//        ResultSet rs = stmt.executeQuery();
-//        while (rs.next()) {
-//            User user = new User(rs.getString("username"), rs.getString("password"));
-//            user.setUsername(rs.getString("userBudget"));
-//            user.setPassword(rs.getString("password"));
-//            users.add(user);
-//        }
-//        stmt.close();
-//        rs.close();
-//        con.close();
-//        return users;
-//    }
     }
-    
+
     @Override
-    public MyBudget createBudget() throws SQLException {
-        
+        public MyBudget createBudget() throws SQLException {
+
         return new MyBudget(description, amount);
     }
-    
+
     public Category create(Category category) throws SQLException {
-        
+
         categories.add(category);
-        
+         
         try {
             saveCategory(category);
         } catch (Exception e) {
@@ -196,9 +184,9 @@ public class DBBudgetDao implements BudgetDao {
         return category;
     }
     public Expense create(Expense expense) throws SQLException {
-        
+
         expenses.add(expense);
-        
+
         try {
             saveExpense(expense);
         } catch (Exception e) {
@@ -206,5 +194,5 @@ public class DBBudgetDao implements BudgetDao {
         }
         return expense;
     }
-    
+
 }

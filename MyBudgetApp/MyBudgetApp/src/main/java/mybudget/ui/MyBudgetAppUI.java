@@ -158,6 +158,7 @@ public class MyBudgetAppUI extends Application {
         TextField newExpenseInput = new TextField();
         GridPane mybudgetLayout = new GridPane();
         chooseCategory.setPromptText("Choose category");
+        chooseCategory.setItems(mybudgetService.createChoices());
         mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
         mybudgetLayout.setHgap(5);
         mybudgetLayout.setVgap(5);;
