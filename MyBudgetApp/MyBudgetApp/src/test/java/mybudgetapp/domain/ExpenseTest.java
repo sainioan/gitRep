@@ -36,6 +36,7 @@ public class ExpenseTest {
 
     @Test
     public void constructorWorks() {
+        e.setId(1);
         try {
             assertEquals(500.0, e.getAmount(), DELTA);
             assertEquals(1, e.getId());

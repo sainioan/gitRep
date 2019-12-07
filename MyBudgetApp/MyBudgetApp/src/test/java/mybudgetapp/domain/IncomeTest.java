@@ -27,7 +27,7 @@ public class IncomeTest {
 
     @Before
     public void setUp() {
-        i = new Income(2500.0, LocalDate.now());
+        i = new Income(1, 2500.0, LocalDate.now());
     }
 
     @After

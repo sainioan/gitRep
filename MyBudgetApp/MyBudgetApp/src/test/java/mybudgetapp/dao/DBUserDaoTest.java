@@ -33,14 +33,12 @@ public class DBUserDaoTest {
     @Before
     public void setUp() throws SQLException, Exception {
 
+        db = new MyBudgetDatabase("jdbc:sqlite:test.db");
         db.initializeDatabase();
         dao = new DBUserDao(db);
-        db = new MyBudgetDatabase("jdbc:sqlite:test.db");
         db.initializeDatabase();;
         dao = new DBUserDao(db);
         user = new User("tester", "password123");
-        dao.saveUser(user);
-        users.add(user);
     }
 
     @After
@@ -52,17 +50,29 @@ public class DBUserDaoTest {
         stmt.close();
         connection.close();
     }
-//    @Test
-//    public void findByUsernameReturnsUser() throws Exception, NullPointerException {
-//        try{
-//        User newUser = new User("tester", "abc123");
-//        dao.create(newUser);
-//        users.add(newUser);
-//        User user = dao.findByUsername("tester");
-//        assertEquals("tester", newUser.getUsername());
-//        assertEquals("abc123", newUser.getPassword());
-//        } catch (Throwable t){
-//            System.out.println(t.getMessage());
-//        }
-//    }
+    @Test
+    public void findByUsernameReturnsUser() throws Exception, NullPointerException {
+        try{
+        User newUser = new User("tester", "abc123");
+        dao.create(newUser);
+        users.add(newUser);
+        newUser = dao.findByUsername("tester");
+        assertEquals("tester", newUser.getUsername());
+        assertEquals("abc123", newUser.getPassword());
+        } catch (Throwable t){
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void create_Works() throws SQLException, Exception {
+        //user.setUsername("tester");
+        try {
+            dao.saveUser(user);
+            dao.create(user);
+            assertEquals("tester", user.getUsername());
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
 }

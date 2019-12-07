@@ -37,10 +37,11 @@ public class MyBudgetTest {
 
     @Test
     public void constructorWorks() {
+        mb.setId(1);
         try {
             assertEquals(1000.0, mb.getAmount(), DELTA);
             assertEquals(1, mb.getId());
-            assertEquals("barbaros", mb.getDescription());
+            assertEquals("barbados", mb.getDescription());
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
