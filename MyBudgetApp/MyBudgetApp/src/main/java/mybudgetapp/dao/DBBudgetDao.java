@@ -50,6 +50,7 @@ public class DBBudgetDao implements BudgetDao {
             ResultSet rs = stmt.executeQuery(selectStmt);
             while (rs.next()) {
                 Category category = new Category();
+                category.setUserName(rs.getString("categoryUser"));
                 category.setName(rs.getString("name"));
                 categories.add(category);
             }

@@ -52,6 +52,7 @@ public class MyBudgetAppUI extends Application {
     private String usernameSU;
     private String passwordSU;
     private String category;
+    private User user;
 
     String checkUser, checkPw;
 
@@ -118,13 +119,15 @@ public class MyBudgetAppUI extends Application {
         //Adding BorderPane to the scene 
         loginscene = new Scene(bp);
         loginButton.setOnAction(e -> {
-
-            checkUser = usernameInput.getText();
-            checkPw = passwordInput.getText();
-            this.username = usernameInput.getText();
-            this.password = passwordInput.getText();
+            
+            username = usernameInput.getText();
+            password = passwordInput.getText();
+//
+//            checkUser = usernameInput.getText();
+//            checkPw = passwordInput.getText();
             if (mybudgetService.login(username, password)) {
-                primarystage.setScene(myBudgetScene);
+            user = mybudgetService.getLoggedUser();
+            primarystage.setScene(myBudgetScene);
             } else {
 
                 loginMessage.setText("Incorrect username or password.");
@@ -162,7 +165,6 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.setId("root");
         myBudgetScene = new Scene(mybudgetPane, 1000, 1500);
 
-
         signoutButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
@@ -178,17 +180,13 @@ public class MyBudgetAppUI extends Application {
             } else {
 
                 category = newCategoryInput.getText();
-                Category newCategory = new Category(this.username, category);
-                mybudgetService.createCategory(category);
+                mybudgetService.createCategory(user.getUsername(), category);
                 createConfirmationMsg.setText("Category '" + category + "' created successfully");
                 createConfirmationMsg.setTextFill(Color.GREEN);
                 newCategoryInput.setText("");
 
             }
         });
-        // } catch (Exception e) {
-        //      System.out.println(e.getMessage());
-        //   }
         // new user scene  
 
         VBox newUserPane = new VBox(10);
@@ -235,8 +233,7 @@ public class MyBudgetAppUI extends Application {
 
         });
 
-        // This code doesn't work:... scene.getStylesheets().add(getClass().getClassLoader().getResource("login.CSS.css").toExternalForm());
-        backButton.setOnAction(e -> {
+            backButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
 

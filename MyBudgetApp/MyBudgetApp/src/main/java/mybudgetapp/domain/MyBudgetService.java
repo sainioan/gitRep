@@ -70,8 +70,8 @@ public class MyBudgetService {
 
     }
 
-    public boolean createCategory(String description) {
-        Category category = new Category(description);
+    public boolean createCategory(String username, String description) {
+        Category category = new Category(username, description);
         try {
             dbbudgetDao.create(category);
         } catch (Exception e) {
@@ -99,11 +99,12 @@ public class MyBudgetService {
         }
 
         loggedIn = user;
-
+    //    System.out.println(user);
         return true;
     }
 
     public User getLoggedUser() {
+        System.out.println(loggedIn);
         return loggedIn;
     }
 
@@ -113,6 +114,7 @@ public class MyBudgetService {
 
     public boolean createUser(String username, String password) {
         User user = new User(username, password);
+     //   System.out.println(user);
         if (!user.validateUsername().isEmpty()) {
             return false;
         }
@@ -134,18 +136,19 @@ public class MyBudgetService {
 
     }
 
-    public Boolean checkUsername(String username) {
-        this.username = username;
-        try {
-            if (validateUsernameInput(username) && dbuserDao.findOne(username.trim()) != null) {
-                return true;
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
+//   The method here is not used!! comment on december 7
+   // public Boolean checkUsername(String username) {
+//        this.username = username;
+//        try {
+//            if (validateUsernameInput(username) && dbuserDao.findOne(username.trim()) != null) {
+//                return true;
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
+//    }
+//
     public Boolean validateUsernameInput(String username) {
         return ((username != null) && username.matches("[A-Za-z0-9_]+") && username.length() >= 5);
     }
