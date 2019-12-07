@@ -20,7 +20,7 @@
 | 1.12.|   3  |graafisen käyttöliittymän editointia, category taulun aktivoimisyritys, debuggausta|
 | 2.12.|   3  |gui editointia, category taulun aktivoiminen onnistuneesti, checkstyle.xml, testejä |
 | 6.12.|   1  |javafx opiskelua ja testailua|
-| 7.12.|   3  |MyBudgetScene koodaamista.|
+| 7.12.|   3  |MyBudgetScenen koodaamista, testien lisaamista, categoriat listalle|
 
 
 
