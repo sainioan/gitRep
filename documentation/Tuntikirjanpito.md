@@ -19,6 +19,8 @@
 | 29.11.|   3  |debuggausta ja daon siistimistä|
 | 1.12.|   3  |graafisen käyttöliittymän editointia, category taulun aktivoimisyritys, debuggausta|
 | 2.12.|   3  |gui editointia, category taulun aktivoiminen onnistuneesti, checkstyle.xml, testejä |
+| 6.12.|   1  |javafx opiskelua ja testailua|
+| 7.12.|   3  |MyBudgetScene koodaamista.|
 
 
 
