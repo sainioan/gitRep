@@ -15,44 +15,36 @@ import java.util.*;
 public class Expense {
 
     private int id;
-    private int categoryId;
+    private String categoryName;
     private double amount;
     private LocalDate date;
     private List<Expense> expenses;
-    private User user;
+    private String userName;
 
     public Expense() {
 
     }
 
-    public Expense(int categoryId, double amount, LocalDate date) {
+    public Expense(double amount, LocalDate date) {
 
-        this.categoryId = categoryId;
         this.amount = amount;
         this.date = date;
     }
 
-    public Expense(User user, double amount, LocalDate date) {
+    public Expense(String user, String categoryName, double amount, LocalDate date) {
 
-        this.user = user;
-        this.categoryId = categoryId;
+        this.userName = user;
+        this.categoryName = categoryName;
         this.amount = amount;
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Expense(int id, int categoryId, double amount, LocalDate date) {
-        this.id = id;
-        this.categoryId = categoryId;
-        this.amount = amount;
-        this.date = date;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getId() {
@@ -63,12 +55,12 @@ public class Expense {
         this.id = id;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public double getAmount() {
@@ -88,7 +80,7 @@ public class Expense {
     }
 
     public List<Expense> getExpenses() {
-        Expense e = new Expense(getCategoryId(), getAmount(), getDate());
+        Expense e = new Expense(getUserName(), getCategoryName(), getAmount(), getDate());
         expenses.add(e);
         return expenses;
     }

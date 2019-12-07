@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -23,13 +24,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.time.LocalDate;
+import javafx.scene.control.ComboBox;
 import mybudgetapp.dao.MyBudgetDatabase;
-//import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.DBBudgetDao;
-import mybudgetapp.domain.Category;
-//import mybudgetapp.domain.Expense;
-//import mybudgetapp.domain.Income;
 import mybudgetapp.domain.User;
 import mybudgetapp.domain.MyBudgetService;
 
@@ -53,14 +52,18 @@ public class MyBudgetAppUI extends Application {
     private String passwordSU;
     private String category;
     private User user;
-
-    String checkUser, checkPw;
+    private  DatePicker dateFieldExpense = new DatePicker();
+    private  DatePicker dateFieldIncome = new DatePicker();
+    private ComboBox chooseCategory = new ComboBox();
 
     @Override
     public void init() throws Exception {
         MyBudgetDatabase database = new MyBudgetDatabase("mybudgetapp.db");
         mybudgetService = new MyBudgetService(database, username);
 
+    }
+    public void createNewUserScene(){
+        
     }
 
     @Override
@@ -122,12 +125,12 @@ public class MyBudgetAppUI extends Application {
 
             username = usernameInput.getText();
             password = passwordInput.getText();
-//
-//            checkUser = usernameInput.getText();
-//            checkPw = passwordInput.getText();
+
             if (mybudgetService.login(username, password)) {
                 user = mybudgetService.getLoggedUser();
                 primarystage.setScene(myBudgetScene);
+                usernameInput.setText("");
+                passwordInput.setText("");
             } else {
 
                 loginMessage.setText("Incorrect username or password.");
@@ -137,40 +140,54 @@ public class MyBudgetAppUI extends Application {
         });
 
         // main scene
-        // try {
         BorderPane bpMain = new BorderPane();
         bpMain.setPadding(new Insets(10, 50, 50, 50));
         VBox mybudgetPane = new VBox(10);
 
         Label welcome = new Label("Welcome to MyBudgetApp!");
+        welcome.setFont(Font.font("Courier New", FontWeight.BOLD, 24));
         Label createErrorMsg = new Label();
         Label createConfirmationMsg = new Label();
+        Label categoryLabel = new Label("New category");
+        Label expenseLabel = new Label("New expense: Add amount.");
+        Label expenseDate = new Label("Pick expense date");
         Button signoutButton = new Button("Sign out");
-        Button createCategoryButton = new Button("Save expense category");
-
+        Button createCategoryButton = new Button("Save category");
+        Button createExpenseButton = new Button("Save expense");
         TextField newCategoryInput = new TextField();
-
+        TextField newExpenseInput = new TextField();
         GridPane mybudgetLayout = new GridPane();
+        chooseCategory.setPromptText("Choose category");
         mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
         mybudgetLayout.setHgap(5);
         mybudgetLayout.setVgap(5);;
 
         mybudgetLayout.add(welcome, 0, 0);
-        mybudgetLayout.add(signoutButton, 2, 0);
-        mybudgetLayout.add(newCategoryInput, 2, 2);
-        mybudgetLayout.add(createCategoryButton, 0, 2);
-        mybudgetLayout.add(createConfirmationMsg, 0, 3);
+        mybudgetLayout.add(categoryLabel, 0, 1);
+        mybudgetLayout.add(chooseCategory, 0, 2);
+        mybudgetLayout.add(newCategoryInput, 0, 3);
+        mybudgetLayout.add(createCategoryButton, 0, 4);
+        mybudgetLayout.add(createConfirmationMsg, 0, 5);
+        mybudgetLayout.add(signoutButton, 10, 0);
+        mybudgetLayout.add(expenseLabel, 4,1);
+        mybudgetLayout.add(expenseDate, 4, 3);
+        mybudgetLayout.add(newExpenseInput, 4, 2);
+        mybudgetLayout.add(dateFieldExpense, 4,4);
+        mybudgetLayout.add(createExpenseButton, 4, 5);
+       
+        
         mybudgetLayout.add(createErrorMsg, 3, 0);
         mybudgetPane.getChildren().addAll(mybudgetLayout);
         mybudgetLayout.setId("root");
         myBudgetScene = new Scene(mybudgetPane, 1000, 1500);
 
+        // signout buttons returns login view
         signoutButton.setOnAction(e -> {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
 
         });
-// create new category
+// create a new category
         createCategoryButton.setOnAction(e -> {
             if (newCategoryInput.getText().isEmpty()) {
 
@@ -188,7 +205,11 @@ public class MyBudgetAppUI extends Application {
             }
         });
         // new user scene  
-
+  // create a new expense
+  // createExpenseButton.setOnAction(e -> { 
+  //String amountString = TextField.getString();
+  //double d = Double.parseDouble(amountString); 
+  // });
         VBox newUserPane = new VBox(10);
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));

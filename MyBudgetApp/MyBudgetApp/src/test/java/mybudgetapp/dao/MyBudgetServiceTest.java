@@ -65,9 +65,20 @@ public class MyBudgetServiceTest {
 
         assertEquals(null, mbs.getLoggedUser());
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void getLoggedUserReturnsLogged() throws SQLException, Exception {
+        try{
+        dbuser.saveUser(testuser);
+        mbs.createUser("testUser", "TU123");
+       
+        assertEquals("testUser", mbs.getLoggedUser().getUsername());
+        } catch (Throwable t){
+            System.out.println(t.getMessage());
+        }
+    }
+    @Test
+    public void loginReturnsFalseIfUserNull() throws SQLException {
+        assertEquals(false,  mbs.login("fakeuser","fakeid"));
+    }
+
 }

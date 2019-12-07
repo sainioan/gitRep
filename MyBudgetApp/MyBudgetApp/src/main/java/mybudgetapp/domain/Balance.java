@@ -23,10 +23,6 @@ public class Balance {
     private Income i;
     private LocalDate date;
 
-    public Balance() {
-
-    }
-
     public Balance(double incomeTotal, double expenseTotal) {
 
         this.incomeTotal = incomeTotal;
@@ -47,19 +43,19 @@ public class Balance {
         this.user = user;
     }
 
-    public Expense getE() {
+    public Expense getExp() {
         return e;
     }
 
-    public void setE(Expense e) {
+    public void setExp(Expense e) {
         this.e = e;
     }
 
-    public Income getI() {
+    public Income getInc() {
         return i;
     }
 
-    public void setI(Income i) {
+    public void setInc(Income i) {
         this.i = i;
     }
 

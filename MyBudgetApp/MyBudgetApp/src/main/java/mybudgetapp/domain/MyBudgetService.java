@@ -81,7 +81,19 @@ public class MyBudgetService {
         return true;
     }
 
+    public boolean createExpense(String username, String category, double amount, LocalDate date) {
+        Expense expense = new Expense(username, category, amount, date);
+
+        try {
+            dbbudgetDao.create(expense);
+        } catch (Exception ex) {
+            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
 //content = some description of the budget
+
     public boolean createBudget(String content, double amount) {
         MyBudget mb = new MyBudget(content, amount);
         try {
@@ -114,7 +126,6 @@ public class MyBudgetService {
 
     public boolean createUser(String username, String password) {
         User user = new User(username, password);
-        //   System.out.println(user);
         if (!user.validateUsername().isEmpty()) {
             return false;
         }

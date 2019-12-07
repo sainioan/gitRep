@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mybudgetapp.domain.Balance;
 import mybudgetapp.domain.Category;
+import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.MyBudget;
 import mybudgetapp.domain.User;
 
@@ -35,6 +36,7 @@ public class DBBudgetDao implements BudgetDao {
     private double amount;
     private String database;
     private List<Category> categories;
+    private List<Expense> expenses;
     String selectStmt = "SELECT*FROM category";
 
     //private User user;
@@ -73,6 +75,7 @@ public class DBBudgetDao implements BudgetDao {
             ResultSet rs = stmt.executeQuery(selectStmt);
             while (rs.next()) {
                 Category category = new Category();
+                category.setUserName(rs.getString("categoryUser"));
                 category.setName(rs.getString("name"));
                 categories.add(category);
             }
@@ -81,7 +84,7 @@ public class DBBudgetDao implements BudgetDao {
         }
     }
     
-    public void saveCategory(Category category) throws Exception {
+    public void saveCategory(Category category) throws SQLException, Exception {
         Connection connection = db.connect();
         
         try {
@@ -90,6 +93,25 @@ public class DBBudgetDao implements BudgetDao {
             );
             statement.setString(1, category.getUserName());
             statement.setString(2, category.getName());
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void saveExpense(Expense expense) throws SQLException, Exception {
+
+        Connection connection = db.connect();
+        
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT OR REPLACE INTO expense (user_username, category_name, amount, time) VALUES (?,?,?,?);"
+            );
+            statement.setString(1, expense.getUserName());
+            statement.setString(2, expense.getCategoryName());
+            statement.setDouble(3, expense.getAmount());
+            statement.setDate(4, Date.valueOf(expense.getDate()));
+            
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -172,6 +194,17 @@ public class DBBudgetDao implements BudgetDao {
             System.out.println(e.getMessage());
         }
         return category;
+    }
+    public Expense create(Expense expense) throws SQLException {
+        
+        expenses.add(expense);
+        
+        try {
+            saveExpense(expense);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return expense;
     }
     
 }

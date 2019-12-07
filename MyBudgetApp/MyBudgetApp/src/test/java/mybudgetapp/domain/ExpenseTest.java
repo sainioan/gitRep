@@ -31,7 +31,7 @@ public class ExpenseTest {
 
     @Before
     public void setUp() {
-        e = new Expense(1, 500.0, LocalDate.now());
+        e = new Expense("tester", "vacation", 500.0, LocalDate.now());
     }
 
     @Test
@@ -60,8 +60,8 @@ public class ExpenseTest {
 
     public void equalWhenSameId() {
         try {
-            Expense e1 = new Expense(1, 500.0, LocalDate.now());
-            Expense e2 = new Expense(1, 500.0, LocalDate.now());
+            Expense e1 = new Expense("tester", "vacation", 500.0, LocalDate.now());
+            Expense e2 = new Expense("tester", "vacation", 500.0, LocalDate.now());
             assertTrue(e1.equals(e2));
         } catch (Throwable t) {
             System.out.println(t.getMessage());
@@ -70,8 +70,8 @@ public class ExpenseTest {
 
     @Test
     public void notEqualWhenDifferentId() {
-        Expense e1 = new Expense(1, 500.0, LocalDate.now());
-        Expense e2 = new Expense(2, 500.0, LocalDate.now());
+        Expense e1 = new Expense("tester", "vacation", 500.0, LocalDate.now());
+        Expense e2 = new Expense("differentTester", "groceries", 1000.0, LocalDate.now());
         assertFalse(e1.equals(e2));
     }
 }
