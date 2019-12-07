@@ -38,7 +38,7 @@
                 <version>0.8.3</version>
                 <configuration>
                     <excludes>
-                        <exclude>myubdget/ui/*</exclude>
+                        <exclude>mybudget/ui/*</exclude>
                         <exclude>mybudgetapp/Main/*</exclude>
                     </excludes>
                 </configuration> 
