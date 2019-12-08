@@ -104,7 +104,7 @@ public class MyBudgetService {
         Income income = new Income(username, amount, date);
 
         try {
-        dbbudgetDao.create(income);
+            dbbudgetDao.create(income);
         } catch (SQLException ex) {
             System.out.println("createIncome error message is..." + ex.getMessage());
             Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,17 +112,6 @@ public class MyBudgetService {
         }
         return true;
     }
-//content = some description of the budget
-
-//    public boolean createBudget(String content, double amount) {
-//        MyBudget mb = new MyBudget(content, amount);
-//        try {
-//            dbbudgetDao.createBudget();
-//        } catch (Exception ex) {
-//            return false;
-//        }
-//        return true;
-//    }
 
     public boolean login(String username, String password) {
         User user = dbuserDao.findByUsername(username);

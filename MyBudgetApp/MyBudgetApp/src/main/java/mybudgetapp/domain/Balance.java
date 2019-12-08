@@ -16,9 +16,10 @@ public class Balance {
 
     private double balance;
     private int id;
+    private double amount;
     private double incomeTotal;
     private double expenseTotal;
-    private User user;
+    private String username;
     private Expense e;
     private Income i;
     private LocalDate date;
@@ -29,18 +30,23 @@ public class Balance {
         this.expenseTotal = expenseTotal;
     }
 
-    public Balance(User user, double incomeTotal, double expenseTotal) {
-        this.user = user;
-        this.incomeTotal = incomeTotal;
-        this.expenseTotal = expenseTotal;
+    public Balance(String username, LocalDate date) {
+        this.username = username;
+        this.date = date;
     }
 
-    public User getUser() {
-        return user;
+    public Balance(String username, double amount, LocalDate date) {
+        this.username = username;
+        this.amount = getBalance();
+        this.date = date;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Expense getExp() {
@@ -63,9 +69,9 @@ public class Balance {
         return balance;
     }
 
-    public void setBalance() {
-
-        this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();
+    public void setBalance(double b) {
+        this.balance = b;
+        //this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();
 
     }
 
@@ -97,18 +103,9 @@ public class Balance {
         this.expenseTotal = expenseTotal;
     }
 
-    public Balance(int id) {
-        this.id = id;
-    }
-
-    public Balance(int id, double incomeTotal, double expenseTotal) {
-        this.id = id;
-        this.incomeTotal = incomeTotal;
-        this.expenseTotal = expenseTotal;
-    }
-
-    public Balance(double balance) {
-        this.balance = balance;
+    @Override
+    public String toString() {
+        return this.username + ": (Balance): " + this.balance + " on " + this.date;
     }
 
 }

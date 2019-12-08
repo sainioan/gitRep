@@ -5,6 +5,7 @@
  */
 package mybudgetapp.domain;
 
+import java.time.LocalDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,27 +15,33 @@ import static org.junit.Assert.*;
 
 public class BalanceTest {
 
-    Balance balance;
-    Income i;
-    Expense e;
+    Balance balance = new Balance("testUser", 2500.0, LocalDate.now());
+    Income i = new Income("Bella", 2500.0, LocalDate.now());
+    Expense e = new Expense("Goofy", "vacation", 0.0, LocalDate.now());
     private static final double DELTA = 1e-15;
-
+    User user = new User("tester", "alphabeta");
+    LocalDate date = LocalDate.now();
     @Before
     public void setUp() {
-        balance = new Balance(2500.0);
+        String username = user.getUsername();
+        balance = new Balance(username, 2500.0, date);
     }
 
     @Test
 
-    public void getBalaceWorks() {
-
+    public void getBalanceWorks() throws Exception {
+        try{
+    balance.setBalance(2500.0);
         assertEquals(2500.0, balance.getBalance(), DELTA);
+        } catch (Exception ex){
+            System.out.println("getBalanceWorkTest fail ..." + ex.getMessage());
+        }
     }
 
     public void equalWhenSameId() {
         try {
-            Balance b1 = new Balance(1, 0.0, DELTA);
-            Balance b2 = new Balance(1, 0.0, DELTA);
+            Balance b1 = new Balance("Ballerina", 2500.0, LocalDate.now());
+            Balance b2 = new Balance("Ballerina", 2500.0, LocalDate.now());
             assertTrue(b1.equals(b2));
         } catch (Throwable t) {
             System.out.println(t.getMessage());
@@ -42,8 +49,8 @@ public class BalanceTest {
     }
     @Test
     public void notEqualWhenDifferentId() {
-        Balance b1 = new Balance(1, 0.0, DELTA);
-        Balance b2 = new Balance(2, 1000000.0, DELTA);
+        Balance b1 = new Balance("Ballerina", 2500.0, LocalDate.now());
+        Balance b2 = new Balance("Ballerina", 2500.0, LocalDate.now());
         assertFalse(b1.equals(b2));
     }
     @Test

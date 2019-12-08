@@ -133,9 +133,10 @@ public class DBBudgetDao implements BudgetDao {
 //        System.out.println("Balance test" + connection);
 //        try {
 //            PreparedStatement statement = connection.prepareStatement(
-//                    "INSERT OR REPLACE INTO Balance (name) VALUES (?);"
+//                    "INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);"
 //            );
-//            statement.setFloat(1, balance.getAmount());
+           // statement.setString(1, balance.get   
+//            statement.setFloat(2, balance.getAmount());
 //            statement.executeUpdate();
 //            statement.close();
 //        } catch (Exception e) {
