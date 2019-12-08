@@ -20,12 +20,10 @@ Individuals, who have a user account, can sign in with their username and passwo
 
 ### After Login
 * User can logout. -- done
-* User can create daily, monthy, or annual budgets.
-* The user should be able to add income.
-* The user should be able to add his/her expenses against different categories such as groceries, gas, clothing, medical, etc.
+* The user should be able to add income.--done
+* The user should be able to add his/her expenses against different categories such as groceries, gas, medical, etc. -- done
 * The user should be able to add new categories of expenses. -- done
 * The user should be able remove old categories of expenses.
-* The user should be able to create/edit/remove budgets.
 * The user should be able to remove his/her account.
 * The user should be able to view his/her balance.
 * The user should be able to view financial statistics (if time).
