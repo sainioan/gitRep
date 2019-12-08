@@ -92,4 +92,9 @@ public class Expense {
         }
         return total;
     }
+
+    @Override
+    public String toString() {
+        return this.userName + ": (Expense catetegory): " + this.categoryName + ", (Amount): " + this.amount + ", (Date): " + this.date;
+    }
 }
