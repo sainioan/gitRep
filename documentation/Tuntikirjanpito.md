@@ -21,6 +21,7 @@
 | 2.12.|   3  |gui editointia, category taulun aktivoiminen onnistuneesti, checkstyle.xml, testejä |
 | 6.12.|   1  |javafx opiskelua ja testailua|
 | 7.12.|   3  |MyBudgetScenen koodaamista, testien lisaamista, uusien metodien luomista|
+|8.12.|    5 |MyBudgetScenen koodaamista (datepicker), income ja expense tietokantataulujen aktivointi, editointia|
 
 
 
