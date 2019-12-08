@@ -85,7 +85,8 @@ public class MyBudgetService {
 
         try {
             dbbudgetDao.create(expense);
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
+            System.out.println("createExpense  message is..." + ex.getMessage());
             Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

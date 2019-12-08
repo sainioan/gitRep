@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import mybudgetapp.domain.User;
 import org.junit.After;
@@ -28,7 +29,7 @@ public class DBUserDaoTest {
     User user;
     DBUserDao dao;
     MyBudgetDatabase db;
-    List<User> users;
+    List<User> users = new ArrayList<>();
 
     @Before
     public void setUp() throws SQLException, Exception {

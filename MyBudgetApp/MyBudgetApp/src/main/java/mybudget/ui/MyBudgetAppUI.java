@@ -25,6 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ComboBox;
 import mybudgetapp.dao.MyBudgetDatabase;
 import mybudgetapp.dao.DBUserDao;
@@ -52,9 +54,10 @@ public class MyBudgetAppUI extends Application {
     private String passwordSU;
     private String category;
     private User user;
-    private  DatePicker dateFieldExpense = new DatePicker();
-    private  DatePicker dateFieldIncome = new DatePicker();
+    private DatePicker dateFieldExpense = new DatePicker();
+    private DatePicker dateFieldIncome = new DatePicker();
     private ComboBox chooseCategory = new ComboBox();
+    private String amountString;
 
     @Override
     public void init() throws Exception {
@@ -62,9 +65,9 @@ public class MyBudgetAppUI extends Application {
         mybudgetService = new MyBudgetService(database, username);
 
     }
-    public void createNewUserScene(){
-        
-    }
+//    public void createNewUserScene(){
+//        
+//    }
 
     @Override
     public void start(Stage primarystage) throws Exception {
@@ -152,31 +155,31 @@ public class MyBudgetAppUI extends Application {
         Label expenseLabel = new Label("New expense: Add amount.");
         Label expenseDate = new Label("Pick expense date");
         Button signoutButton = new Button("Sign out");
-        Button createCategoryButton = new Button("Save category");
+        Button createCategoryButton = new Button("Save newcategory");
         Button createExpenseButton = new Button("Save expense");
         TextField newCategoryInput = new TextField();
         TextField newExpenseInput = new TextField();
         GridPane mybudgetLayout = new GridPane();
         chooseCategory.setPromptText("Choose category");
-        chooseCategory.setItems(mybudgetService.createChoices());
+        chooseCategory.getItems().addAll(mybudgetService.createChoices());
+        chooseCategory.setEditable(true);
         mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
         mybudgetLayout.setHgap(5);
         mybudgetLayout.setVgap(5);;
 
         mybudgetLayout.add(welcome, 0, 0);
-        mybudgetLayout.add(categoryLabel, 0, 1);
-        mybudgetLayout.add(chooseCategory, 0, 2);
+        mybudgetLayout.add(chooseCategory, 0, 1);
+        mybudgetLayout.add(categoryLabel, 0, 2);
         mybudgetLayout.add(newCategoryInput, 0, 3);
         mybudgetLayout.add(createCategoryButton, 0, 4);
         mybudgetLayout.add(createConfirmationMsg, 0, 5);
         mybudgetLayout.add(signoutButton, 10, 0);
-        mybudgetLayout.add(expenseLabel, 4,1);
+        mybudgetLayout.add(expenseLabel, 4, 1);
         mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(newExpenseInput, 4, 2);
-        mybudgetLayout.add(dateFieldExpense, 4,4);
+        mybudgetLayout.add(dateFieldExpense, 4, 4);
         mybudgetLayout.add(createExpenseButton, 4, 5);
-       
-        
+
         mybudgetLayout.add(createErrorMsg, 3, 0);
         mybudgetPane.getChildren().addAll(mybudgetLayout);
         mybudgetLayout.setId("root");
@@ -206,11 +209,23 @@ public class MyBudgetAppUI extends Application {
             }
         });
         // new user scene  
-  // create a new expense
-  // createExpenseButton.setOnAction(e -> { 
-  //String amountString = TextField.getString();
-  //double d = Double.parseDouble(amountString); 
-  // });
+        //create a new expense
+        createExpenseButton.setOnAction(e -> {
+           if (newExpenseInput.getText().isEmpty()) {
+
+                createErrorMsg.setTextFill(Color.RED);
+                createErrorMsg.setText("Enter the value of expense ");
+
+            } else {
+                
+                String categoryString = (String) chooseCategory.getValue();
+                amountString = newExpenseInput.getText();
+                double d = Double.parseDouble(amountString);
+                LocalDate expensedate = dateFieldExpense.getValue();
+                System.out.println(d);
+                mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
+           }
+        });
         VBox newUserPane = new VBox(10);
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
