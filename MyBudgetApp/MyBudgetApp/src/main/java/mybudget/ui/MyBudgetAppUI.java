@@ -6,6 +6,7 @@
 package mybudget.ui;
 
 //import mybudgetapp.dao.BudgetDao;
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -153,12 +154,16 @@ public class MyBudgetAppUI extends Application {
         Label createConfirmationMsg = new Label();
         Label categoryLabel = new Label("New category");
         Label expenseLabel = new Label("New expense: Add amount.");
+        Label incomeLabel = new Label("New income: Add amount.");
         Label expenseDate = new Label("Pick expense date");
+        Label incomeDate = new Label("Pick income date");
         Button signoutButton = new Button("Sign out");
         Button createCategoryButton = new Button("Save newcategory");
         Button createExpenseButton = new Button("Save expense");
+        Button createIncomeButton = new Button("Save income");
         TextField newCategoryInput = new TextField();
         TextField newExpenseInput = new TextField();
+        TextField newIncomeInput = new TextField();
         GridPane mybudgetLayout = new GridPane();
         chooseCategory.setPromptText("Choose category");
         chooseCategory.getItems().addAll(mybudgetService.createChoices());
@@ -173,12 +178,17 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(newCategoryInput, 0, 3);
         mybudgetLayout.add(createCategoryButton, 0, 4);
         mybudgetLayout.add(createConfirmationMsg, 0, 5);
-        mybudgetLayout.add(signoutButton, 10, 0);
+        mybudgetLayout.add(signoutButton, 15, 0);
         mybudgetLayout.add(expenseLabel, 4, 1);
-        mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(newExpenseInput, 4, 2);
+        mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(dateFieldExpense, 4, 4);
         mybudgetLayout.add(createExpenseButton, 4, 5);
+        mybudgetLayout.add(incomeLabel, 0, 21);
+        mybudgetLayout.add(newIncomeInput, 0, 22);
+        mybudgetLayout.add(incomeDate, 0, 23);
+        mybudgetLayout.add(dateFieldIncome, 0, 24);
+        mybudgetLayout.add(createIncomeButton, 0, 25);
 
         mybudgetLayout.add(createErrorMsg, 3, 0);
         mybudgetPane.getChildren().addAll(mybudgetLayout);
@@ -211,20 +221,47 @@ public class MyBudgetAppUI extends Application {
         // new user scene  
         //create a new expense
         createExpenseButton.setOnAction(e -> {
-           if (newExpenseInput.getText().isEmpty()) {
+            if (newExpenseInput.getText().isEmpty()) {
 
                 createErrorMsg.setTextFill(Color.RED);
                 createErrorMsg.setText("Enter the value of expense ");
 
             } else {
-                
+
                 String categoryString = (String) chooseCategory.getValue();
                 amountString = newExpenseInput.getText();
                 double d = Double.parseDouble(amountString);
                 LocalDate expensedate = dateFieldExpense.getValue();
                 System.out.println(d);
-                mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
-           }
+                try {
+                    mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
+                } catch (Throwable t) {
+                    System.out.println("MybudgetService.createExpense error message ..." + t.getMessage());
+                }
+            }
+        });
+
+        //create income
+        createIncomeButton.setOnAction(e -> {
+            if (newIncomeInput.getText().isEmpty()) {
+
+                createErrorMsg.setTextFill(Color.RED);
+                createErrorMsg.setText("Enter the value of expense ");
+
+            } else {
+
+                String amount = newIncomeInput.getText();
+                double d2 = Double.parseDouble(amount);
+                LocalDate incomedate = dateFieldIncome.getValue();
+                System.out.println(d2);
+                try {
+                    mybudgetService.createIncome(user.getUsername(), d2, incomedate);
+                } catch (Exception ex) {
+                    System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
+
+                    Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         });
         VBox newUserPane = new VBox(10);
         HBox newUsernamePane = new HBox(10);

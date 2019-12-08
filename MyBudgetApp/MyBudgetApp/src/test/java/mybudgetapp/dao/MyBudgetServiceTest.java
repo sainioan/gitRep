@@ -29,6 +29,7 @@ public class MyBudgetServiceTest {
     MyBudgetDatabase testdatabase;
     User testuser;
     DBUserDao dbuser;
+    DBBudgetDao dbbudget;
 
     @Before
     public void setUp() throws IOException, ClassNotFoundException, Exception {

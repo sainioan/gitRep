@@ -18,7 +18,7 @@ public class Income {
     private double amount;
     private LocalDate date;
     private List<Income> totalIncome;
-    private User user;
+    private String username;
 
     public Income() {
 
@@ -31,8 +31,8 @@ public class Income {
 
     }
 
-    public Income(User user, double amount, LocalDate date) {
-        this.user = user;
+    public Income(String username, double amount, LocalDate date) {
+        this.username = username;
         this.amount = amount;
         this.date = date;
     }
@@ -59,12 +59,12 @@ public class Income {
         this.totalIncome = totalIncome;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public double getAmount() {
@@ -84,7 +84,7 @@ public class Income {
     }
 
     public List<Income> getIncome() {
-        Income i = new Income(getAmount(), getDate());
+        Income i = new Income(getUserName(), getAmount(), getDate());
         totalIncome.add(i);
         return totalIncome;
         //The following method is to get the totalAmountOfIncome   
@@ -96,5 +96,10 @@ public class Income {
             total = total + i.getAmount();
         }
         return total;
+    }
+
+    @Override
+    public String toString() {
+        return this.username + ": (Income amount): " + this.amount + ", (Date): " + this.date;
     }
 }

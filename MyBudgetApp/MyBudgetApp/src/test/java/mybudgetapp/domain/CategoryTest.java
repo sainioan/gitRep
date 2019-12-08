@@ -39,7 +39,6 @@ public class CategoryTest {
     public void constructorWorks() {
         try {
             assertEquals("testCategory", category.getName());
-            assertEquals(1, category2.getId());
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }

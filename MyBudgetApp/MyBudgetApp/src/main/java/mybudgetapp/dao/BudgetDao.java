@@ -7,7 +7,6 @@ package mybudgetapp.dao;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import mybudgetapp.domain.MyBudget;
 import mybudgetapp.domain.User;
 
@@ -15,10 +14,10 @@ import mybudgetapp.domain.User;
  *
  * @author anniinasainio
  */
-public interface BudgetDao {
+public interface BudgetDao<T> {
 
     MyBudget createBudget() throws SQLException;
 
-    List<MyBudget> getAll() throws SQLException;
+    List<T> getAll() throws SQLException;
 
 }

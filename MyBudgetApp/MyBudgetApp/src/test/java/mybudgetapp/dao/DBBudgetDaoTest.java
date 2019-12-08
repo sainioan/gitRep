@@ -44,14 +44,14 @@ public class DBBudgetDaoTest {
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void create_Works() throws SQLException {
         try {
-         dao.saveCategory(testCategory);
-         dao.create(testCategory);
-        assertEquals("testCategory", testCategory.getName());   
-        } catch (Throwable t){
+            dao.saveCategory(testCategory);
+            dao.create(testCategory);
+            assertEquals("testCategory", testCategory.getName());
+        } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
     }

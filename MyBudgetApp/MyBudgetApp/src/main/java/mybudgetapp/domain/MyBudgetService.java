@@ -80,13 +80,33 @@ public class MyBudgetService {
         return true;
     }
 
-    public boolean createExpense(String username, String category, double amount, LocalDate date) {
+    public boolean createExpense(String username, String category, double amount, LocalDate date) throws SQLException {
         Expense expense = new Expense(username, category, amount, date);
+        try {
+            if (!category.equals("create new")) {
+                dbbudgetDao.create(expense);
+                return true;
+            } else {
+
+                Category newCategory = new Category(username, category);
+                dbbudgetDao.create(newCategory);
+                dbbudgetDao.create(expense);
+            }
+        } catch (SQLException ex) {
+            System.out.println("createExpense error message is..." + ex.getMessage());
+            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean createIncome(String username, double amount, LocalDate date) throws SQLException, Exception {
+        Income income = new Income(username, amount, date);
 
         try {
-            dbbudgetDao.create(expense);
+        dbbudgetDao.create(income);
         } catch (SQLException ex) {
-            System.out.println("createExpense  message is..." + ex.getMessage());
+            System.out.println("createIncome error message is..." + ex.getMessage());
             Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
@@ -94,15 +114,15 @@ public class MyBudgetService {
     }
 //content = some description of the budget
 
-    public boolean createBudget(String content, double amount) {
-        MyBudget mb = new MyBudget(content, amount);
-        try {
-            dbbudgetDao.createBudget();
-        } catch (Exception ex) {
-            return false;
-        }
-        return true;
-    }
+//    public boolean createBudget(String content, double amount) {
+//        MyBudget mb = new MyBudget(content, amount);
+//        try {
+//            dbbudgetDao.createBudget();
+//        } catch (Exception ex) {
+//            return false;
+//        }
+//        return true;
+//    }
 
     public boolean login(String username, String password) {
         User user = dbuserDao.findByUsername(username);
@@ -111,7 +131,6 @@ public class MyBudgetService {
         }
 
         loggedIn = user;
-        //    System.out.println(user);
         return true;
     }
 
@@ -151,7 +170,7 @@ public class MyBudgetService {
         ObservableList<String> items = FXCollections.observableArrayList();
         List<Category> categories = dbbudgetDao.getAllCategories(loggedIn);
         ArrayList<String> categorynames = new ArrayList<>();
-       
+
         for (Category c : categories) {
             String name = c.getName();
             categorynames.add(name);
@@ -166,18 +185,6 @@ public class MyBudgetService {
 
     }
 
-//   The method here is not used!! comment on december 7
-    // public Boolean checkUsername(String username) {
-//        this.username = username;
-//        try {
-//            if (validateUsernameInput(username) && dbuserDao.findOne(username.trim()) != null) {
-//                return true;
-//            }
-//        } catch (Exception ex) {
-//            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return false;
-//    }
     public Boolean validateUsernameInput(String username) {
         return ((username != null) && username.matches("[A-Za-z0-9_]+") && username.length() >= 5);
     }

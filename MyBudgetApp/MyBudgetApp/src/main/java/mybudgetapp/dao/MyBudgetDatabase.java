@@ -152,7 +152,7 @@ public class MyBudgetDatabase {
                     + "user_username VARCHAR(100),"
                     + "amount float, "
                     + "time DATE,"
-                    + "FOREIGN KEY (user_username) REFERENCES User(username)"
+                    + "FOREIGN KEY (user_username) REFERENCES user(username)"
                     + ");"
             );
             createIncomeTable.execute();
@@ -203,7 +203,7 @@ public class MyBudgetDatabase {
         float fAmount = (float) amount;
         try {
             PreparedStatement saveDetailsStatement = connection.prepareStatement(
-                    "INSERT INTO expense (category_id, amount, time) VALUES (?, ?, ?);"
+                    "INSERT INTO expense (user_username, category_name, amount, time) VALUES (?, ?, ?);"
             );
 
             saveDetailsStatement.setInt(1, categoryid);
@@ -226,7 +226,6 @@ public class MyBudgetDatabase {
 
             saveDetailsStatement.setFloat(1, fAmount);
             saveDetailsStatement.setDate(2, Date.valueOf(time));
-
             saveDetailsStatement.executeUpdate();
             saveDetailsStatement.close();
         } catch (SQLException ex) {
@@ -242,7 +241,6 @@ public class MyBudgetDatabase {
             );
             statement.setString(1, username);
             statement.setString(2, password);
-
             statement.executeUpdate();
             statement.close();
         } catch (SQLException ex) {
