@@ -34,9 +34,14 @@ public class DBBudgetDao implements BudgetDao {
     private String description;
     private MyBudgetDatabase db;
     private String database;
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
     private List<Expense> expenses = new ArrayList<>();
     private List<Income> incomeList = new ArrayList<>();
+    private String sql2 = "SELECT*FROM income where user_username = ?";
+    private String sql3 = "SELECT*FROM expense where user_username = ?";
+    private String sql4 = "SELECT*FROM category where categoryUser = ?";
+    private List<Income> incomeByUser = new ArrayList<>();
+    private List<Expense> expensesByUser = new ArrayList<>();
 
     public DBBudgetDao(MyBudgetDatabase db) {
         this.db = db;
@@ -90,10 +95,7 @@ public class DBBudgetDao implements BudgetDao {
 
         Connection connection = db.connect();
         Float amountF = (float) expense.getAmount();
-        System.out.println(expense.getDate());
         Date sqlDate = Date.valueOf(expense.getDate());
-        System.out.println(sqlDate);
-        // java.sql.Date sqlDate = Date.valueOf(expense.getDate());
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT OR REPLACE INTO expense (user_username, category_name, amount, time) VALUES (?,?,?,?);"
@@ -110,10 +112,8 @@ public class DBBudgetDao implements BudgetDao {
     }
 
     public void saveIncome(Income income) throws SQLException, Exception {
-
         Connection connection = db.connect();
         Float amountF2 = (float) income.getAmount();
-        System.out.println(income.getDate());
         Date sqlDate = Date.valueOf(income.getDate());
         try {
             PreparedStatement statementIn = connection.prepareStatement(
@@ -135,7 +135,7 @@ public class DBBudgetDao implements BudgetDao {
 //            PreparedStatement statement = connection.prepareStatement(
 //                    "INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);"
 //            );
-           // statement.setString(1, balance.get   
+    // statement.setString(1, balance.get   
 //            statement.setFloat(2, balance.getAmount());
 //            statement.executeUpdate();
 //            statement.close();
@@ -145,20 +145,16 @@ public class DBBudgetDao implements BudgetDao {
 //    }
 
     public List<Expense> getAllExpenses(User user) throws SQLException {
-        List<Expense> expensesByUser = new ArrayList<>();
         try {
             Connection con = db.connect();
-            String sql2 = "SELECT*FROM expense where user_username = ?";
             String userUsername = user.getUsername();
-            PreparedStatement stmt = con.prepareStatement(sql2);
+            PreparedStatement stmt = con.prepareStatement(sql3);
             stmt.setString(1, userUsername);
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Expense expense = new Expense(rs.getString("user_username").trim(), rs.getString("category_name"), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
                 expense.setId(rs.getInt("id"));
                 expensesByUser.add(expense);
-
                 stmt.close();
                 rs.close();
                 con.close();
@@ -166,28 +162,22 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
-
-        System.out.println(expensesByUser.toString());
         return expensesByUser;
-
     }
 
     public List<Income> getAllIncome(User user) throws SQLException {
-        List<Income> incomeByUser = new ArrayList<>();
+
         try {
             Connection con = db.connect();
-            String sql2 = "SELECT*FROM income where user_username = ?";
             String userUsername = user.getUsername();
             PreparedStatement stmt = con.prepareStatement(sql2);
             stmt.setString(1, userUsername);
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 Income income = new Income(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
                 income.setId(rs.getInt("id"));
                 incomeByUser.add(income);
                 incomeList.add(income);
-
                 stmt.close();
                 rs.close();
                 con.close();
@@ -195,8 +185,6 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
-
-        System.out.println(incomeByUser.toString());
         return incomeByUser;
 
     }
@@ -204,17 +192,14 @@ public class DBBudgetDao implements BudgetDao {
     public List<Category> getAllCategories(User user) throws SQLException {
         try {
             Connection con = db.connect();
-            String sql = "SELECT*FROM category where categoryUser = ?";
             String categoryUser = user.getUsername();
-            PreparedStatement stmt = con.prepareStatement(sql);
+            PreparedStatement stmt = con.prepareStatement(sql4);
             stmt.setString(1, categoryUser);
             ResultSet rs = stmt.executeQuery();
-            categories = new ArrayList<>();
             while (rs.next()) {
                 Category category = new Category(rs.getString("categoryUser").trim(), rs.getString("name"));
                 category.setId(rs.getInt("id"));
                 categories.add(category);
-
                 stmt.close();
                 rs.close();
                 con.close();
@@ -222,8 +207,6 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
-
-        System.out.println(categories.toString());
         return categories;
     }
 
@@ -235,7 +218,7 @@ public class DBBudgetDao implements BudgetDao {
 
     @Override
     public MyBudget createBudget() throws SQLException {
-    Double amount = 0.0;
+        Double amount = 0.0;
         return new MyBudget(description, amount);
     }
 
