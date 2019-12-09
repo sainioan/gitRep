@@ -11,4 +11,9 @@ If the database file is deleted, the data will be lost permanently.
 ## Login
 
 Once the app opens, the Login screen appears. If you have already signed up as a user enter the username and password to access the application. If you have not yet signed up for MyBudgetApp, create a new username and password. 
+
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppLogin.png">
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp_Sign_up.png">
 	 
