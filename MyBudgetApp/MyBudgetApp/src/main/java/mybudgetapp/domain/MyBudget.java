@@ -22,9 +22,7 @@ public class MyBudget {
 
     /**
      *
-     * @param id i
-     * @param content
-     * @param user
+     *
      */
     public MyBudget(int id, String content, User user) {
         this.id = id;
@@ -34,8 +32,6 @@ public class MyBudget {
 
     /**
      *
-     * @param description
-     * @param amount
      */
     public MyBudget(String description, double amount) {
         this.description = description;
