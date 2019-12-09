@@ -13,11 +13,10 @@ import mybudgetapp.domain.User;
 /**
  *
  * @author anniinasainio
+ * 
  */
 public interface BudgetDao<T> {
 
-    MyBudget createBudget() throws SQLException;
-
-    List<T> getAll() throws SQLException;
+T create(T object) throws SQLException;
 
 }

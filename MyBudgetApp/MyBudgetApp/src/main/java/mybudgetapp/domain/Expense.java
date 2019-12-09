@@ -31,6 +31,13 @@ public class Expense {
         this.date = date;
     }
 
+    /**
+     *
+     * @param user username of the logged in user
+     * @param categoryName name of the category for the expense object
+     * @param amount amount of the expense as double
+     * @param date time of the expense
+     */
     public Expense(String user, String categoryName, double amount, LocalDate date) {
 
         this.userName = user;
@@ -39,6 +46,10 @@ public class Expense {
         this.date = date;
     }
 
+    /**
+     *
+     * @return returns the username of the logged in user
+     */
     public String getUserName() {
         return userName;
     }
@@ -75,6 +86,10 @@ public class Expense {
         return date;
     }
 
+    /**
+     *
+     * @param date time of the expense
+     */
     public void setDate(LocalDate date) {
         this.date = date;
     }

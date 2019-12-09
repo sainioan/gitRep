@@ -9,7 +9,7 @@ import javafx.beans.property.*;
 
 /**
  *
- * @author ralahtin
+ * The class representing the user 
  */
 public class User {
 
@@ -29,6 +29,10 @@ public class User {
         return password;
     }
 
+    /**
+     *
+     * @param password password inputted by the logged in user
+     */
     public void setPassword(String password) {
         this.password = password;
     }
@@ -37,10 +41,18 @@ public class User {
         return username;
     }
 
+    /**
+     * 
+     * @param username username of the logged in user
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     *
+     * @return returns an empty string if validateUsername succeeds
+     */
     public String validateUsername() {
         String s = "";
 

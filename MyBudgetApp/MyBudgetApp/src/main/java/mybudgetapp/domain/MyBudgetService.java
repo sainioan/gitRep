@@ -44,6 +44,11 @@ public class MyBudgetService {
     private String password;
     private LocalDate date;
 
+    /**
+     *
+     * @param db the database givens as a parameter
+     * @throws SQLException when connection to the database fails
+     */
     public MyBudgetService(MyBudgetDatabase db) throws SQLException {
         this.mybDatabase = db;
         this.mybDatabase.initializeDatabase();
@@ -69,6 +74,12 @@ public class MyBudgetService {
 
     }
 
+    /**
+     * method creates a new expense category
+     * @param username the name of the logged in user
+     * @param description the category name inputted by the user
+     * @return true when the creation of a new category succeeds
+     */
     public boolean createCategory(String username, String description) {
         Category category = new Category(username, description);
         try {
@@ -80,6 +91,16 @@ public class MyBudgetService {
         return true;
     }
 
+    /**
+     * the method creates a new expense entry
+     *
+     * @param username the username of the logged in user
+     * @param category the category inputted by the user
+     * @param amount the expense amount as double inputted by the user 
+     * @param date the date of the expense entry
+     * @return returns true if the entry succeeds
+     * @throws SQLException if the entry fails
+     */
     public boolean createExpense(String username, String category, double amount, LocalDate date) throws SQLException {
         Expense expense = new Expense(username, category, amount, date);
         try {

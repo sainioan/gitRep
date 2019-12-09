@@ -34,6 +34,11 @@ public class MyBudgetDatabase {
 
     private String dbName;
 
+    /**
+     * constructor where user gives the name for the database when invoked
+     * @param databaseName the address of database given as a parameter
+     * @throws SQLException when connection fails
+     */
     public MyBudgetDatabase(String databaseName) throws SQLException {
         this.dbName = databaseName;
     }
@@ -65,6 +70,10 @@ public class MyBudgetDatabase {
         conn.close();
     }
 
+    /**
+     * initializeDatabase method initializes the five database tables
+     * @return returns true if the database tables are created
+     */
     public boolean initializeDatabase() {
         // The following methods will create required tables if they do not already exist in the database
         try {
@@ -99,6 +108,9 @@ public class MyBudgetDatabase {
         }
     }
 
+    /**
+     *
+     */
     public void initializeUser() {
         try {
             Connection connection = connect();

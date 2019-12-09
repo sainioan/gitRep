@@ -326,8 +326,8 @@ public class MyBudgetAppUI extends Application {
             errorMessage2.setTextFill(Color.RED);
             mybudgetService.createUser(usernameSU, passwordSU);
             if (usernameerror.equals("") && (passworderror.equals(""))) {
-              primarystage.setScene(loginscene);
-              errorMessage.setText("");
+                primarystage.setScene(loginscene);
+                errorMessage.setText("");
             }
 
         });
@@ -343,6 +343,10 @@ public class MyBudgetAppUI extends Application {
     public void stop() {
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

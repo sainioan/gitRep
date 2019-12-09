@@ -72,6 +72,13 @@ public class DBUserDao implements UserDao {
         }
     }
 
+    /**
+     * The medhod saves a new user given into the database
+     *
+     * @param user new user object given as a parameter
+     * @return returns true if the saving of the user into the database succeeds
+     * @throws SQLException if saveUser fails
+     */
     public boolean saveUser(User user) throws SQLException, Exception {
         Connection connection = db.connect();
         System.out.println("test " + connection);
@@ -103,6 +110,14 @@ public class DBUserDao implements UserDao {
         conn.close();
     }
 
+    /**
+     * The medhod creates a new user given as a parameter by calling the
+     * saveuser method
+     *
+     * @param user user object
+     * @return returns the user object
+     * @throws SQLException if saveUser fails
+     */
     @Override
     public User create(User user) throws SQLException {
 
@@ -150,6 +165,13 @@ public class DBUserDao implements UserDao {
         return users;
     }
 
+    /**
+     * Finds a user with the given username from the database
+     *
+     * @param username name of the logged in user
+     * @return returns the user object with the username given as a parameter
+     * @throws SQLException if unable to retrieve the username from the database
+     */
     @Override
     public User findOne(String username) throws SQLException {
         Connection conn = db.connect();

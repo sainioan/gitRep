@@ -20,12 +20,23 @@ public class MyBudget {
     private double amount;
     private LocalDate date;
 
+    /**
+     *
+     * @param id i
+     * @param content
+     * @param user
+     */
     public MyBudget(int id, String content, User user) {
         this.id = id;
         this.description = content;
         this.user = user;
     }
 
+    /**
+     *
+     * @param description
+     * @param amount
+     */
     public MyBudget(String description, double amount) {
         this.description = description;
         this.amount = amount;
@@ -38,6 +49,10 @@ public class MyBudget {
         this.date = date;
     }
 
+    /**
+     *
+     *
+     */
     public MyBudget(User user, String description, double amount, LocalDate date) {
         this.user = user;
         this.description = description;
@@ -45,6 +60,9 @@ public class MyBudget {
         this.date = date;
     }
 
+    /**
+     *
+     */
     public String getDescription() {
         return description;
     }
@@ -57,6 +75,9 @@ public class MyBudget {
         return amount;
     }
 
+    /**
+     *
+     */
     public void setAmount(double amount) {
         this.amount = amount;
     }
@@ -69,10 +90,16 @@ public class MyBudget {
         this.date = date;
     }
 
+    /**
+     *
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     */
     public User getUser() {
         return user;
     }

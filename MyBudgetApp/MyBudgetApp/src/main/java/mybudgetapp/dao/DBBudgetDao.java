@@ -13,11 +13,6 @@ import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import mybudgetapp.domain.Balance;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
@@ -39,10 +34,14 @@ public class DBBudgetDao implements BudgetDao {
     private List<Income> incomeList = new ArrayList<>();
     private String sql2 = "SELECT*FROM income where user_username = ?";
     private String sql3 = "SELECT*FROM expense where user_username = ?";
-    private String sql4 = "SELECT*FROM category";    
+    private String sql4 = "SELECT*FROM category";
     private List<Income> incomeByUser = new ArrayList<>();
     private List<Expense> expensesByUser = new ArrayList<>();
 
+    /**
+     *
+     * @param db database given as a parameter
+     */
     public DBBudgetDao(MyBudgetDatabase db) {
         this.db = db;
         categories = new ArrayList<>();
@@ -65,6 +64,11 @@ public class DBBudgetDao implements BudgetDao {
 
     }
 
+    /**
+     *
+     * @param database address of the database
+     * @throws SQLException if the connection to the database fails
+     */
     public DBBudgetDao(String database) throws SQLException {
         Connection conn = db.connect();
 
@@ -75,6 +79,12 @@ public class DBBudgetDao implements BudgetDao {
 
     }
 
+    /**
+     * Saves given category into the database
+     *
+     * @param category category name
+     * @throws SQLException if saving the category name fails
+     */
     public void saveCategory(Category category) throws SQLException, Exception {
         Connection connection = db.connect();
 
@@ -91,6 +101,12 @@ public class DBBudgetDao implements BudgetDao {
         }
     }
 
+    /**
+     *
+     * @param expense the inserted expected
+     * @throws SQLException throws an SQL if saving into database fails
+     * @throws Exception throws an Exception if execution fails
+     */
     public void saveExpense(Expense expense) throws SQLException, Exception {
 
         Connection connection = db.connect();
@@ -111,6 +127,14 @@ public class DBBudgetDao implements BudgetDao {
         }
     }
 
+    /**
+     * Saves an income entry into the database
+     *
+     * @param income income object
+     * @throws SQLException if the saving into the database fails
+     *
+     * @throws Exception if execution fails
+     */
     public void saveIncome(Income income) throws SQLException, Exception {
         Connection connection = db.connect();
         Float amountF2 = (float) income.getAmount();
@@ -144,6 +168,14 @@ public class DBBudgetDao implements BudgetDao {
 //        }
 //    }
 
+    /**
+     * Adds a new expense entered by a user given as a parameter to a list
+     *
+     * @param user user object
+     * @return an ArrayList with all of the users expenses
+     * @throws SQLException if retrieving data from the database fails
+     *
+     */
     public List<Expense> getAllExpenses(User user) throws SQLException {
         try {
             Connection con = db.connect();
@@ -165,8 +197,13 @@ public class DBBudgetDao implements BudgetDao {
         return expensesByUser;
     }
 
+    /**
+     *
+     * @param user user given as a parameter
+     * @return returns a List with all given user's income entries
+     * @throws SQLException if data retrieval fails 
+     */
     public List<Income> getAllIncome(User user) throws SQLException {
-
         try {
             Connection con = db.connect();
             String userUsername = user.getUsername();
@@ -176,7 +213,6 @@ public class DBBudgetDao implements BudgetDao {
             while (rs.next()) {
                 Income income = new Income(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
                 income.setId(rs.getInt("id"));
-                incomeByUser.add(income);
                 incomeList.add(income);
                 stmt.close();
                 rs.close();
@@ -189,13 +225,18 @@ public class DBBudgetDao implements BudgetDao {
 
     }
 
+    /**
+     *
+     * @param user user object
+     * @return returns a list of categories created by the given user
+     * @throws SQLException when retrieving data from the database fails
+     */
     public List<Category> getAllCategories(User user) throws SQLException {
-        
+
         try {
             Connection con = db.connect();
-            String categoryUser = user.getUsername();
             PreparedStatement stmt = con.prepareStatement("SELECT*FROM category WHERE categoryUser = ?");
-            stmt.setString(1, categoryUser);
+            stmt.setString(1, user.getUsername());
             ResultSet rs = stmt.executeQuery();
             categories = new ArrayList<>();
             while (rs.next()) {
@@ -213,18 +254,13 @@ public class DBBudgetDao implements BudgetDao {
         return categories;
     }
 
-    @Override
-    public List<MyBudget> getAll() throws SQLException {
-        return new ArrayList<MyBudget>();
-
-    }
-
-    @Override
-    public MyBudget createBudget() throws SQLException {
-        Double amount = 0.0;
-        return new MyBudget(description, amount);
-    }
-
+    /**
+     * creates a new category object by calling saveCategory method
+     *
+     * @param category category object
+     * @return returns category object
+     * @throws SQLException if data retrieval fails
+     */
     public Category create(Category category) throws SQLException {
 
         categories.add(category);
@@ -237,6 +273,12 @@ public class DBBudgetDao implements BudgetDao {
         return category;
     }
 
+    /**
+     *
+     * @param income income object
+     * @return returns income object
+     * @throws SQLException if the data retrieval fails
+     */
     public Income create(Income income) throws SQLException {
 
         try {
@@ -249,6 +291,12 @@ public class DBBudgetDao implements BudgetDao {
         return income;
     }
 
+    /**
+     *
+     * @param expense expense object inputted by the logged in user
+     * @return returns the newly created expense object
+     * @throws SQLException if data retrieval from the database fails
+     */
     public Expense create(Expense expense) throws SQLException {
 
         try {
@@ -259,6 +307,11 @@ public class DBBudgetDao implements BudgetDao {
         }
         System.out.println(expenses.toString());
         return expense;
+    }
+
+    @Override
+    public Object create(Object object) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

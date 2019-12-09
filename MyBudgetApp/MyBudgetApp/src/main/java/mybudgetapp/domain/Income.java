@@ -37,6 +37,11 @@ public class Income {
         this.date = date;
     }
 
+    /**
+     *
+     * @param amount income amount as double
+     * @param date time of income
+     */
     public Income(double amount, LocalDate date) {
 
         this.amount = amount;
@@ -55,10 +60,18 @@ public class Income {
         return totalIncome;
     }
 
+    /**
+     *
+     * @param totalIncome list of users totalIncome
+     */
     public void setTotalIncome(List<Income> totalIncome) {
         this.totalIncome = totalIncome;
     }
 
+    /**
+     *
+     * @return returns the user's username
+     */
     public String getUserName() {
         return username;
     }
@@ -67,6 +80,10 @@ public class Income {
         this.username = username;
     }
 
+    /**
+     *
+     * @return returns the amount of the income entry
+     */
     public double getAmount() {
         return amount;
     }
@@ -79,6 +96,10 @@ public class Income {
         return date;
     }
 
+    /**
+     *
+     * @param date time of the income 
+     */
     public void setDate(LocalDate date) {
         this.date = date;
     }

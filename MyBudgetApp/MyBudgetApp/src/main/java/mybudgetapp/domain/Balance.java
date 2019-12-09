@@ -30,6 +30,11 @@ public class Balance {
         this.expenseTotal = expenseTotal;
     }
 
+    /**
+     * the constructor that takes two parameters:
+     * @param username of the logged in user
+     * @param date time when a balance is checked
+     */
     public Balance(String username, LocalDate date) {
         this.username = username;
         this.date = date;
@@ -41,6 +46,10 @@ public class Balance {
         this.date = date;
     }
 
+    /**
+     *
+     * @return returns the username of the user
+     */
     public String getUsername() {
         return username;
     }
@@ -49,10 +58,18 @@ public class Balance {
         this.username = username;
     }
 
+    /**
+     *
+     * @return returns the expense object
+     */
     public Expense getExp() {
         return e;
     }
 
+    /**
+     * setter the expense object
+     * @param e expense object
+     */
     public void setExp(Expense e) {
         this.e = e;
     }
@@ -61,6 +78,10 @@ public class Balance {
         return i;
     }
 
+    /**
+     * setter for the income object
+     * @param i the income object
+     */
     public void setInc(Income i) {
         this.i = i;
     }
@@ -79,6 +100,10 @@ public class Balance {
         return date;
     }
 
+    /**
+     *
+     * @return returns id for the balance
+     */
     public int getId() {
         return id;
     }
@@ -87,6 +112,10 @@ public class Balance {
         this.id = id;
     }
 
+    /**
+     *
+     * @return returns total income as double
+     */
     public double getIncomeTotal() {
         return incomeTotal;
     }
