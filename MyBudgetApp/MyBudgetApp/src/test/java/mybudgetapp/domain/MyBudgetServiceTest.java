@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mybudgetapp.dao;
+package mybudgetapp.domain;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import mybudgetapp.domain.MyBudgetService;
-import mybudgetapp.dao.MyBudgetDatabase;
-import mybudgetapp.domain.User;
+import java.time.LocalDate;
+import java.util.List;
+import mybudgetapp.dao.DBBudgetDao;
+import mybudgetapp.dao.DBUserDao;
+import mybudgetapp.dao.MyBudgetDatabase;;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -30,15 +30,22 @@ public class MyBudgetServiceTest {
     User testuser;
     DBUserDao dbuser;
     DBBudgetDao dbbudget;
+    LocalDate today = LocalDate.now();
 
     @Before
     public void setUp() throws IOException, ClassNotFoundException, Exception {
         testdatabase = new MyBudgetDatabase("jdbc:sqlite:test.db");
         testdatabase.initializeDatabase();
+
+        dbuser = new DBUserDao(testdatabase);
+        dbbudget = new DBBudgetDao(testdatabase);
         mbs = new MyBudgetService(testdatabase);
+
         testuser = new User("testUser", "TU123");
+        dbuser.saveUser(testuser);
         mbs.login("testUser", "TU123");
         dbuser = new DBUserDao(testdatabase);
+        
 
     }
 
@@ -67,19 +74,30 @@ public class MyBudgetServiceTest {
         assertEquals(null, mbs.getLoggedUser());
     }
     @Test
+    public void listListsCategories() throws SQLException {
+       Category category = new Category(testuser.getUsername(), "cars");
+       dbbudget.create(category);
+       dbbudget.getAllCategories(testuser);
+       List<String> categories = mbs.createChoices();
+       assertEquals(1, mbs.createChoices().size());
+        
+    }
+
+    @Test
     public void getLoggedUserReturnsLogged() throws SQLException, Exception {
-        try{
-        dbuser.saveUser(testuser);
-        mbs.createUser("testUser", "TU123");
-       
-        assertEquals("testUser", mbs.getLoggedUser().getUsername());
-        } catch (Throwable t){
+        try {
+            dbuser.saveUser(testuser);
+            mbs.createUser("testUser", "TU123");
+
+            assertEquals("testUser", mbs.getLoggedUser().getUsername());
+        } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
     }
+
     @Test
     public void loginReturnsFalseIfUserNull() throws SQLException {
-        assertEquals(false,  mbs.login("fakeuser","fakeid"));
+        assertEquals(false, mbs.login("fakeuser", "fakeid"));
     }
 
 }

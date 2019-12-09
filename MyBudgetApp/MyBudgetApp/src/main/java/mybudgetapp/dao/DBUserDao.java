@@ -6,17 +6,12 @@
 package mybudgetapp.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mybudgetapp.domain.User;
 
 /**
@@ -36,14 +31,11 @@ public class DBUserDao implements UserDao {
         this.db = db;
 
         users = new ArrayList<>();
-        this.database = database;
 
         db.initializeDatabase();
         Statement stmt = null;
         try {
             Connection conn = db.connect();
-            //     System.out.println("testing " + conn);
-            db = new MyBudgetDatabase(database);
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(selectStmt);
             while (rs.next()) {
@@ -91,7 +83,6 @@ public class DBUserDao implements UserDao {
 
             saveDetailsStatement.setString(1, user.getUsername());
             saveDetailsStatement.setString(2, user.getPassword());
-
             saveDetailsStatement.executeUpdate();
             saveDetailsStatement.close();
 
