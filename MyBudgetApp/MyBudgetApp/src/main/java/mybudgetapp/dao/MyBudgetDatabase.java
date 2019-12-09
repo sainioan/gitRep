@@ -126,11 +126,11 @@ public class MyBudgetDatabase {
 
             PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
                     + "id INTEGER PRIMARY KEY, "
-                    + "user_username VARCHAR(100),"
+                    + "user_username varchar,"
                     + "category_name varchar, "
                     + "amount float, "
                     + "time DATE,"
-                    + "FOREIGN KEY (user_username) REFERENCES User(username),"
+                    + "FOREIGN KEY (user_username) REFERENCES user(username),"
                     + "FOREIGN KEY(category_name) REFERENCES category(name)"
                     + ");"
             );

@@ -21,6 +21,7 @@ public class BalanceTest {
     private static final double DELTA = 1e-15;
     User user = new User("tester", "alphabeta");
     LocalDate date = LocalDate.now();
+
     @Before
     public void setUp() {
         String username = user.getUsername();
@@ -30,15 +31,17 @@ public class BalanceTest {
     @Test
 
     public void getBalanceWorks() throws Exception {
-        try{
-    balance.setBalance(2500.0);
-        assertEquals(2500.0, balance.getBalance(), DELTA);
-        } catch (Exception ex){
+
+        balance = new Balance(user.getUsername(), 2500.0, date);
+        try {
+            balance.setBalance(2500.0);
+            assertEquals(2500.0, balance.getBalance(), DELTA);
+        } catch (Exception ex) {
             System.out.println("getBalanceWorkTest fail ..." + ex.getMessage());
         }
     }
 
-    public void equalWhenSameId() {
+    public void equalWhenSame() {
         try {
             Balance b1 = new Balance("Ballerina", 2500.0, LocalDate.now());
             Balance b2 = new Balance("Ballerina", 2500.0, LocalDate.now());
@@ -47,14 +50,17 @@ public class BalanceTest {
             System.out.println(t.getMessage());
         }
     }
+
     @Test
-    public void notEqualWhenDifferentId() {
+    public void notEqualWhenDifferent() {
         Balance b1 = new Balance("Ballerina", 2500.0, LocalDate.now());
-        Balance b2 = new Balance("Ballerina", 2500.0, LocalDate.now());
+        Balance b2 = new Balance("Ballerina", 0.0, LocalDate.now());
         assertFalse(b1.equals(b2));
     }
+
     @Test
     public void constructorWorks() {
+        balance.setBalance(2500.0);
         try {
             assertEquals(2500.0, balance.getBalance(), DELTA);
         } catch (Throwable t) {

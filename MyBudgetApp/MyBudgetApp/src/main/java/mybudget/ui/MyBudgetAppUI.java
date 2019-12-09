@@ -158,7 +158,7 @@ public class MyBudgetAppUI extends Application {
         Label expenseDate = new Label("Pick expense date");
         Label incomeDate = new Label("Pick income date");
         Button signoutButton = new Button("Sign out");
-        Button createCategoryButton = new Button("Save newcategory");
+        Button createCategoryButton = new Button("Save new category");
         Button createExpenseButton = new Button("Save expense");
         Button createIncomeButton = new Button("Save income");
         TextField newCategoryInput = new TextField();
@@ -326,7 +326,8 @@ public class MyBudgetAppUI extends Application {
             errorMessage2.setTextFill(Color.RED);
             mybudgetService.createUser(usernameSU, passwordSU);
             if (usernameerror.equals("") && (passworderror.equals(""))) {
-                primarystage.setScene(loginscene);
+              primarystage.setScene(loginscene);
+              errorMessage.setText("");
             }
 
         });

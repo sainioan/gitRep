@@ -13,7 +13,8 @@ import java.time.LocalDate;
 import java.util.List;
 import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.dao.DBUserDao;
-import mybudgetapp.dao.MyBudgetDatabase;;
+import mybudgetapp.dao.MyBudgetDatabase;
+;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +24,12 @@ import static org.junit.Assert.*;
  *
  * @author anniinasainio
  */
+
+
 public class MyBudgetServiceTest {
 
     MyBudgetService mbs;
+    MyBudgetService mbs2;
     MyBudgetDatabase testdatabase;
     User testuser;
     DBUserDao dbuser;
@@ -45,7 +49,7 @@ public class MyBudgetServiceTest {
         dbuser.saveUser(testuser);
         mbs.login("testUser", "TU123");
         dbuser = new DBUserDao(testdatabase);
-        
+        mbs2 = new MyBudgetService(testdatabase, testuser.getUsername());
 
     }
 
@@ -73,14 +77,44 @@ public class MyBudgetServiceTest {
 
         assertEquals(null, mbs.getLoggedUser());
     }
+
     @Test
     public void listListsCategories() throws SQLException {
-       Category category = new Category(testuser.getUsername(), "cars");
-       dbbudget.create(category);
-       dbbudget.getAllCategories(testuser);
-       List<String> categories = mbs.createChoices();
-       assertEquals(1, mbs.createChoices().size());
-        
+        Category category = new Category(testuser.getUsername(), "cars");
+        dbbudget.create(category);
+        dbbudget.getAllCategories(testuser);
+        List<String> categories = mbs.createChoices();
+        assertEquals(1, mbs.createChoices().size());
+
+    }
+
+    @Test
+    public void createExpense() throws SQLException {
+        Expense expense = new Expense(testuser.getUsername(), "groceries", 150.0, today);
+        dbbudget.create(expense);
+        assertEquals(true, mbs.createExpense(testuser.getUsername(), "groceries", 150.0, today));
+    }
+
+    @Test
+    public void createCategory() throws SQLException {
+        Category cat = new Category(testuser.getUsername(), "vacations");
+        dbbudget.create(cat);
+        assertEquals(true, mbs.createCategory(testuser.getUsername(), "vacations"));
+    }
+    @Test
+    public void createIncome() throws SQLException, Exception {
+        Income i = new Income(testuser.getUsername(), 1000.0, today);
+        dbbudget.create(i);
+        assertEquals(true, mbs.createIncome(testuser.getUsername(), 1000.0, today));
+    }
+
+    @Test
+    public void createExpenseNewCategory() throws SQLException {
+        Expense expense = new Expense(testuser.getUsername(), "create new", 150.0, today);
+        Category cat = new Category(testuser.getUsername(), "vacations");
+        dbbudget.create(expense);
+        dbbudget.create(cat);
+        assertEquals(true, mbs.createExpense(testuser.getUsername(), "groceries", 150.0, today));
     }
 
     @Test

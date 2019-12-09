@@ -39,7 +39,7 @@ public class DBBudgetDao implements BudgetDao {
     private List<Income> incomeList = new ArrayList<>();
     private String sql2 = "SELECT*FROM income where user_username = ?";
     private String sql3 = "SELECT*FROM expense where user_username = ?";
-    private String sql4 = "SELECT*FROM category where categoryUser = ?";
+    private String sql4 = "SELECT*FROM category";    
     private List<Income> incomeByUser = new ArrayList<>();
     private List<Expense> expensesByUser = new ArrayList<>();
 
@@ -48,20 +48,20 @@ public class DBBudgetDao implements BudgetDao {
         categories = new ArrayList<>();
         db.initializeDatabase();
         Statement stmt = null;
-//        try {
-//            Connection conn = db.connect();
-//            db = new MyBudgetDatabase(database);
-//            stmt = conn.createStatement();
-//            ResultSet rs = stmt.executeQuery("Select*FROM category where categoryUser = ?");
-//            while (rs.next()) {
-//                Category category = new Category();
-//                category.setUserName(rs.getString("categoryUser"));
-//                category.setName(rs.getString("name"));
-//                categories.add(category);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+        try {
+            Connection conn = db.connect();
+            db = new MyBudgetDatabase(database);
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("Select*FROM category");
+            while (rs.next()) {
+                Category category = new Category();
+                category.setUserName(rs.getString("categoryUser"));
+                category.setName(rs.getString("name"));
+                categories.add(category);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
@@ -190,12 +190,14 @@ public class DBBudgetDao implements BudgetDao {
     }
 
     public List<Category> getAllCategories(User user) throws SQLException {
+        
         try {
             Connection con = db.connect();
             String categoryUser = user.getUsername();
-            PreparedStatement stmt = con.prepareStatement(sql4);
+            PreparedStatement stmt = con.prepareStatement("SELECT*FROM category WHERE categoryUser = ?");
             stmt.setString(1, categoryUser);
             ResultSet rs = stmt.executeQuery();
+            categories = new ArrayList<>();
             while (rs.next()) {
                 Category category = new Category(rs.getString("categoryUser").trim(), rs.getString("name"));
                 category.setId(rs.getInt("id"));
@@ -207,6 +209,7 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
+        System.out.println(categories.toString());
         return categories;
     }
 
