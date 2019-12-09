@@ -9,5 +9,7 @@
 
 [Viikko5 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko5)
 
+[Kayttoohje](../master/documentation/Usage.md)
+
 
 
