@@ -1,7 +1,7 @@
 # User guide
 
 
-Download the file [MyBudgetApp.jar](https://github.com/sainioan/gitRep/releases/tag/Viikko5)
+Download the file [MyBudgetApp.jar](https://github.com/sainioan/gitRep/releases)
 
 ## Database file
 
