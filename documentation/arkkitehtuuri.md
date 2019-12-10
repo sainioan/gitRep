@@ -87,7 +87,7 @@ In the login window, the user inputs his/her username and password into the appr
 In the sign up window, the user creates a new username and password and click on the confirm button.
 
 #### Other Functionalities
-##### Financial Transactions
+##### Recording Financial Transactions
 
 After logging in, the user can input data regarding his/her income or expense as well create new expense cateogories. The data regarding the amount of money is entered into the corresponding textfields and the datepicker object is used to set the time of transaction.
 
