@@ -11,7 +11,7 @@
 
 [Viikko6 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko6)
 
-[Kayttoohje](../master/documentation/Usage.md)
+[Käyttoohje](../master/documentation/Usage.md)
 
 
 ###  Terminal Commands
