@@ -11,8 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import mybudgetapp.domain.Balance;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
@@ -60,21 +62,6 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-    }
-
-    /**
-     *
-     * @param database address of the database
-     * @throws SQLException if the connection to the database fails
-     */
-    public DBBudgetDao(String database) throws SQLException {
-        Connection conn = db.connect();
-
-        categories = new ArrayList<>();
-        this.database = database;
-        db = new MyBudgetDatabase(database);
-        db.initializeDatabase();
 
     }
 
@@ -151,21 +138,64 @@ public class DBBudgetDao implements BudgetDao {
             System.out.println("saveIncome error message is... " + e.getMessage());
         }
     }
-//    public void saveBalance(Balance balance) throws Exception {
-//        Connection connection = db.connect();
-//        System.out.println("Balance test" + connection);
-//        try {
-//            PreparedStatement statement = connection.prepareStatement(
-//                    "INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);"
-//            );
-    // statement.setString(1, balance.get   
-//            statement.setFloat(2, balance.getAmount());
-//            statement.executeUpdate();
-//            statement.close();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+
+    public void saveBalance(Balance balance) throws Exception {
+        Connection connection = db.connect();
+        Float amount = (float) balance.getBalance();
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);"
+            );
+            statement.setString(1, balance.getUsername());
+            statement.setFloat(2, amount);
+            statement.setDate(3, Date.valueOf(LocalDate.now()));
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            System.out.println("saveBAlance error" + e.getMessage());
+        }
+    }
+
+    public Balance findOne(String username) throws SQLException {
+        Connection conn = db.connect();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM balance WHERE user_username = ?");
+        stmt.setString(1, username);
+        ResultSet rs = stmt.executeQuery();
+        boolean findOne = rs.next();
+        if (!findOne) {
+            return null;
+        }
+        double balanceAmount = Double.parseDouble(rs.getString("amount"));
+        Balance b = new Balance(rs.getString("user_username"), balanceAmount, LocalDate.now());
+        stmt.close();
+        rs.close();
+        conn.close();
+
+        return b;
+    }
+
+    public List<Balance> getBalanceList(User user) throws SQLException {
+        List<Balance> listB = new ArrayList<>();
+        try {
+            Connection con = db.connect();
+            String userUsername = user.getUsername();
+            PreparedStatement stmt = con.prepareStatement("SELECT*FROM balance WHERE user_username = ?");
+            stmt.setString(1, userUsername);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Balance balance = new Balance(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
+                balance.setId(rs.getInt("id"));
+                listB.add(balance);
+                stmt.close();
+                rs.close();
+                con.close();
+            }
+        } catch (Throwable t) {
+            System.out.println("getBalanceList" + t.getMessage());
+
+        }
+        return listB;
+    }
 
     /**
      * Adds a new expense entered by a user given as a parameter to a list
@@ -284,7 +314,6 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(incomeList.toString());
         return income;
     }
 
@@ -302,7 +331,6 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(expenses.toString());
         return expense;
     }
 

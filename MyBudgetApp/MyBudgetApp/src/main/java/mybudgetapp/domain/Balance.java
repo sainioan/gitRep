@@ -16,7 +16,6 @@ public class Balance {
 
     private double balance;
     private int id;
-    private double amount;
     private double incomeTotal;
     private double expenseTotal;
     private String username;
@@ -43,7 +42,7 @@ public class Balance {
 
     public Balance(String username, double amount, LocalDate date) {
         this.username = username;
-        this.amount = 0.0;
+        this.balance = amount;
         this.date = date;
     }
 
@@ -97,16 +96,17 @@ public class Balance {
             return;
         }
     }
-    public void deductExpense(double expense){
-        if (this.balance - expense < 0){
+
+    public void deductExpense(double expense) {
+        if (this.balance - expense < 0) {
             this.balance = 0.0;
-        }   else {
+        } else {
             this.balance = this.balance - expense;
         }
     }
 
     public double getBalance() {
-        return balance;
+        return this.balance;
     }
 
     public void setBalance(double b) {
@@ -117,6 +117,10 @@ public class Balance {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     /**

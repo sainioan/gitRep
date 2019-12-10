@@ -7,11 +7,12 @@ package mybudgetapp.domain;
 
 import java.time.LocalDate;
 import org.junit.After;
-import org.junit.AfterClass;
+;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+
 
 public class BalanceTest {
 
@@ -83,11 +84,17 @@ public class BalanceTest {
             System.out.println(t.getMessage());
         }
     }
+
     @Test
     public void setIdworks() {
         balance.setId(5);
         assertEquals(5, balance.getId());
 
+    }
+
+    @Test
+    public void getDate() {
+        assertEquals(LocalDate.now(), balance.getDate());
     }
 
     @Test

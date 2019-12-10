@@ -14,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import mybudgetapp.domain.User;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -76,7 +74,7 @@ public class DBUserDaoTest {
     }
 
     @Test
-    public void create_Works() throws SQLException, Exception {
+    public void createWorks() throws SQLException, Exception {
         users.add(user);
         try {
             dao.saveUser(user);
@@ -89,20 +87,20 @@ public class DBUserDaoTest {
     }
 
     @Test
-    public void getAll1_Works() throws SQLException, Exception {
+    public void getAll1Works() throws SQLException, Exception {
         dao.create(user);
         users.add(user);
         assertEquals(1, users.size());
     }
 
     @Test
-    public void getAll2_Works() throws SQLException, Exception {
+    public void getAll2Works() throws SQLException, Exception {
         dao.delete(user.getUsername());
         assertEquals(0, users.size());
     }
 
     @Test
-    public void getAll3_Works() throws SQLException, Exception {
+    public void getAll3Works() throws SQLException, Exception {
         try{
         Connection con = db.connect();
         PreparedStatement stmt = con.prepareStatement("SELECT * FROM user");
@@ -126,7 +124,7 @@ public class DBUserDaoTest {
     }
 
     @Test
-    public void findOne_Works() throws SQLException {
+    public void findOneWorks() throws SQLException {
         dao.create(user);
         assertEquals(user, dao.findOne("tester"));
         assertEquals(null, dao.findByUsername("fakeUser"));

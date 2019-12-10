@@ -6,9 +6,7 @@
 package mybudgetapp.domain;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -50,7 +48,7 @@ public class UserTest {
     }
 
     @Test
-    public void users_Password_IsCorrect() {
+    public void usersPasswordIsCorrect() {
         assertEquals("AtOIC2020", user.getPassword());
     }
 

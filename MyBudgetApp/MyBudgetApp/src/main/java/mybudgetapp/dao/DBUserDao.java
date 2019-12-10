@@ -50,28 +50,6 @@ public class DBUserDao implements UserDao {
 
     }
 
-//    public DBUserDao(String database) throws SQLException {
-//        Connection conn = db.connect();
-//        System.out.println("testing " + conn);
-//        users = new ArrayList<>();
-//        this.database = database;
-//        db = new MyBudgetDatabase(database);
-//        db.initializeDatabase();
-//        Statement stmt = null;
-//        try {
-//            stmt = conn.createStatement();
-//            ResultSet rs = stmt.executeQuery(selectStmt);
-//            while (rs.next()) {
-//                User user = new User();
-//                user.setUsername(rs.getString("username"));
-//                user.setPassword(rs.getString("password"));
-//                users.add(user);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-
     /**
      * The medhod saves a new user given into the database
      *
@@ -81,7 +59,6 @@ public class DBUserDao implements UserDao {
      */
     public boolean saveUser(User user) throws SQLException, Exception {
         Connection connection = db.connect();
-        System.out.println("test " + connection);
         try {
 
             PreparedStatement saveDetailsStatement = connection.prepareStatement(

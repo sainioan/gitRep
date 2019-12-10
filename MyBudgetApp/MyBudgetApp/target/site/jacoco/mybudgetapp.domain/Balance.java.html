@@ -16,7 +16,6 @@ public class Balance {
 
     private double balance;
     private int id;
-    private double amount;
     private double incomeTotal;
     private double expenseTotal;
     private String username;
@@ -24,11 +23,11 @@ public class Balance {
     private Income i;
     private LocalDate date;
 
-<span class="nc" id="L27">    public Balance(double incomeTotal, double expenseTotal) {</span>
+<span class="nc" id="L26">    public Balance(double incomeTotal, double expenseTotal) {</span>
 
-<span class="nc" id="L29">        this.incomeTotal = incomeTotal;</span>
-<span class="nc" id="L30">        this.expenseTotal = expenseTotal;</span>
-<span class="nc" id="L31">    }</span>
+<span class="nc" id="L28">        this.incomeTotal = incomeTotal;</span>
+<span class="nc" id="L29">        this.expenseTotal = expenseTotal;</span>
+<span class="nc" id="L30">    }</span>
 
     /**
      * the constructor that takes two parameters:
@@ -36,35 +35,35 @@ public class Balance {
      * @param username of the logged in user
      * @param date time when a balance is checked
      */
-<span class="nc" id="L39">    public Balance(String username, LocalDate date) {</span>
-<span class="nc" id="L40">        this.username = username;</span>
-<span class="nc" id="L41">        this.date = date;</span>
-<span class="nc" id="L42">    }</span>
+<span class="nc" id="L38">    public Balance(String username, LocalDate date) {</span>
+<span class="nc" id="L39">        this.username = username;</span>
+<span class="nc" id="L40">        this.date = date;</span>
+<span class="nc" id="L41">    }</span>
 
-<span class="fc" id="L44">    public Balance(String username, double amount, LocalDate date) {</span>
-<span class="fc" id="L45">        this.username = username;</span>
-<span class="fc" id="L46">        this.amount = 0.0;</span>
-<span class="fc" id="L47">        this.date = date;</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L43">    public Balance(String username, double amount, LocalDate date) {</span>
+<span class="fc" id="L44">        this.username = username;</span>
+<span class="fc" id="L45">        this.balance = amount;</span>
+<span class="fc" id="L46">        this.date = date;</span>
+<span class="fc" id="L47">    }</span>
 
     /**
      *
      * @return returns the username of the user
      */
     public String getUsername() {
-<span class="nc" id="L55">        return username;</span>
+<span class="fc" id="L54">        return username;</span>
     }
 
     public void setUsername(String username) {
-<span class="nc" id="L59">        this.username = username;</span>
-<span class="nc" id="L60">    }</span>
+<span class="nc" id="L58">        this.username = username;</span>
+<span class="nc" id="L59">    }</span>
 
     /**
      *
      * @return returns the expense object
      */
     public Expense getExp() {
-<span class="nc" id="L67">        return e;</span>
+<span class="nc" id="L66">        return e;</span>
     }
 
     /**
@@ -73,11 +72,11 @@ public class Balance {
      * @param e expense object
      */
     public void setExp(Expense e) {
-<span class="nc" id="L76">        this.e = e;</span>
-<span class="nc" id="L77">    }</span>
+<span class="nc" id="L75">        this.e = e;</span>
+<span class="nc" id="L76">    }</span>
 
     public Income getInc() {
-<span class="nc" id="L80">        return i;</span>
+<span class="nc" id="L79">        return i;</span>
     }
 
     /**
@@ -86,27 +85,28 @@ public class Balance {
      * @param i the income object
      */
     public void setInc(Income i) {
-<span class="nc" id="L89">        this.i = i;</span>
-<span class="nc" id="L90">    }</span>
+<span class="nc" id="L88">        this.i = i;</span>
+<span class="nc" id="L89">    }</span>
 
     public void addIncome(double income) {
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (income &gt;= 0) {</span>
-<span class="fc" id="L95">            this.balance += income;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (income &gt;= 0) {</span>
+<span class="fc" id="L94">            this.balance += income;</span>
         } else {
-<span class="nc" id="L97">            return;</span>
+<span class="nc" id="L96">            return;</span>
         }
-<span class="fc" id="L99">    }</span>
-    public void deductExpense(double expense){
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (this.balance - expense &lt; 0){</span>
+<span class="fc" id="L98">    }</span>
+
+    public void deductExpense(double expense) {
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (this.balance - expense &lt; 0) {</span>
 <span class="nc" id="L102">            this.balance = 0.0;</span>
-        }   else {
+        } else {
 <span class="fc" id="L104">            this.balance = this.balance - expense;</span>
         }
 <span class="fc" id="L106">    }</span>
 
     public double getBalance() {
-<span class="fc" id="L109">        return balance;</span>
+<span class="fc" id="L109">        return this.balance;</span>
     }
 
     public void setBalance(double b) {
@@ -119,41 +119,45 @@ public class Balance {
 <span class="fc" id="L119">        return date;</span>
     }
 
+    public void setDate(LocalDate date) {
+<span class="fc" id="L123">        this.date = date;</span>
+<span class="fc" id="L124">    }</span>
+
     /**
      *
      * @return returns id for the balance
      */
     public int getId() {
-<span class="fc" id="L127">        return id;</span>
+<span class="fc" id="L131">        return id;</span>
     }
 
     public void setId(int id) {
-<span class="fc" id="L131">        this.id = id;</span>
-<span class="fc" id="L132">    }</span>
+<span class="fc" id="L135">        this.id = id;</span>
+<span class="fc" id="L136">    }</span>
 
     /**
      *
      * @return returns total income as double
      */
     public double getIncomeTotal() {
-<span class="nc" id="L139">        return incomeTotal;</span>
+<span class="nc" id="L143">        return incomeTotal;</span>
     }
 
     public void setIncomeTotal(double incomeTotal) {
-<span class="nc" id="L143">        this.incomeTotal = incomeTotal;</span>
-<span class="nc" id="L144">    }</span>
+<span class="nc" id="L147">        this.incomeTotal = incomeTotal;</span>
+<span class="nc" id="L148">    }</span>
 
     public double getExpenseTotal() {
-<span class="nc" id="L147">        return expenseTotal;</span>
+<span class="nc" id="L151">        return expenseTotal;</span>
     }
 
     public void setExpenseTotal(double expenseTotal) {
-<span class="nc" id="L151">        this.expenseTotal = expenseTotal;</span>
-<span class="nc" id="L152">    }</span>
+<span class="nc" id="L155">        this.expenseTotal = expenseTotal;</span>
+<span class="nc" id="L156">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L156">        return this.username + &quot;: (Balance): &quot; + this.balance + &quot; on &quot; + this.date;</span>
+<span class="fc" id="L160">        return this.username + &quot;: (Balance): &quot; + this.balance + &quot; on &quot; + this.date;</span>
     }
 
 }

@@ -43,6 +43,7 @@ public class MyBudgetService {
     private String username;
     private String password;
     private LocalDate date;
+    private Balance currentBalance;
 
     /**
      *
@@ -131,6 +132,37 @@ public class MyBudgetService {
             dbbudgetDao.create(income);
         } catch (SQLException ex) {
             System.out.println("createIncome error message is..." + ex.getMessage());
+            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateBalanceNewIncome(String username, double income, LocalDate date) throws SQLException, Exception {
+        currentBalance = dbbudgetDao.findOne(username);
+        currentBalance.addIncome(income);
+        currentBalance.setDate(date);
+        try {
+            dbbudgetDao.saveBalance(currentBalance);
+        } catch (SQLException ex) {
+            System.out.println("updateBalance error message is..." + ex.getMessage());
+            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateBalanceNewExpense(String username, double expense, LocalDate date) throws SQLException, Exception {
+        Balance currentBalance = dbbudgetDao.findOne(username);
+
+        Balance balance = new Balance(username, currentBalance.getBalance() - expense, LocalDate.now());
+        try {
+            if (currentBalance.getBalance() - expense >= 0) {
+                dbbudgetDao.saveBalance(balance);
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.out.println("updateBalance error message is..." + ex.getMessage());
             Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

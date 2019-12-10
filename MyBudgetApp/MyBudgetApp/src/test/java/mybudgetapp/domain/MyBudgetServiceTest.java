@@ -14,7 +14,6 @@ import java.util.List;
 import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.MyBudgetDatabase;
-;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +23,6 @@ import static org.junit.Assert.*;
  *
  * @author anniinasainio
  */
-
-
 public class MyBudgetServiceTest {
 
     MyBudgetService mbs;
@@ -35,6 +32,10 @@ public class MyBudgetServiceTest {
     DBUserDao dbuser;
     DBBudgetDao dbbudget;
     LocalDate today = LocalDate.now();
+    Balance testBalance;
+    private static final double DELTA = 1e-15;
+    private Income i;
+    private Expense e;
 
     @Before
     public void setUp() throws IOException, ClassNotFoundException, Exception {
@@ -50,7 +51,10 @@ public class MyBudgetServiceTest {
         mbs.login("testUser", "TU123");
         dbuser = new DBUserDao(testdatabase);
         mbs2 = new MyBudgetService(testdatabase, testuser.getUsername());
+        testBalance = new Balance(testuser.getUsername(), 1000.0, today);
 
+        i = new Income(testuser.getUsername(), 1000.0, today);
+        e = new Expense(testuser.getUsername(), "testCategory", 500.0, today);
     }
 
     @After
@@ -101,9 +105,9 @@ public class MyBudgetServiceTest {
         dbbudget.create(cat);
         assertEquals(true, mbs.createCategory(testuser.getUsername(), "vacations"));
     }
+
     @Test
     public void createIncome() throws SQLException, Exception {
-        Income i = new Income(testuser.getUsername(), 1000.0, today);
         dbbudget.create(i);
         assertEquals(true, mbs.createIncome(testuser.getUsername(), 1000.0, today));
     }
@@ -116,9 +120,26 @@ public class MyBudgetServiceTest {
         dbbudget.create(cat);
         assertEquals(true, mbs.createExpense(testuser.getUsername(), "groceries", 150.0, today));
     }
+
+    @Test
+    public void updateBalanceNewIncome() throws SQLException, Exception {
+        dbbudget.saveBalance(testBalance);
+        double inc = i.getAmount();
+        boolean result = mbs.updateBalanceNewIncome(testuser.getUsername(), inc, LocalDate.now());
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void updateBalanceNewExpense() throws SQLException, Exception {
+        dbbudget.saveBalance(testBalance);
+        double expense = e.getAmount();
+        boolean result = mbs.updateBalanceNewIncome(testuser.getUsername(), expense, LocalDate.now());
+        assertEquals(true, result);
+    }
+
     @Test
     public void createExpenseReturnsfalse() throws SQLException {
-        
+
         assertEquals(false, mbs.createExpense("", "groceries", -100.0, today));
     }
 

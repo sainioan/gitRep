@@ -9,14 +9,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import mybudgetapp.domain.Balance;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
 import mybudgetapp.domain.User;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -32,6 +31,8 @@ public class DBBudgetDaoTest {
     Expense testExpense;
     Income testIncome;
     User testUser;
+    Balance testBalance;
+    List<Balance> balanceL;
 
     private static final double DELTA = 1e-15;
 
@@ -40,13 +41,14 @@ public class DBBudgetDaoTest {
 
     @Before
     public void setUp() throws SQLException, Exception {
-        db = new MyBudgetDatabase();
+        db = new MyBudgetDatabase("jdbc:sqlite:test.db");
         db.initializeDatabase();
         dao = new DBBudgetDao(db);
         testUser = new User("tester", "testpw");
         testCategory = new Category("tester", "testCategory");
         testExpense = new Expense(testUser.getUsername(), testCategory.getName(), 50.50, LocalDate.now());
         testIncome = new Income(testUser.getUsername(), 1500.00, LocalDate.now());
+        testBalance = new Balance("tester", 7000.0, LocalDate.now());
 
     }
 
@@ -55,7 +57,7 @@ public class DBBudgetDaoTest {
     }
 
     @Test
-    public void create_Category_Works() throws SQLException {
+    public void createCategoryWorks() throws SQLException {
         try {
             dao.saveCategory(testCategory);
             dao.create(testCategory);
@@ -66,7 +68,17 @@ public class DBBudgetDaoTest {
     }
 
     @Test
-    public void create_Expense_Works() throws SQLException {
+    public void saveBalanceWorks() throws SQLException {
+        try {
+            dao.saveBalance(testBalance);
+            assertEquals(7000.0, testBalance.getBalance(), DELTA);
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void createExpenseWorks() throws SQLException {
         try {
             dao.saveExpense(testExpense);
             dao.create(testExpense);
@@ -77,7 +89,7 @@ public class DBBudgetDaoTest {
     }
 
     @Test
-    public void create_Income_Works() throws SQLException {
+    public void createIncomeWorks() throws SQLException {
         try {
             dao.saveIncome(testIncome);
             dao.create(testIncome);
@@ -86,9 +98,18 @@ public class DBBudgetDaoTest {
             System.out.println(t.getMessage());
         }
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+
+    @Test
+    public void findOneWorks() throws SQLException, Exception {
+        Balance b = new Balance("tester", 7000.0, LocalDate.now());
+        dao.saveBalance(b);
+        Balance d = dao.findOne("tester");
+        assertEquals(7000.0, d.getBalance(), DELTA);
+    }
+
+    @Test
+    public void getBalanceListWorks() throws SQLException {
+        balanceL = dao.getBalanceList(testUser);
+        assertEquals(1, balanceL.size());
+    }
 }
