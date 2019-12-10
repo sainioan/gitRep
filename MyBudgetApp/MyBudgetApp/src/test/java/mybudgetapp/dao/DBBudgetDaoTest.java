@@ -7,8 +7,11 @@ package mybudgetapp.dao;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import mybudgetapp.domain.Category;
+import mybudgetapp.domain.Expense;
+import mybudgetapp.domain.Income;
 import mybudgetapp.domain.MyBudget;
 import mybudgetapp.domain.User;
 import org.junit.After;
@@ -28,6 +31,11 @@ public class DBBudgetDaoTest {
     DBBudgetDao dao;
     MyBudgetDatabase db;
     Category testCategory;
+    Expense testExpense;
+    Income testIncome;
+    User testUser;
+
+    private static final double DELTA = 1e-15;
 
     public DBBudgetDaoTest() {
     }
@@ -37,7 +45,10 @@ public class DBBudgetDaoTest {
         db = new MyBudgetDatabase();
         db.initializeDatabase();
         dao = new DBBudgetDao(db);
+        testUser = new User("tester", "testpw");
         testCategory = new Category("tester", "testCategory");
+        testExpense = new Expense(testUser.getUsername(), testCategory.getName(), 50.50, LocalDate.now());
+        testIncome = new Income(testUser.getUsername(), 1500.00, LocalDate.now());
 
     }
 
@@ -46,11 +57,33 @@ public class DBBudgetDaoTest {
     }
 
     @Test
-    public void create_Works() throws SQLException {
+    public void create_Category_Works() throws SQLException {
         try {
             dao.saveCategory(testCategory);
             dao.create(testCategory);
             assertEquals("testCategory", testCategory.getName());
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void create_Expense_Works() throws SQLException {
+        try {
+            dao.saveExpense(testExpense);
+            dao.create(testExpense);
+            assertEquals(testExpense.getAmount(), 50.50, DELTA);
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
+    }
+
+    @Test
+    public void create_Income_Works() throws SQLException {
+        try {
+            dao.saveIncome(testIncome);
+            dao.create(testIncome);
+            assertEquals(testIncome.getAmount(), 1500.00, DELTA);
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }

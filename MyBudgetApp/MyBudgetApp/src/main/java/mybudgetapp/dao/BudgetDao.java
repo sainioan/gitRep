@@ -13,10 +13,10 @@ import mybudgetapp.domain.User;
 /**
  *
  * @author anniinasainio
- * 
+ *
  */
 public interface BudgetDao<T> {
 
-T create(T object) throws SQLException;
+    T create(T object) throws SQLException;
 
 }

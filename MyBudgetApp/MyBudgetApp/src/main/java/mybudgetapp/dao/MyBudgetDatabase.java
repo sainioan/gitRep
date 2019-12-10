@@ -96,7 +96,7 @@ public class MyBudgetDatabase {
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS category ("
                     + "id INTEGER PRIMARY KEY,"
                     + "categoryUser varchar, "
-                    + "name VARCHAR(100),"
+                    + "name varchar(100),"
                     + "FOREIGN KEY (categoryUser) REFERENCES user(username));"
             );
             createCategoryTable.execute();
@@ -182,7 +182,7 @@ public class MyBudgetDatabase {
 
             PreparedStatement createBalanceTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS balance ("
                     + "id INTEGER PRIMARY KEY,"
-                    + "user_username VARCHAR(100),"
+                    + "user_username varchar(100),"
                     + "amount float, "
                     + "time DATE,"
                     + "FOREIGN KEY (user_username) REFERENCES User(username));"

@@ -116,6 +116,11 @@ public class MyBudgetServiceTest {
         dbbudget.create(cat);
         assertEquals(true, mbs.createExpense(testuser.getUsername(), "groceries", 150.0, today));
     }
+    @Test
+    public void createExpenseReturnsfalse() throws SQLException {
+        
+        assertEquals(false, mbs.createExpense("", "groceries", -100.0, today));
+    }
 
     @Test
     public void getLoggedUserReturnsLogged() throws SQLException, Exception {

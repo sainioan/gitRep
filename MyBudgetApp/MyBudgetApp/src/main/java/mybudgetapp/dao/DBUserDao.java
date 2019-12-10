@@ -50,27 +50,27 @@ public class DBUserDao implements UserDao {
 
     }
 
-    public DBUserDao(String database) throws SQLException {
-        Connection conn = db.connect();
-        System.out.println("testing " + conn);
-        users = new ArrayList<>();
-        this.database = database;
-        db = new MyBudgetDatabase(database);
-        db.initializeDatabase();
-        Statement stmt = null;
-        try {
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(selectStmt);
-            while (rs.next()) {
-                User user = new User();
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                users.add(user);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+//    public DBUserDao(String database) throws SQLException {
+//        Connection conn = db.connect();
+//        System.out.println("testing " + conn);
+//        users = new ArrayList<>();
+//        this.database = database;
+//        db = new MyBudgetDatabase(database);
+//        db.initializeDatabase();
+//        Statement stmt = null;
+//        try {
+//            stmt = conn.createStatement();
+//            ResultSet rs = stmt.executeQuery(selectStmt);
+//            while (rs.next()) {
+//                User user = new User();
+//                user.setUsername(rs.getString("username"));
+//                user.setPassword(rs.getString("password"));
+//                users.add(user);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
     /**
      * The medhod saves a new user given into the database
@@ -100,14 +100,20 @@ public class DBUserDao implements UserDao {
         return true;
     }
 
-    public void delete(String username) throws SQLException {
-        Connection conn = db.connect();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM user WHERE username = (?)");
+    public boolean delete(String username) throws SQLException {
+        try {
+            Connection conn = db.connect();
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM user WHERE username = (?)");
 
-        stmt.setString(1, username);
-        stmt.executeUpdate();
-        stmt.close();
-        conn.close();
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+            stmt.close();
+            conn.close();
+        } catch (Throwable t) {
+            System.out.println("delete user error..." + t.getMessage());
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -155,7 +161,7 @@ public class DBUserDao implements UserDao {
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             User user = new User(rs.getString("username"), rs.getString("password"));
-            user.setUsername(rs.getString("userBudget"));
+            user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
             users.add(user);
         }

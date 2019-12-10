@@ -201,7 +201,7 @@ public class DBBudgetDao implements BudgetDao {
      *
      * @param user user given as a parameter
      * @return returns a List with all given user's income entries
-     * @throws SQLException if data retrieval fails 
+     * @throws SQLException if data retrieval fails
      */
     public List<Income> getAllIncome(User user) throws SQLException {
         try {
@@ -232,7 +232,6 @@ public class DBBudgetDao implements BudgetDao {
      * @throws SQLException when retrieving data from the database fails
      */
     public List<Category> getAllCategories(User user) throws SQLException {
-
         try {
             Connection con = db.connect();
             PreparedStatement stmt = con.prepareStatement("SELECT*FROM category WHERE categoryUser = ?");
@@ -250,7 +249,6 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
-        System.out.println(categories.toString());
         return categories;
     }
 

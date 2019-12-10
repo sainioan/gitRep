@@ -51,29 +51,97 @@ public class DBUserDaoTest {
         stmt.close();
         connection.close();
     }
+
     @Test
     public void findByUsernameReturnsUser() throws Exception, NullPointerException {
-        try{
-        User newUser = new User("tester", "abc123");
-        dao.create(newUser);
-        users.add(newUser);
-        newUser = dao.findByUsername("tester");
-        assertEquals("tester", newUser.getUsername());
-        assertEquals("abc123", newUser.getPassword());
-        } catch (Throwable t){
+        try {
+            Connection connection = db.connect();
+
+            assertEquals(true, dao.saveUser(user));
+
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM User WHERE username = 'tester'");
+
+            ResultSet rs = stmt.executeQuery();
+            User user = new User(rs.getString("username"), rs.getString("password"));
+
+            stmt.close();
+            rs.close();
+
+            connection.close();
+            assertEquals("tester", user.getUsername());
+            assertEquals("abc123", user.getPassword());
+        } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
     }
 
     @Test
     public void create_Works() throws SQLException, Exception {
-        //user.setUsername("tester");
+        users.add(user);
         try {
             dao.saveUser(user);
             dao.create(user);
             assertEquals("tester", user.getUsername());
+
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
     }
+
+    @Test
+    public void getAll1_Works() throws SQLException, Exception {
+        dao.create(user);
+        users.add(user);
+        assertEquals(1, users.size());
+    }
+
+    @Test
+    public void getAll2_Works() throws SQLException, Exception {
+        dao.delete(user.getUsername());
+        assertEquals(0, users.size());
+    }
+
+    @Test
+    public void getAll3_Works() throws SQLException, Exception {
+        try{
+        Connection con = db.connect();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM user");
+        users = new ArrayList<>();
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            User user = new User(rs.getString("username"), rs.getString("password"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            
+        }
+        stmt.close();
+        rs.close();
+        con.close();
+        users.add(user);
+        assertEquals(1, users.size());
+        } catch (Exception e){
+            System.out.println("getAll3_Works test error..." + e.getMessage() );
+        }
+    }
+
+    @Test
+    public void findOne_Works() throws SQLException {
+        dao.create(user);
+        assertEquals(user, dao.findOne("tester"));
+        assertEquals(null, dao.findByUsername("fakeUser"));
+    }
+
+    @Test
+    public void delete_Works() throws SQLException, Exception {
+        try {
+            dao.delete(user.getUsername());
+
+            assertEquals(true, dao.delete(user.getUsername()));
+
+        } catch (Throwable t) {
+            System.out.println("delete_Works test error..." + t.getMessage());
+        }
+    }
+
 }

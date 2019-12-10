@@ -76,6 +76,7 @@ public class MyBudgetService {
 
     /**
      * method creates a new expense category
+     *
      * @param username the name of the logged in user
      * @param description the category name inputted by the user
      * @return true when the creation of a new category succeeds
@@ -96,7 +97,7 @@ public class MyBudgetService {
      *
      * @param username the username of the logged in user
      * @param category the category inputted by the user
-     * @param amount the expense amount as double inputted by the user 
+     * @param amount the expense amount as double inputted by the user
      * @param date the date of the expense entry
      * @return returns true if the entry succeeds
      * @throws SQLException if the entry fails
@@ -104,11 +105,13 @@ public class MyBudgetService {
     public boolean createExpense(String username, String category, double amount, LocalDate date) throws SQLException {
         Expense expense = new Expense(username, category, amount, date);
         try {
-            if (!category.equals("create new")) {
+            if (!category.equals("create new") && (!username.equals("") && (date != null) && (amount > 0))) {
                 dbbudgetDao.create(expense);
                 return true;
-            } else {
 
+            } else if ((amount < 0) || (username.equals("")) || (date == null)) {
+                return false;
+            } else {
                 Category newCategory = new Category(username, category);
                 dbbudgetDao.create(newCategory);
                 dbbudgetDao.create(expense);
