@@ -12,7 +12,6 @@ import java.util.List;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
-import mybudgetapp.domain.MyBudget;
 import mybudgetapp.domain.User;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -27,7 +26,6 @@ import static org.junit.Assert.*;
  */
 public class DBBudgetDaoTest {
 
-    MyBudget myBudget;
     DBBudgetDao dao;
     MyBudgetDatabase db;
     Category testCategory;

@@ -32,6 +32,7 @@ public class Balance {
 
     /**
      * the constructor that takes two parameters:
+     *
      * @param username of the logged in user
      * @param date time when a balance is checked
      */
@@ -42,7 +43,7 @@ public class Balance {
 
     public Balance(String username, double amount, LocalDate date) {
         this.username = username;
-        this.amount = getBalance();
+        this.amount = 0.0;
         this.date = date;
     }
 
@@ -68,6 +69,7 @@ public class Balance {
 
     /**
      * setter the expense object
+     *
      * @param e expense object
      */
     public void setExp(Expense e) {
@@ -80,10 +82,28 @@ public class Balance {
 
     /**
      * setter for the income object
+     *
      * @param i the income object
      */
     public void setInc(Income i) {
         this.i = i;
+    }
+
+    public void addIncome(double income) {
+
+        if (income >= 0) {
+            addIncome(income);
+            this.balance += income;
+        } else {
+            return;
+        }
+    }
+    public void deductExpense(double expense){
+        if (this.balance - expense < 0){
+            this.balance = 0.0;
+        }   else {
+            this.balance = this.balance - expense;
+        }
     }
 
     public double getBalance() {

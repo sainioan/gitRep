@@ -16,7 +16,6 @@ import java.util.List;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
 import mybudgetapp.domain.Income;
-import mybudgetapp.domain.MyBudget;
 import mybudgetapp.domain.User;
 
 /**

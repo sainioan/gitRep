@@ -59,6 +59,7 @@ public class MyBudgetAppUI extends Application {
     private DatePicker dateFieldIncome = new DatePicker();
     private ComboBox chooseCategory = new ComboBox();
     private String amountString;
+    private Label balanceLabel = new Label("BALANCE");
 
     @Override
     public void init() throws Exception {
@@ -150,6 +151,7 @@ public class MyBudgetAppUI extends Application {
 
         Label welcome = new Label("Welcome to MyBudgetApp!");
         welcome.setFont(Font.font("Courier New", FontWeight.BOLD, 24));
+        balanceLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
         Label createErrorMsg = new Label();
         Label createConfirmationMsg = new Label();
         Label categoryLabel = new Label("New category");
@@ -157,6 +159,7 @@ public class MyBudgetAppUI extends Application {
         Label incomeLabel = new Label("New income: Add amount.");
         Label expenseDate = new Label("Pick expense date");
         Label incomeDate = new Label("Pick income date");
+        Label currentBalance = new Label();
         Button signoutButton = new Button("Sign out");
         Button createCategoryButton = new Button("Save new category");
         Button createExpenseButton = new Button("Save expense");
@@ -184,6 +187,8 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(dateFieldExpense, 4, 4);
         mybudgetLayout.add(createExpenseButton, 4, 5);
+        mybudgetLayout.add(balanceLabel, 4, 10);
+        mybudgetLayout.add(currentBalance, 4, 11);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
         mybudgetLayout.add(incomeDate, 0, 23);
