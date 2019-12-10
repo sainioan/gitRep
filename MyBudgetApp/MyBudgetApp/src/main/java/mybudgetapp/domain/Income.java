@@ -17,7 +17,7 @@ public class Income {
     private int id;
     private double amount;
     private LocalDate date;
-    private List<Income> totalIncome;
+    private ArrayList<Income> totalIncome = new ArrayList<>();
     private String username;
 
     public Income() {
@@ -55,6 +55,7 @@ public class Income {
     public void setId(int id) {
         this.id = id;
     }
+
     /**
      *
      * @return returns the user's username
@@ -85,16 +86,16 @@ public class Income {
 
     /**
      *
-     * @param date time of the income 
+     * @param date time of the income
      */
     public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public List<Income> getIncome() {
-        Income i = new Income(getUserName(), getAmount(), getDate());
+    public void listIncome(ArrayList<Income> list, Income i) {
+        this.totalIncome = list;
+        i = new Income(i.getUserName(), getAmount(), getDate());
         totalIncome.add(i);
-        return totalIncome;
         //The following method is to get the totalAmountOfIncome   
     }
 

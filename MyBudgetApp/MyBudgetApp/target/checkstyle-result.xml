@@ -9,7 +9,6 @@
 <file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/BudgetDao.java">
 </file>
 <file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/DBBudgetDao.java">
-<error line="177" column="5" severity="error" message="Method length is 21 lines (max allowed is 20)." source="com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck"/>
 </file>
 <file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/package-info.java">
 </file>

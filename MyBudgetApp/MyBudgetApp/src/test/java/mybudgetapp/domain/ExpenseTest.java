@@ -6,6 +6,7 @@
 package mybudgetapp.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.TimeZone.*;
 import org.junit.After;
 import org.junit.Before;
@@ -21,6 +22,7 @@ public class ExpenseTest {
     private static final double DELTA = 1e-15;
     private Expense e;
     private LocalDate date = LocalDate.now();
+    private ArrayList<Expense> testList;
 
     public ExpenseTest() {
 
@@ -29,14 +31,14 @@ public class ExpenseTest {
     @Before
     public void setUp() {
         e = new Expense("tester", "vacation", 500.0, LocalDate.now());
+        testList = new ArrayList<>();
     }
 
     @Test
     public void constructorWorks() {
-        e.setId(1);
+
         try {
             assertEquals(500.0, e.getAmount(), DELTA);
-            assertEquals(1, e.getId());
             assertEquals(LocalDate.now(), e.getDate());
         } catch (Throwable t) {
             System.out.println(t.getMessage());
@@ -44,15 +46,33 @@ public class ExpenseTest {
     }
 
     @Test
-    public void setIdworks() {
-        e.setId(5);
-        assertEquals(5, e.getId());
+    public void listExpensesWorks() {
+        try {
+            Expense exp = new Expense("Peter", "boats", 700.0, LocalDate.now());
+            System.out.println("size of List" + testList.size());
+            System.out.println("size of List" + testList.size());
+        } catch (Exception e) {
+            System.out.println("listExpensesTest error" + e.getMessage());
+        }
+    }
 
+    @Test
+    public void getExpensesTotalWorks() {
+        e.listExpenses(testList, e);
+        try {
+            assertEquals(500.0, e.getExpensesTotal(), DELTA);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void getAmountWorks() {
+        try {
 
-        assertEquals(500.0, e.getAmount(), DELTA);
+            assertEquals(500.0, e.getAmount(), DELTA);
+        } catch (Exception e) {
+            System.out.println("Expense getAmount error " + e.getMessage());
+        }
     }
 
     public void equalWhenSameId() {
@@ -74,16 +94,24 @@ public class ExpenseTest {
 
     @Test
     public void getDateWorks() {
-        e.setDate(date);
-        assertEquals(LocalDate.now(), e.getDate());
+        try {
+            e.setDate(date);
+            assertEquals(LocalDate.now(), e.getDate());
+        } catch (Exception e) {
+            System.out.println("Expense getDate error " + e.getMessage());
+        }
     }
 
     @Test
     public void testToString() {
+        try {
 
-        Expense e1 = new Expense("Tester", "Insurance", 700.0, LocalDate.now());
-        e1.setAmount(700.0);
-        String expected = "Tester: (Expense catetegory): Insurance, (Amount): 700.0, (Date): " + LocalDate.now().toString();
-        assertEquals(expected, e1.toString());
+            Expense e1 = new Expense("Tester", "Insurance", 700.0, LocalDate.now());
+            e1.setAmount(700.0);
+            String expected = "Tester: (Expense catetegory): Insurance, (Amount): 700.0, (Date): " + LocalDate.now().toString();
+            assertEquals(expected, e1.toString());
+        } catch (Throwable t) {
+            System.out.println("Expense toString error " + t.getMessage());
+        }
     }
 }

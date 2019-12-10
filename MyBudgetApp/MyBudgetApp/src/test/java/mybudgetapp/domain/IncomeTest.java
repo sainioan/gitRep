@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,12 +21,15 @@ public class IncomeTest {
     Income i;
     private static final double DELTA = 1e-15;
     private LocalDate today = LocalDate.now();
+    private ArrayList<Income> testList;
+
     public IncomeTest() {
     }
 
     @Before
     public void setUp() {
         i = new Income(1, 2500.0, LocalDate.now());
+        testList = new ArrayList<>();
     }
 
     @After
@@ -67,14 +71,36 @@ public class IncomeTest {
         assertEquals(5, i.getId());
 
     }
-    @Test 
-    public void getDateWorks(){
+
+    @Test
+    public void getDateWorks() {
         i.setDate(today);
         assertEquals(LocalDate.now(), i.getDate());
     }
+
     @Test
     public void getAmountWorks() {
         assertEquals(2500.0, i.getAmount(), DELTA);
+    }
+
+    public void listincomeWorks() {
+        try {
+            Income inc = new Income("Peter", 1500.0, LocalDate.now());
+            System.out.println("size of List" + testList.size());
+            System.out.println("size of List" + testList.size());;
+        } catch (Exception e) {
+            System.out.println("listExpensesTest error" + e.getMessage());
+        }
+    }
+
+    @Test
+    public void getExpensesTotalWorks() {
+        i.listIncome(testList, i);
+        try {
+            assertEquals(2500.0, i.getIncomeTotal(), DELTA);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test

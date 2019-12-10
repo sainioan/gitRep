@@ -38,6 +38,7 @@ public class DBBudgetDao implements BudgetDao {
     private String sql4 = "SELECT*FROM category";
     private List<Income> incomeByUser = new ArrayList<>();
     private List<Expense> expensesByUser = new ArrayList<>();
+    private List<Balance> listB = new ArrayList<>();
 
     /**
      *
@@ -175,7 +176,6 @@ public class DBBudgetDao implements BudgetDao {
     }
 
     public List<Balance> getBalanceList(User user) throws SQLException {
-        List<Balance> listB = new ArrayList<>();
         try {
             Connection con = db.connect();
             String userUsername = user.getUsername();
@@ -192,7 +192,6 @@ public class DBBudgetDao implements BudgetDao {
             }
         } catch (Throwable t) {
             System.out.println("getBalanceList" + t.getMessage());
-
         }
         return listB;
     }
@@ -214,7 +213,6 @@ public class DBBudgetDao implements BudgetDao {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Expense expense = new Expense(rs.getString("user_username").trim(), rs.getString("category_name"), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
-                expense.setId(rs.getInt("id"));
                 expensesByUser.add(expense);
                 stmt.close();
                 rs.close();

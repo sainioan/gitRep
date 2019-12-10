@@ -18,17 +18,11 @@ public class Expense {
     private String categoryName;
     private double amount;
     private LocalDate date;
-    private List<Expense> expenses;
+    private ArrayList<Expense> expenses = new ArrayList<>();
     private String userName;
 
     public Expense() {
 
-    }
-
-    public Expense(double amount, LocalDate date) {
-
-        this.amount = amount;
-        this.date = date;
     }
 
     /**
@@ -56,14 +50,6 @@ public class Expense {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getCategoryName() {
@@ -94,10 +80,10 @@ public class Expense {
         this.date = date;
     }
 
-    public List<Expense> getExpenses() {
-        Expense e = new Expense(getUserName(), getCategoryName(), getAmount(), getDate());
+    public void listExpenses(ArrayList<Expense> list, Expense e) {
+        this.expenses = list;
+        e = new Expense(getUserName(), getCategoryName(), getAmount(), getDate());
         expenses.add(e);
-        return expenses;
     }
 
     public double getExpensesTotal() {
