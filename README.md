@@ -9,6 +9,8 @@
 
 [Viikko5 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko5)
 
+[Viikko6 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko6)
+
 [Kayttoohje](../master/documentation/Usage.md)
 
 
