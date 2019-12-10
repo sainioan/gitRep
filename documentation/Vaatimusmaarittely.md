@@ -20,7 +20,8 @@ Individuals, who have a user account, can sign in with their username and passwo
 
 ### After Login
 * User can logout. -- done
-* The user should be able to add income.--done
+* The user should be able to add income amount and date.-- done
+* The user should be able to add enxpense amount and date. -- done
 * The user should be able to add his/her expenses against different categories such as groceries, gas, medical, etc. -- done
 * The user should be able to add new categories of expenses. -- done
 * The user should be able remove old categories of expenses.
