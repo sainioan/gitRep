@@ -4,7 +4,6 @@
 
 The program uses a three-tier architecture, and the package structure of the code is following:
 
-
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/Structure.png">
 
 ## Graphical User Interface
@@ -18,6 +17,7 @@ The GUI consistis of three scenese:
 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/Sovelluslogiikka.png">
 
+MyBudgetService is responsible for the interaction between the Graphical User Interface and the database.
 
 ### Class/Package Diagram
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/class diagram.png">
@@ -76,14 +76,26 @@ FOREIGN KEY (categoryUser) REFERENCES user(username)
 
 #### Login
 
+In the login window, the user inputs his/her username and password into the appropriate text fields and clicks the "login" button. If the user does not have an existing username and password, the user clicks on the "sign up" button
+
 #### Sequence Diagram
 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp Login Sequence Diagram.png">
 
 #### New User Sign Up
 
+In the sign up window, the user creates a new username and password and click on the confirm button.
 
 #### Other Functionalities
+##### Financial Transactions
+
+After logging in, the user can input data regarding his/her income or expense as well create new expense cateogories. The data regarding the amount of money is entered into the corresponding textfields and the datepicker object is used to set the time of transaction.
+
+When a new category is created, the gui invokes the createCateogory method in MyBudgetService class, with the username and the category as its parameters.
+
+When a new expense is recorded, the gui invokes the createExpense method of the MyBudgetService class, with the username, category name, amount, and date as its parameters.
+
+When a new income is recorded, the gui invokes the createIncome method of the MyBudgetService class, with the username, amount, and date as its parameters.
 
 
 
