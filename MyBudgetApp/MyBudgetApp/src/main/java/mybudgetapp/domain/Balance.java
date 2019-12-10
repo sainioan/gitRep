@@ -92,7 +92,6 @@ public class Balance {
     public void addIncome(double income) {
 
         if (income >= 0) {
-            addIncome(income);
             this.balance += income;
         } else {
             return;

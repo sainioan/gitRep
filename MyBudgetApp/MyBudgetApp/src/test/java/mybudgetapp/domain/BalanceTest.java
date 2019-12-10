@@ -21,11 +21,13 @@ public class BalanceTest {
     private static final double DELTA = 1e-15;
     User user = new User("tester", "alphabeta");
     LocalDate date = LocalDate.now();
+    private double amount;
 
     @Before
     public void setUp() {
         String username = user.getUsername();
         balance = new Balance(username, 2500.0, date);
+
     }
 
     @Test
@@ -59,6 +61,20 @@ public class BalanceTest {
     }
 
     @Test
+    public void addIncomeIsCorrect() {
+        balance.setBalance(2500.0);
+        balance.addIncome(200);
+        assertEquals(2700.0, balance.getBalance(), DELTA);
+    }
+
+    @Test
+    public void deductExpenseIsCorrect() {
+        balance.setBalance(2500.0);
+        balance.deductExpense(200);
+        assertEquals(2300.0, balance.getBalance(), DELTA);
+    }
+
+    @Test
     public void constructorWorks() {
         balance.setBalance(2500.0);
         try {
@@ -67,12 +83,20 @@ public class BalanceTest {
             System.out.println(t.getMessage());
         }
     }
-
     @Test
     public void setIdworks() {
         balance.setId(5);
         assertEquals(5, balance.getId());
 
+    }
+
+    @Test
+    public void testToString() {
+
+        Balance b1 = new Balance("Ballerina", 2500.0, LocalDate.now());
+        b1.setBalance(2500.0);
+        String expected = "Ballerina: (Balance): 2500.0 on " + LocalDate.now().toString();
+        assertEquals(expected, b1.toString());
     }
 
 }

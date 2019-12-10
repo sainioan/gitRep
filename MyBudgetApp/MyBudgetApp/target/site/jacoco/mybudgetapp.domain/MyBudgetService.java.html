@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyBudgetService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBudgetApp</a> &gt; <a href="index.source.html" class="el_package">mybudgetapp.domain</a> &gt; <span class="el_source">MyBudgetService.java</span></div><h1>MyBudgetService.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mybudgetapp.domain;
+
+import javafx.beans.property.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.sql.SQLException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+import mybudgetapp.dao.BudgetDao;
+import mybudgetapp.dao.DBBudgetDao;
+import mybudgetapp.dao.DBUserDao;
+import mybudgetapp.dao.MyBudgetDatabase;
+import mybudgetapp.dao.UserDao;
+import mybudgetapp.domain.User;
+
+/**
+ *
+ * @author anniinasainio
+ */
+public class MyBudgetService {
+
+    private MyBudgetDatabase mybDatabase;
+    private DBBudgetDao dbbudgetDao;
+    private DBUserDao dbuserDao;
+    private User loggedIn;
+    private String username;
+    private String password;
+    private LocalDate date;
+
+    /**
+     *
+     * @param db the database givens as a parameter
+     * @throws SQLException when connection to the database fails
+     */
+<span class="fc" id="L52">    public MyBudgetService(MyBudgetDatabase db) throws SQLException {</span>
+<span class="fc" id="L53">        this.mybDatabase = db;</span>
+<span class="fc" id="L54">        this.mybDatabase.initializeDatabase();</span>
+<span class="fc" id="L55">        dbuserDao = new DBUserDao(mybDatabase);</span>
+<span class="fc" id="L56">        dbbudgetDao = new DBBudgetDao(mybDatabase);</span>
+<span class="fc" id="L57">        this.date = LocalDate.now();</span>
+
+<span class="fc" id="L59">    }</span>
+
+<span class="fc" id="L61">    public MyBudgetService(MyBudgetDatabase db, String username) throws SQLException {</span>
+<span class="fc" id="L62">        this.username = username;</span>
+<span class="fc" id="L63">        this.mybDatabase = db;</span>
+<span class="fc" id="L64">        this.mybDatabase.initializeDatabase();</span>
+<span class="fc" id="L65">        dbuserDao = new DBUserDao(mybDatabase);</span>
+<span class="fc" id="L66">        dbbudgetDao = new DBBudgetDao(mybDatabase);</span>
+<span class="fc" id="L67">        this.date = LocalDate.now();</span>
+<span class="fc" id="L68">    }</span>
+
+<span class="nc" id="L70">    public MyBudgetService() {</span>
+
+<span class="nc" id="L72">        this.mybDatabase.initializeDatabase();</span>
+<span class="nc" id="L73">        dbuserDao = new DBUserDao(mybDatabase);</span>
+
+<span class="nc" id="L75">    }</span>
+
+    /**
+     * method creates a new expense category
+     *
+     * @param username the name of the logged in user
+     * @param description the category name inputted by the user
+     * @return true when the creation of a new category succeeds
+     */
+    public boolean createCategory(String username, String description) {
+<span class="fc" id="L85">        Category category = new Category(username, description);</span>
+        try {
+<span class="fc" id="L87">            dbbudgetDao.create(category);</span>
+<span class="nc" id="L88">        } catch (Exception e) {</span>
+<span class="nc" id="L89">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L90">            return false;</span>
+<span class="fc" id="L91">        }</span>
+<span class="fc" id="L92">        return true;</span>
+    }
+
+    /**
+     * the method creates a new expense entry
+     *
+     * @param username the username of the logged in user
+     * @param category the category inputted by the user
+     * @param amount the expense amount as double inputted by the user
+     * @param date the date of the expense entry
+     * @return returns true if the entry succeeds
+     * @throws SQLException if the entry fails
+     */
+    public boolean createExpense(String username, String category, double amount, LocalDate date) throws SQLException {
+<span class="fc" id="L106">        Expense expense = new Expense(username, category, amount, date);</span>
+        try {
+<span class="pc bpc" id="L108" title="3 of 8 branches missed.">            if (!category.equals(&quot;create new&quot;) &amp;&amp; (!username.equals(&quot;&quot;) &amp;&amp; (date != null) &amp;&amp; (amount &gt; 0))) {</span>
+<span class="fc" id="L109">                dbbudgetDao.create(expense);</span>
+<span class="fc" id="L110">                return true;</span>
+
+<span class="pc bpc" id="L112" title="5 of 6 branches missed.">            } else if ((amount &lt; 0) || (username.equals(&quot;&quot;)) || (date == null)) {</span>
+<span class="fc" id="L113">                return false;</span>
+            } else {
+<span class="nc" id="L115">                Category newCategory = new Category(username, category);</span>
+<span class="nc" id="L116">                dbbudgetDao.create(newCategory);</span>
+<span class="nc" id="L117">                dbbudgetDao.create(expense);</span>
+            }
+<span class="nc" id="L119">        } catch (SQLException ex) {</span>
+<span class="nc" id="L120">            System.out.println(&quot;createExpense error message is...&quot; + ex.getMessage());</span>
+<span class="nc" id="L121">            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L122">            return false;</span>
+<span class="nc" id="L123">        }</span>
+<span class="nc" id="L124">        return true;</span>
+    }
+
+    public boolean createIncome(String username, double amount, LocalDate date) throws SQLException, Exception {
+<span class="fc" id="L128">        Income income = new Income(username, amount, date);</span>
+
+        try {
+<span class="fc" id="L131">            dbbudgetDao.create(income);</span>
+<span class="nc" id="L132">        } catch (SQLException ex) {</span>
+<span class="nc" id="L133">            System.out.println(&quot;createIncome error message is...&quot; + ex.getMessage());</span>
+<span class="nc" id="L134">            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L135">            return false;</span>
+<span class="fc" id="L136">        }</span>
+<span class="fc" id="L137">        return true;</span>
+    }
+
+    public boolean login(String username, String password) {
+<span class="fc" id="L141">        User user = dbuserDao.findByUsername(username);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (user == null) {</span>
+<span class="fc" id="L143">            return false;</span>
+        }
+
+<span class="nc" id="L146">        loggedIn = user;</span>
+<span class="nc" id="L147">        return true;</span>
+    }
+
+    public User getLoggedUser() {
+<span class="fc" id="L151">        System.out.println(loggedIn);</span>
+<span class="fc" id="L152">        return loggedIn;</span>
+    }
+
+    public void logout() {
+<span class="fc" id="L156">        loggedIn = null;</span>
+<span class="fc" id="L157">    }</span>
+
+    public boolean createUser(String username, String password) {
+<span class="fc" id="L160">        User user = new User(username, password);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (!user.validateUsername().isEmpty()) {</span>
+<span class="nc" id="L162">            return false;</span>
+        }
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        if (!user.validatePassword().isEmpty()) {</span>
+<span class="nc" id="L165">            return false;</span>
+        }
+
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (dbuserDao.findByUsername(username) != null) {</span>
+<span class="nc" id="L169">            return false;</span>
+        }
+
+        try {
+<span class="fc" id="L173">            dbuserDao.create(user);</span>
+<span class="nc" id="L174">        } catch (Exception e) {</span>
+<span class="nc" id="L175">            return false;</span>
+<span class="fc" id="L176">        }</span>
+
+<span class="fc" id="L178">        return true;</span>
+
+    }
+
+    public ObservableList&lt;String&gt; createChoices() throws SQLException {
+<span class="fc" id="L183">        ObservableList&lt;String&gt; items = FXCollections.observableArrayList();</span>
+<span class="fc" id="L184">        List&lt;Category&gt; categories = dbbudgetDao.getAllCategories(loggedIn);</span>
+<span class="fc" id="L185">        ArrayList&lt;String&gt; categorynames = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        for (Category c : categories) {</span>
+<span class="nc" id="L188">            String name = c.getName();</span>
+<span class="nc" id="L189">            categorynames.add(name);</span>
+<span class="nc" id="L190">        }</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">        for (String s : categorynames) {</span>
+<span class="nc" id="L192">            items.add(s.trim());</span>
+<span class="nc" id="L193">        }</span>
+<span class="fc" id="L194">        System.out.println(categories);</span>
+<span class="fc" id="L195">        items.add(&quot;create new&quot;);</span>
+<span class="fc" id="L196">        System.out.println(items);</span>
+<span class="fc" id="L197">        return items;</span>
+
+    }
+
+    public Boolean validateUsernameInput(String username) {
+<span class="nc bnc" id="L202" title="All 6 branches missed.">        return ((username != null) &amp;&amp; username.matches(&quot;[A-Za-z0-9_]+&quot;) &amp;&amp; username.length() &gt;= 5);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

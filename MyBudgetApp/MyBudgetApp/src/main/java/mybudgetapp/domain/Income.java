@@ -55,19 +55,6 @@ public class Income {
     public void setId(int id) {
         this.id = id;
     }
-
-    public List<Income> getTotalIncome() {
-        return totalIncome;
-    }
-
-    /**
-     *
-     * @param totalIncome list of users totalIncome
-     */
-    public void setTotalIncome(List<Income> totalIncome) {
-        this.totalIncome = totalIncome;
-    }
-
     /**
      *
      * @return returns the user's username

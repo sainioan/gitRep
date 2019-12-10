@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DBBudgetDao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBudgetApp</a> &gt; <a href="index.source.html" class="el_package">mybudgetapp.dao</a> &gt; <span class="el_source">DBBudgetDao.java</span></div><h1>DBBudgetDao.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mybudgetapp.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import mybudgetapp.domain.Category;
+import mybudgetapp.domain.Expense;
+import mybudgetapp.domain.Income;
+import mybudgetapp.domain.User;
+
+/**
+ *
+ * @author anniinasainio
+ */
+public class DBBudgetDao implements BudgetDao {
+
+    private int id;
+    private String description;
+    private MyBudgetDatabase db;
+    private String database;
+<span class="pc" id="L31">    private List&lt;Category&gt; categories = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L32">    private List&lt;Expense&gt; expenses = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L33">    private List&lt;Income&gt; incomeList = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L34">    private String sql2 = &quot;SELECT*FROM income where user_username = ?&quot;;</span>
+<span class="pc" id="L35">    private String sql3 = &quot;SELECT*FROM expense where user_username = ?&quot;;</span>
+<span class="pc" id="L36">    private String sql4 = &quot;SELECT*FROM category&quot;;</span>
+<span class="pc" id="L37">    private List&lt;Income&gt; incomeByUser = new ArrayList&lt;&gt;();</span>
+<span class="pc" id="L38">    private List&lt;Expense&gt; expensesByUser = new ArrayList&lt;&gt;();</span>
+
+    /**
+     *
+     * @param db database given as a parameter
+     */
+<span class="fc" id="L44">    public DBBudgetDao(MyBudgetDatabase db) {</span>
+<span class="fc" id="L45">        this.db = db;</span>
+<span class="fc" id="L46">        categories = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L47">        db.initializeDatabase();</span>
+<span class="fc" id="L48">        Statement stmt = null;</span>
+        try {
+<span class="fc" id="L50">            Connection conn = db.connect();</span>
+<span class="fc" id="L51">            db = new MyBudgetDatabase(database);</span>
+<span class="fc" id="L52">            stmt = conn.createStatement();</span>
+<span class="fc" id="L53">            ResultSet rs = stmt.executeQuery(&quot;Select*FROM category&quot;);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L55">                Category category = new Category();</span>
+<span class="fc" id="L56">                category.setUserName(rs.getString(&quot;categoryUser&quot;));</span>
+<span class="fc" id="L57">                category.setName(rs.getString(&quot;name&quot;));</span>
+<span class="fc" id="L58">                categories.add(category);</span>
+<span class="fc" id="L59">            }</span>
+<span class="nc" id="L60">        } catch (Exception e) {</span>
+<span class="nc" id="L61">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L62">        }</span>
+
+<span class="fc" id="L64">    }</span>
+
+    /**
+     *
+     * @param database address of the database
+     * @throws SQLException if the connection to the database fails
+     */
+<span class="nc" id="L71">    public DBBudgetDao(String database) throws SQLException {</span>
+<span class="nc" id="L72">        Connection conn = db.connect();</span>
+
+<span class="nc" id="L74">        categories = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L75">        this.database = database;</span>
+<span class="nc" id="L76">        db = new MyBudgetDatabase(database);</span>
+<span class="nc" id="L77">        db.initializeDatabase();</span>
+
+<span class="nc" id="L79">    }</span>
+
+    /**
+     * Saves given category into the database
+     *
+     * @param category category name
+     * @throws SQLException if saving the category name fails
+     */
+    public void saveCategory(Category category) throws SQLException, Exception {
+<span class="fc" id="L88">        Connection connection = db.connect();</span>
+
+        try {
+<span class="fc" id="L91">            PreparedStatement statement = connection.prepareStatement(</span>
+                    &quot;INSERT OR REPLACE INTO category (categoryUser, name) VALUES (?,?);&quot;
+            );
+<span class="fc" id="L94">            statement.setString(1, category.getUserName());</span>
+<span class="fc" id="L95">            statement.setString(2, category.getName());</span>
+<span class="fc" id="L96">            statement.executeUpdate();</span>
+<span class="fc" id="L97">            statement.close();</span>
+<span class="nc" id="L98">        } catch (Exception e) {</span>
+<span class="nc" id="L99">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L100">        }</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     *
+     * @param expense the inserted expected
+     * @throws SQLException throws an SQL if saving into database fails
+     * @throws Exception throws an Exception if execution fails
+     */
+    public void saveExpense(Expense expense) throws SQLException, Exception {
+
+<span class="fc" id="L111">        Connection connection = db.connect();</span>
+<span class="fc" id="L112">        Float amountF = (float) expense.getAmount();</span>
+<span class="fc" id="L113">        Date sqlDate = Date.valueOf(expense.getDate());</span>
+        try {
+<span class="fc" id="L115">            PreparedStatement statement = connection.prepareStatement(</span>
+                    &quot;INSERT OR REPLACE INTO expense (user_username, category_name, amount, time) VALUES (?,?,?,?);&quot;
+            );
+<span class="fc" id="L118">            statement.setString(1, expense.getUserName());</span>
+<span class="fc" id="L119">            statement.setString(2, expense.getCategoryName());</span>
+<span class="fc" id="L120">            statement.setFloat(3, amountF);</span>
+<span class="fc" id="L121">            statement.setDate(4, sqlDate);</span>
+<span class="fc" id="L122">            statement.executeUpdate();</span>
+<span class="fc" id="L123">            statement.close();</span>
+<span class="nc" id="L124">        } catch (SQLException e) {</span>
+<span class="nc" id="L125">            System.out.println(&quot;saveExpense message is... &quot; + e.getMessage());</span>
+<span class="fc" id="L126">        }</span>
+<span class="fc" id="L127">    }</span>
+
+    /**
+     * Saves an income entry into the database
+     *
+     * @param income income object
+     * @throws SQLException if the saving into the database fails
+     *
+     * @throws Exception if execution fails
+     */
+    public void saveIncome(Income income) throws SQLException, Exception {
+<span class="fc" id="L138">        Connection connection = db.connect();</span>
+<span class="fc" id="L139">        Float amountF2 = (float) income.getAmount();</span>
+<span class="fc" id="L140">        Date sqlDate = Date.valueOf(income.getDate());</span>
+        try {
+<span class="fc" id="L142">            PreparedStatement statementIn = connection.prepareStatement(</span>
+                    &quot;INSERT OR REPLACE INTO income (user_username, amount, time) VALUES (?,?,?);&quot;
+            );
+<span class="fc" id="L145">            statementIn.setString(1, income.getUserName());</span>
+<span class="fc" id="L146">            statementIn.setFloat(2, amountF2);</span>
+<span class="fc" id="L147">            statementIn.setDate(3, sqlDate);</span>
+<span class="fc" id="L148">            statementIn.executeUpdate();</span>
+<span class="fc" id="L149">            statementIn.close();</span>
+<span class="nc" id="L150">        } catch (SQLException e) {</span>
+<span class="nc" id="L151">            System.out.println(&quot;saveIncome error message is... &quot; + e.getMessage());</span>
+<span class="fc" id="L152">        }</span>
+<span class="fc" id="L153">    }</span>
+//    public void saveBalance(Balance balance) throws Exception {
+//        Connection connection = db.connect();
+//        System.out.println(&quot;Balance test&quot; + connection);
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(
+//                    &quot;INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);&quot;
+//            );
+    // statement.setString(1, balance.get   
+//            statement.setFloat(2, balance.getAmount());
+//            statement.executeUpdate();
+//            statement.close();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+
+    /**
+     * Adds a new expense entered by a user given as a parameter to a list
+     *
+     * @param user user object
+     * @return an ArrayList with all of the users expenses
+     * @throws SQLException if retrieving data from the database fails
+     *
+     */
+    public List&lt;Expense&gt; getAllExpenses(User user) throws SQLException {
+        try {
+<span class="nc" id="L180">            Connection con = db.connect();</span>
+<span class="nc" id="L181">            String userUsername = user.getUsername();</span>
+<span class="nc" id="L182">            PreparedStatement stmt = con.prepareStatement(sql3);</span>
+<span class="nc" id="L183">            stmt.setString(1, userUsername);</span>
+<span class="nc" id="L184">            ResultSet rs = stmt.executeQuery();</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L186">                Expense expense = new Expense(rs.getString(&quot;user_username&quot;).trim(), rs.getString(&quot;category_name&quot;), rs.getFloat(&quot;amount&quot;), rs.getDate(&quot;time&quot;).toLocalDate());</span>
+<span class="nc" id="L187">                expense.setId(rs.getInt(&quot;id&quot;));</span>
+<span class="nc" id="L188">                expensesByUser.add(expense);</span>
+<span class="nc" id="L189">                stmt.close();</span>
+<span class="nc" id="L190">                rs.close();</span>
+<span class="nc" id="L191">                con.close();</span>
+<span class="nc" id="L192">            }</span>
+<span class="nc" id="L193">        } catch (Throwable t) {</span>
+<span class="nc" id="L194">            System.out.println(t.getMessage());</span>
+<span class="nc" id="L195">        }</span>
+<span class="nc" id="L196">        return expensesByUser;</span>
+    }
+
+    /**
+     *
+     * @param user user given as a parameter
+     * @return returns a List with all given user's income entries
+     * @throws SQLException if data retrieval fails
+     */
+    public List&lt;Income&gt; getAllIncome(User user) throws SQLException {
+        try {
+<span class="nc" id="L207">            Connection con = db.connect();</span>
+<span class="nc" id="L208">            String userUsername = user.getUsername();</span>
+<span class="nc" id="L209">            PreparedStatement stmt = con.prepareStatement(sql2);</span>
+<span class="nc" id="L210">            stmt.setString(1, userUsername);</span>
+<span class="nc" id="L211">            ResultSet rs = stmt.executeQuery();</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L213">                Income income = new Income(rs.getString(&quot;user_username&quot;).trim(), rs.getFloat(&quot;amount&quot;), rs.getDate(&quot;time&quot;).toLocalDate());</span>
+<span class="nc" id="L214">                income.setId(rs.getInt(&quot;id&quot;));</span>
+<span class="nc" id="L215">                incomeList.add(income);</span>
+<span class="nc" id="L216">                stmt.close();</span>
+<span class="nc" id="L217">                rs.close();</span>
+<span class="nc" id="L218">                con.close();</span>
+<span class="nc" id="L219">            }</span>
+<span class="nc" id="L220">        } catch (Throwable t) {</span>
+<span class="nc" id="L221">            System.out.println(t.getMessage());</span>
+<span class="nc" id="L222">        }</span>
+<span class="nc" id="L223">        return incomeByUser;</span>
+
+    }
+
+    /**
+     *
+     * @param user user object
+     * @return returns a list of categories created by the given user
+     * @throws SQLException when retrieving data from the database fails
+     */
+    public List&lt;Category&gt; getAllCategories(User user) throws SQLException {
+        try {
+<span class="fc" id="L235">            Connection con = db.connect();</span>
+<span class="fc" id="L236">            PreparedStatement stmt = con.prepareStatement(&quot;SELECT*FROM category WHERE categoryUser = ?&quot;);</span>
+<span class="fc" id="L237">            stmt.setString(1, user.getUsername());</span>
+<span class="fc" id="L238">            ResultSet rs = stmt.executeQuery();</span>
+<span class="fc" id="L239">            categories = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L241">                Category category = new Category(rs.getString(&quot;categoryUser&quot;).trim(), rs.getString(&quot;name&quot;));</span>
+<span class="fc" id="L242">                category.setId(rs.getInt(&quot;id&quot;));</span>
+<span class="fc" id="L243">                categories.add(category);</span>
+<span class="fc" id="L244">                stmt.close();</span>
+<span class="fc" id="L245">                rs.close();</span>
+<span class="fc" id="L246">                con.close();</span>
+<span class="fc" id="L247">            }</span>
+<span class="fc" id="L248">        } catch (Throwable t) {</span>
+<span class="fc" id="L249">            System.out.println(t.getMessage());</span>
+<span class="fc" id="L250">        }</span>
+<span class="fc" id="L251">        return categories;</span>
+    }
+
+    /**
+     * creates a new category object by calling saveCategory method
+     *
+     * @param category category object
+     * @return returns category object
+     * @throws SQLException if data retrieval fails
+     */
+    public Category create(Category category) throws SQLException {
+
+<span class="fc" id="L263">        categories.add(category);</span>
+
+        try {
+<span class="fc" id="L266">            saveCategory(category);</span>
+<span class="nc" id="L267">        } catch (Exception e) {</span>
+<span class="nc" id="L268">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L269">        }</span>
+<span class="fc" id="L270">        return category;</span>
+    }
+
+    /**
+     *
+     * @param income income object
+     * @return returns income object
+     * @throws SQLException if the data retrieval fails
+     */
+    public Income create(Income income) throws SQLException {
+
+        try {
+<span class="fc" id="L282">            incomeList.add(income);</span>
+<span class="fc" id="L283">            saveIncome(income);</span>
+<span class="nc" id="L284">        } catch (Exception e) {</span>
+<span class="nc" id="L285">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L286">        }</span>
+<span class="fc" id="L287">        System.out.println(incomeList.toString());</span>
+<span class="fc" id="L288">        return income;</span>
+    }
+
+    /**
+     *
+     * @param expense expense object inputted by the logged in user
+     * @return returns the newly created expense object
+     * @throws SQLException if data retrieval from the database fails
+     */
+    public Expense create(Expense expense) throws SQLException {
+
+        try {
+<span class="fc" id="L300">            expenses.add(expense);</span>
+<span class="fc" id="L301">            saveExpense(expense);</span>
+<span class="nc" id="L302">        } catch (Exception e) {</span>
+<span class="nc" id="L303">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L304">        }</span>
+<span class="fc" id="L305">        System.out.println(expenses.toString());</span>
+<span class="fc" id="L306">        return expense;</span>
+    }
+
+    @Override
+    public Object create(Object object) throws SQLException {
+<span class="nc" id="L311">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

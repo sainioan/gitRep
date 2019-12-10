@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Balance.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBudgetApp</a> &gt; <a href="index.source.html" class="el_package">mybudgetapp.domain</a> &gt; <span class="el_source">Balance.java</span></div><h1>Balance.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mybudgetapp.domain;
+
+import java.time.LocalDate;
+import java.util.*;
+
+/**
+ *
+ * @author anniinasainio
+ */
+public class Balance {
+
+    private double balance;
+    private int id;
+    private double amount;
+    private double incomeTotal;
+    private double expenseTotal;
+    private String username;
+    private Expense e;
+    private Income i;
+    private LocalDate date;
+
+<span class="nc" id="L27">    public Balance(double incomeTotal, double expenseTotal) {</span>
+
+<span class="nc" id="L29">        this.incomeTotal = incomeTotal;</span>
+<span class="nc" id="L30">        this.expenseTotal = expenseTotal;</span>
+<span class="nc" id="L31">    }</span>
+
+    /**
+     * the constructor that takes two parameters:
+     *
+     * @param username of the logged in user
+     * @param date time when a balance is checked
+     */
+<span class="nc" id="L39">    public Balance(String username, LocalDate date) {</span>
+<span class="nc" id="L40">        this.username = username;</span>
+<span class="nc" id="L41">        this.date = date;</span>
+<span class="nc" id="L42">    }</span>
+
+<span class="fc" id="L44">    public Balance(String username, double amount, LocalDate date) {</span>
+<span class="fc" id="L45">        this.username = username;</span>
+<span class="fc" id="L46">        this.amount = 0.0;</span>
+<span class="fc" id="L47">        this.date = date;</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     *
+     * @return returns the username of the user
+     */
+    public String getUsername() {
+<span class="nc" id="L55">        return username;</span>
+    }
+
+    public void setUsername(String username) {
+<span class="nc" id="L59">        this.username = username;</span>
+<span class="nc" id="L60">    }</span>
+
+    /**
+     *
+     * @return returns the expense object
+     */
+    public Expense getExp() {
+<span class="nc" id="L67">        return e;</span>
+    }
+
+    /**
+     * setter the expense object
+     *
+     * @param e expense object
+     */
+    public void setExp(Expense e) {
+<span class="nc" id="L76">        this.e = e;</span>
+<span class="nc" id="L77">    }</span>
+
+    public Income getInc() {
+<span class="nc" id="L80">        return i;</span>
+    }
+
+    /**
+     * setter for the income object
+     *
+     * @param i the income object
+     */
+    public void setInc(Income i) {
+<span class="nc" id="L89">        this.i = i;</span>
+<span class="nc" id="L90">    }</span>
+
+    public void addIncome(double income) {
+
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (income &gt;= 0) {</span>
+<span class="fc" id="L95">            this.balance += income;</span>
+        } else {
+<span class="nc" id="L97">            return;</span>
+        }
+<span class="fc" id="L99">    }</span>
+    public void deductExpense(double expense){
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (this.balance - expense &lt; 0){</span>
+<span class="nc" id="L102">            this.balance = 0.0;</span>
+        }   else {
+<span class="fc" id="L104">            this.balance = this.balance - expense;</span>
+        }
+<span class="fc" id="L106">    }</span>
+
+    public double getBalance() {
+<span class="fc" id="L109">        return balance;</span>
+    }
+
+    public void setBalance(double b) {
+<span class="fc" id="L113">        this.balance = b;</span>
+        //this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();
+
+<span class="fc" id="L116">    }</span>
+
+    public LocalDate getDate() {
+<span class="fc" id="L119">        return date;</span>
+    }
+
+    /**
+     *
+     * @return returns id for the balance
+     */
+    public int getId() {
+<span class="fc" id="L127">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="fc" id="L131">        this.id = id;</span>
+<span class="fc" id="L132">    }</span>
+
+    /**
+     *
+     * @return returns total income as double
+     */
+    public double getIncomeTotal() {
+<span class="nc" id="L139">        return incomeTotal;</span>
+    }
+
+    public void setIncomeTotal(double incomeTotal) {
+<span class="nc" id="L143">        this.incomeTotal = incomeTotal;</span>
+<span class="nc" id="L144">    }</span>
+
+    public double getExpenseTotal() {
+<span class="nc" id="L147">        return expenseTotal;</span>
+    }
+
+    public void setExpenseTotal(double expenseTotal) {
+<span class="nc" id="L151">        this.expenseTotal = expenseTotal;</span>
+<span class="nc" id="L152">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L156">        return this.username + &quot;: (Balance): &quot; + this.balance + &quot; on &quot; + this.date;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

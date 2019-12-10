@@ -6,9 +6,7 @@
 package mybudgetapp.domain;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
@@ -21,7 +19,7 @@ public class IncomeTest {
 
     Income i;
     private static final double DELTA = 1e-15;
-
+    private LocalDate today = LocalDate.now();
     public IncomeTest() {
     }
 
@@ -69,9 +67,23 @@ public class IncomeTest {
         assertEquals(5, i.getId());
 
     }
-
+    @Test 
+    public void getDateWorks(){
+        i.setDate(today);
+        assertEquals(LocalDate.now(), i.getDate());
+    }
     @Test
     public void getAmountWorks() {
         assertEquals(2500.0, i.getAmount(), DELTA);
     }
+
+    @Test
+    public void testToString() {
+
+        Income i1 = new Income("Tester", 1500.0, LocalDate.now());
+        i1.setAmount(1500.0);
+        String expected = "Tester: (Income amount): 1500.0, (Date): " + LocalDate.now().toString();
+        assertEquals(expected, i1.toString());
+    }
+
 }

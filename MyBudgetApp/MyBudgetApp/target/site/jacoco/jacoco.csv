@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+MyBudgetApp,mybudgetapp.dao,MyBudgetDatabase,45,126,0,0,21,54,2,9,2,9
+MyBudgetApp,mybudgetapp.dao,DBUserDao,95,182,4,6,28,54,4,8,1,6
+MyBudgetApp,mybudgetapp.dao,DBBudgetDao,244,300,4,4,56,87,6,10,4,8
+MyBudgetApp,mybudgetapp,Main,6,0,0,0,3,0,2,0,2,0
+MyBudgetApp,mybudgetapp.domain,User,11,58,2,4,5,22,3,10,1,9
+MyBudgetApp,mybudgetapp.domain,Category,6,46,0,0,2,21,2,9,2,9
+MyBudgetApp,mybudgetapp.domain,Balance,58,73,2,2,25,19,14,9,12,9
+MyBudgetApp,mybudgetapp.domain,MyBudgetService,139,204,20,12,33,52,17,11,2,10
+MyBudgetApp,mybudgetapp.domain,Income,55,66,2,0,16,21,6,10,5,10
+MyBudgetApp,mybudgetapp.domain,Expense,61,65,2,0,18,18,7,10,6,10

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DBUserDao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBudgetApp</a> &gt; <a href="index.source.html" class="el_package">mybudgetapp.dao</a> &gt; <span class="el_source">DBUserDao.java</span></div><h1>DBUserDao.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package mybudgetapp.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import mybudgetapp.domain.User;
+
+/**
+ *
+ * @author anniinasainio
+ */
+public class DBUserDao implements UserDao {
+
+    private List&lt;User&gt; users;
+    private String database;
+    private MyBudgetDatabase db;
+    private String password;
+
+<span class="fc" id="L28">    String selectStmt = &quot;SELECT * FROM user&quot;;</span>
+
+<span class="fc" id="L30">    public DBUserDao(MyBudgetDatabase db) {</span>
+<span class="fc" id="L31">        this.db = db;</span>
+
+<span class="fc" id="L33">        users = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L35">        db.initializeDatabase();</span>
+<span class="fc" id="L36">        Statement stmt = null;</span>
+        try {
+<span class="fc" id="L38">            Connection conn = db.connect();</span>
+<span class="fc" id="L39">            stmt = conn.createStatement();</span>
+<span class="fc" id="L40">            ResultSet rs = stmt.executeQuery(selectStmt);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L42">                User user = new User();</span>
+<span class="fc" id="L43">                user.setUsername(rs.getString(&quot;username&quot;));</span>
+<span class="fc" id="L44">                user.setPassword(rs.getString(&quot;password&quot;));</span>
+<span class="fc" id="L45">                users.add(user);</span>
+<span class="fc" id="L46">            }</span>
+<span class="nc" id="L47">        } catch (Exception e) {</span>
+<span class="nc" id="L48">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L49">        }</span>
+
+<span class="fc" id="L51">    }</span>
+
+//    public DBUserDao(String database) throws SQLException {
+//        Connection conn = db.connect();
+//        System.out.println(&quot;testing &quot; + conn);
+//        users = new ArrayList&lt;&gt;();
+//        this.database = database;
+//        db = new MyBudgetDatabase(database);
+//        db.initializeDatabase();
+//        Statement stmt = null;
+//        try {
+//            stmt = conn.createStatement();
+//            ResultSet rs = stmt.executeQuery(selectStmt);
+//            while (rs.next()) {
+//                User user = new User();
+//                user.setUsername(rs.getString(&quot;username&quot;));
+//                user.setPassword(rs.getString(&quot;password&quot;));
+//                users.add(user);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+
+    /**
+     * The medhod saves a new user given into the database
+     *
+     * @param user new user object given as a parameter
+     * @return returns true if the saving of the user into the database succeeds
+     * @throws SQLException if saveUser fails
+     */
+    public boolean saveUser(User user) throws SQLException, Exception {
+<span class="fc" id="L83">        Connection connection = db.connect();</span>
+<span class="fc" id="L84">        System.out.println(&quot;test &quot; + connection);</span>
+        try {
+
+<span class="fc" id="L87">            PreparedStatement saveDetailsStatement = connection.prepareStatement(</span>
+                    &quot;INSERT OR REPLACE INTO user (username, password) VALUES (?, ?);&quot;
+            );
+
+<span class="fc" id="L91">            saveDetailsStatement.setString(1, user.getUsername());</span>
+<span class="fc" id="L92">            saveDetailsStatement.setString(2, user.getPassword());</span>
+<span class="fc" id="L93">            saveDetailsStatement.executeUpdate();</span>
+<span class="fc" id="L94">            saveDetailsStatement.close();</span>
+
+<span class="nc" id="L96">        } catch (SQLException ex) {</span>
+<span class="nc" id="L97">            System.out.println(ex.getMessage());</span>
+<span class="nc" id="L98">            return false;</span>
+<span class="fc" id="L99">        }</span>
+<span class="fc" id="L100">        return true;</span>
+    }
+
+    public boolean delete(String username) throws SQLException {
+        try {
+<span class="fc" id="L105">            Connection conn = db.connect();</span>
+<span class="fc" id="L106">            PreparedStatement stmt = conn.prepareStatement(&quot;DELETE FROM user WHERE username = (?)&quot;);</span>
+
+<span class="fc" id="L108">            stmt.setString(1, username);</span>
+<span class="fc" id="L109">            stmt.executeUpdate();</span>
+<span class="fc" id="L110">            stmt.close();</span>
+<span class="fc" id="L111">            conn.close();</span>
+<span class="nc" id="L112">        } catch (Throwable t) {</span>
+<span class="nc" id="L113">            System.out.println(&quot;delete user error...&quot; + t.getMessage());</span>
+<span class="nc" id="L114">            return false;</span>
+<span class="fc" id="L115">        }</span>
+<span class="fc" id="L116">        return true;</span>
+    }
+
+    /**
+     * The medhod creates a new user given as a parameter by calling the
+     * saveuser method
+     *
+     * @param user user object
+     * @return returns the user object
+     * @throws SQLException if saveUser fails
+     */
+    @Override
+    public User create(User user) throws SQLException {
+
+<span class="fc" id="L130">        users.add(user);</span>
+
+        try {
+<span class="fc" id="L133">            saveUser(user);</span>
+<span class="nc" id="L134">        } catch (Exception e) {</span>
+<span class="nc" id="L135">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L136">        }</span>
+<span class="fc" id="L137">        return user;</span>
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        try {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            for (User u : this.users) {</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">                if (u.getUsername().equals(username)) {</span>
+<span class="nc" id="L145">                    return u;</span>
+                }
+<span class="fc" id="L147">            }</span>
+<span class="nc" id="L148">        } catch (Exception e) {</span>
+<span class="nc" id="L149">            System.out.println(e.getMessage());</span>
+<span class="fc" id="L150">        }</span>
+<span class="fc" id="L151">        return null;</span>
+
+    }
+
+    @Override
+    public List&lt;User&gt; getAll() throws SQLException {
+<span class="nc" id="L157">        Connection con = db.connect();</span>
+<span class="nc" id="L158">        PreparedStatement stmt = con.prepareStatement(selectStmt);</span>
+<span class="nc" id="L159">        users = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L161">        ResultSet rs = stmt.executeQuery();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        while (rs.next()) {</span>
+<span class="nc" id="L163">            User user = new User(rs.getString(&quot;username&quot;), rs.getString(&quot;password&quot;));</span>
+<span class="nc" id="L164">            user.setUsername(rs.getString(&quot;username&quot;));</span>
+<span class="nc" id="L165">            user.setPassword(rs.getString(&quot;password&quot;));</span>
+<span class="nc" id="L166">            users.add(user);</span>
+<span class="nc" id="L167">        }</span>
+<span class="nc" id="L168">        stmt.close();</span>
+<span class="nc" id="L169">        rs.close();</span>
+<span class="nc" id="L170">        con.close();</span>
+<span class="nc" id="L171">        return users;</span>
+    }
+
+    /**
+     * Finds a user with the given username from the database
+     *
+     * @param username name of the logged in user
+     * @return returns the user object with the username given as a parameter
+     * @throws SQLException if unable to retrieve the username from the database
+     */
+    @Override
+    public User findOne(String username) throws SQLException {
+<span class="fc" id="L183">        Connection conn = db.connect();</span>
+<span class="fc" id="L184">        PreparedStatement stmt = conn.prepareStatement(&quot;SELECT * FROM user WHERE username = ?&quot;);</span>
+<span class="fc" id="L185">        stmt.setString(1, username);</span>
+
+<span class="fc" id="L187">        ResultSet rs = stmt.executeQuery();</span>
+<span class="fc" id="L188">        boolean findOne = rs.next();</span>
+
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">        if (!findOne) {</span>
+<span class="nc" id="L191">            return null;</span>
+        }
+
+<span class="fc" id="L194">        User user = new User(rs.getString(&quot;username&quot;), rs.getString(&quot;password&quot;));</span>
+
+<span class="fc" id="L196">        stmt.close();</span>
+<span class="fc" id="L197">        rs.close();</span>
+<span class="fc" id="L198">        conn.close();</span>
+
+<span class="fc" id="L200">        return user;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
