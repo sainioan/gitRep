@@ -83,7 +83,7 @@ FOREIGN KEY (categoryUser) REFERENCES user(username)
 #### New User Sign Up
 
 
-#### Othe Functionalities
+#### Other Functionalities
 
 
 
