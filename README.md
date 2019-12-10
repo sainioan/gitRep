@@ -14,4 +14,35 @@
 [Kayttoohje](../master/documentation/Usage.md)
 
 
+###  Terminal Commands
+
+#### Test
+```
+mvn test
+```
+#### Run .jar package
+```
+java -jar MyBudgetApp.jar
+```
+
+#### Compile & Run
+```
+mvn compile exec:java -Dexec.mainClass=mybudgetapp.Main
+```
+
+#### Generate Jacoco tests 
+```
+mvn test jacoco:report
+```
+
+#### Run Checkstyle Tests
+```
+mvn jxr:jxr checkstyle:checkstyle
+```
+
+#### Generate Javadoc
+
+```
+mvn javadoc:javadoc
+```
 
