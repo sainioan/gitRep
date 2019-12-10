@@ -22,8 +22,8 @@
 | 6.12.|   1  |javafx opiskelua ja testailua|
 | 7.12.|   3  |MyBudgetScenen koodaamista, testien lisaamista, uusien metodien luomista|
 |8.12.|    5 |MyBudgetScenen koodaamista (datepicker), income ja expense tietokantataulujen aktivointi, editointia|
-|9.12.|    3 |testien koodausta, javadocien kijoittamista, editointia|
-|10.12.|    2 |testien koodausta, javadocien kijoittamista, editointia|
+|9.12.|    3.5 |testien koodausta, javadocien kijoittamista, editointia|
+|10.12.|    5 |testien koodausta, balance tietokantataulun aktivointi, metodeja dbmybudget mybudgetserviceen|
 
 
 
