@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mybudgetapp.domain.Balance;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
@@ -178,20 +180,20 @@ public class DBBudgetDao implements BudgetDao {
     public List<Balance> getBalanceList(User user) throws SQLException {
         try {
             Connection con = db.connect();
-            String userUsername = user.getUsername();
             PreparedStatement stmt = con.prepareStatement("SELECT*FROM balance WHERE user_username = ?");
-            stmt.setString(1, userUsername);
+            stmt.setString(1, user.getUsername());
             ResultSet rs = stmt.executeQuery();
+            listB = new ArrayList<>();
             while (rs.next()) {
-                Balance balance = new Balance(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
-                balance.setId(rs.getInt("id"));
-                listB.add(balance);
+                Balance b = new Balance(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
+                b.setId(rs.getInt("id"));
+                listB.add(b);
                 stmt.close();
                 rs.close();
                 con.close();
             }
         } catch (Throwable t) {
-            System.out.println("getBalanceList" + t.getMessage());
+            System.out.println(t.getMessage());
         }
         System.out.println(listB.toString());
         return listB;
@@ -222,6 +224,7 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
+        System.out.println(expensesByUser);
         return expensesByUser;
     }
 
@@ -338,4 +341,69 @@ public class DBBudgetDao implements BudgetDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public boolean deleteExpense(String key) throws SQLException {
+
+        Connection con = db.connect();
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM expense WHERE id = ?");
+
+        stmt.setString(1, key);
+
+        stmt.executeUpdate();
+
+        stmt.close();
+        con.close();
+
+        return true;
+
+    }
+
+    public boolean deleteIncome(String key) throws SQLException {
+
+        Connection con = db.connect();
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM income WHERE id = ?");
+
+        stmt.setString(1, key);
+
+        stmt.executeUpdate();
+
+        stmt.close();
+        con.close();
+
+        return true;
+
+    }
+
+    public boolean deleteCategory(String key) throws SQLException {
+
+        Connection con = db.connect();
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM category WHERE id = ?");
+
+        stmt.setString(1, key);
+
+        stmt.executeUpdate();
+
+        stmt.close();
+        con.close();
+
+        return true;
+
+    }
+
+    private int getLastId(Connection connection) {
+        int id = -1;
+        try {
+            PreparedStatement getLastId = connection.prepareStatement("SELECT last_insert_rowid() AS id;");
+            ResultSet resultSet = getLastId.executeQuery();
+
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+            }
+
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBudgetDao.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return id;
+    }
 }

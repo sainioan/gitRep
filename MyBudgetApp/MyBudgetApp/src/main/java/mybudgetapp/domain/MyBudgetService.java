@@ -119,7 +119,6 @@ public class MyBudgetService {
             }
         } catch (SQLException ex) {
             System.out.println("createExpense error message is..." + ex.getMessage());
-            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
@@ -132,7 +131,6 @@ public class MyBudgetService {
             dbbudgetDao.create(income);
         } catch (SQLException ex) {
             System.out.println("createIncome error message is..." + ex.getMessage());
-            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
@@ -140,7 +138,6 @@ public class MyBudgetService {
 
     public String getMostRecent(User user) throws SQLException {
         user = loggedIn;
- 
         List<Balance> list = dbbudgetDao.getBalanceList(loggedIn);
         System.out.println(list.toString());
         Balance mostR = list.get(list.size() - 1);
@@ -158,9 +155,11 @@ public class MyBudgetService {
                 Balance balance = new Balance(username, income, date);
                 dbbudgetDao.saveBalance(balance);
             } else {
-
                 currentBalance.addIncome(income);
+                double newBalance = currentBalance.getBalance();
+                currentBalance.setBalance(newBalance);
                 currentBalance.setDate(date);
+
                 dbbudgetDao.saveBalance(currentBalance);
             }
         } catch (SQLException ex) {
@@ -180,6 +179,8 @@ public class MyBudgetService {
         try {
             //  if (currentBalance.getBalance() - expense >= 0) {
             currentBalance.deductExpense(expense);
+            double newBalance = currentBalance.getBalance();
+            currentBalance.setBalance(newBalance);
             dbbudgetDao.saveBalance(currentBalance);
             return true;
 
@@ -254,6 +255,38 @@ public class MyBudgetService {
 
     public Boolean validateUsernameInput(String username) {
         return ((username != null) && username.matches("[A-Za-z0-9_]+") && username.length() >= 5);
+    }
+
+    public boolean deleteCategory(String id) {
+        try {
+            dbbudgetDao.deleteCategory(id);
+        } catch (Exception ex) {
+        }
+        return true;
+    }
+
+    public boolean deleteExpense(String id) {
+        try {
+            dbbudgetDao.deleteExpense(id);
+        } catch (Exception ex) {
+        }
+        return true;
+    }
+
+    public boolean deleteIncome(String id) {
+        try {
+            dbbudgetDao.deleteIncome(id);
+        } catch (Exception ex) {
+        }
+        return true;
+    }
+
+    public boolean deleteUser(String id) {
+        try {
+            dbuserDao.deleteUser(id);
+        } catch (Exception ex) {
+        }
+        return true;
     }
 
 }

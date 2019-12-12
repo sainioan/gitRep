@@ -137,7 +137,7 @@ public class MyBudgetAppUI extends Application {
                 try{ 
                 System.out.println(mybudgetService.getMostRecent(user));
                 } catch (Throwable t){
-                    System.out.println("not printing balanceL" + t.getMessage());
+                    System.out.println("not printing balanceL" + t.getMessage());   
                 }
                 usernameInput.setText("");
                 passwordInput.setText("");
@@ -342,6 +342,9 @@ public class MyBudgetAppUI extends Application {
             if (usernameerror.equals("") && (passworderror.equals(""))) {
                 primarystage.setScene(loginscene);
                 errorMessage.setText("");
+                usernameInput.setText("");
+                passwordInput.setText("");
+                loginMessage.setText("");
             }
 
         });

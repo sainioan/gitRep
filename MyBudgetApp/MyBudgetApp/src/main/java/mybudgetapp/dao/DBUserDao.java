@@ -176,4 +176,21 @@ public class DBUserDao implements UserDao {
 
         return user;
     }
+
+    public boolean deleteUser(String key) throws SQLException {
+
+        Connection con = db.connect();
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM user WHERE id = ?");
+
+        stmt.setString(1, key);
+
+        stmt.executeUpdate();
+
+        stmt.close();
+        con.close();
+
+        return true;
+
+    }
+
 }

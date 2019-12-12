@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="mybudgetapp.domain.ExpenseTest" time="0.021" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="mybudgetapp.domain.ExpenseTest" time="0.015" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre/lib"/>
@@ -59,10 +59,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mybudgetapp.domain.ExpenseTest" name="listExpensesWorks" time="0.001"/>
+  <testcase classname="mybudgetapp.domain.ExpenseTest" name="listExpensesWorks" time="0.004"/>
   <testcase classname="mybudgetapp.domain.ExpenseTest" name="testToString" time="0.001"/>
-  <testcase classname="mybudgetapp.domain.ExpenseTest" name="getDateWorks" time="0.001"/>
-  <testcase classname="mybudgetapp.domain.ExpenseTest" name="constructorWorks" time="0"/>
-  <testcase classname="mybudgetapp.domain.ExpenseTest" name="getExpensesTotalWorks" time="0.002"/>
-  <testcase classname="mybudgetapp.domain.ExpenseTest" name="notEqualWhenDifferentId" time="0.004"/>
+  <testcase classname="mybudgetapp.domain.ExpenseTest" name="getDateWorks" time="0.002"/>
+  <testcase classname="mybudgetapp.domain.ExpenseTest" name="constructorWorks" time="0.001"/>
+  <testcase classname="mybudgetapp.domain.ExpenseTest" name="getExpensesTotalWorks" time="0"/>
+  <testcase classname="mybudgetapp.domain.ExpenseTest" name="notEqualWhenDifferentId" time="0"/>
 </testsuite>
