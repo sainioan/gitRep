@@ -72,7 +72,7 @@ public class MyBudgetAppUI extends Application {
 //    }
 
     @Override
-    public void start(Stage primarystage) throws Exception {
+    public void start(Stage primarystage) throws SQLException, Exception {
         init();
         primarystage.setTitle("MyBudgetApp");
 
@@ -134,8 +134,14 @@ public class MyBudgetAppUI extends Application {
             if (mybudgetService.login(username, password)) {
                 user = mybudgetService.getLoggedUser();
                 primarystage.setScene(myBudgetScene);
+                try{ 
+                System.out.println(mybudgetService.getMostRecent(user));
+                } catch (Throwable t){
+                    System.out.println("not printing balanceL" + t.getMessage());
+                }
                 usernameInput.setText("");
                 passwordInput.setText("");
+                loginMessage.setText("");
             } else {
 
                 loginMessage.setText("Incorrect username or password.");

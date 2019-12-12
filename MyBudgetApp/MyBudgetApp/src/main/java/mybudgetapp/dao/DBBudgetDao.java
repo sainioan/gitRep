@@ -193,6 +193,7 @@ public class DBBudgetDao implements BudgetDao {
         } catch (Throwable t) {
             System.out.println("getBalanceList" + t.getMessage());
         }
+        System.out.println(listB.toString());
         return listB;
     }
 

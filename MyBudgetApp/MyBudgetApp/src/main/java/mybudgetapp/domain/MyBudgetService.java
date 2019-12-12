@@ -138,6 +138,18 @@ public class MyBudgetService {
         return true;
     }
 
+    public String getMostRecent(User user) throws SQLException {
+        user = loggedIn;
+ 
+        List<Balance> list = dbbudgetDao.getBalanceList(loggedIn);
+        System.out.println(list.toString());
+        Balance mostR = list.get(list.size() - 1);
+        if (mostR == null) {
+            return "";
+        }
+        return mostR.toString();
+    }
+
     public boolean updateBalanceNewIncome(String username, double income, LocalDate date) throws SQLException, Exception {
 
         try {
@@ -165,7 +177,6 @@ public class MyBudgetService {
         if (currentBalance == null) {
             return false;
         }
-        Balance balance = new Balance(username, currentBalance.getBalance() - expense, LocalDate.now());
         try {
             //  if (currentBalance.getBalance() - expense >= 0) {
             currentBalance.deductExpense(expense);
