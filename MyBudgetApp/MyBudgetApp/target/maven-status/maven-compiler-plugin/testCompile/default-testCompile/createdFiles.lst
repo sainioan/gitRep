@@ -1,9 +1,0 @@
-mybudgetapp/domain/ExpenseTest.class
-mybudgetapp/dao/MyBudgetDatabaseTest.class
-mybudgetapp/domain/UserTest.class
-mybudgetapp/domain/IncomeTest.class
-mybudgetapp/domain/MyBudgetServiceTest.class
-mybudgetapp/dao/DBUserDaoTest.class
-mybudgetapp/domain/CategoryTest.class
-mybudgetapp/domain/BalanceTest.class
-mybudgetapp/dao/DBBudgetDaoTest.class

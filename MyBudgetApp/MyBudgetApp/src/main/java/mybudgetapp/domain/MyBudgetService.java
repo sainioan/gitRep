@@ -139,11 +139,18 @@ public class MyBudgetService {
     }
 
     public boolean updateBalanceNewIncome(String username, double income, LocalDate date) throws SQLException, Exception {
-        currentBalance = dbbudgetDao.findOne(username);
-        currentBalance.addIncome(income);
-        currentBalance.setDate(date);
+
         try {
-            dbbudgetDao.saveBalance(currentBalance);
+            currentBalance = dbbudgetDao.findOne(username);
+            if (currentBalance == null) {
+                Balance balance = new Balance(username, income, date);
+                dbbudgetDao.saveBalance(balance);
+            } else {
+
+                currentBalance.addIncome(income);
+                currentBalance.setDate(date);
+                dbbudgetDao.saveBalance(currentBalance);
+            }
         } catch (SQLException ex) {
             System.out.println("updateBalance error message is..." + ex.getMessage());
             Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,20 +160,24 @@ public class MyBudgetService {
     }
 
     public boolean updateBalanceNewExpense(String username, double expense, LocalDate date) throws SQLException, Exception {
-        Balance currentBalance = dbbudgetDao.findOne(username);
 
+        currentBalance = dbbudgetDao.findOne(username);
+        if (currentBalance == null) {
+            return false;
+        }
         Balance balance = new Balance(username, currentBalance.getBalance() - expense, LocalDate.now());
         try {
-            if (currentBalance.getBalance() - expense >= 0) {
-                dbbudgetDao.saveBalance(balance);
-                return true;
-            }
+            //  if (currentBalance.getBalance() - expense >= 0) {
+            currentBalance.deductExpense(expense);
+            dbbudgetDao.saveBalance(currentBalance);
+            return true;
+
         } catch (SQLException ex) {
             System.out.println("updateBalance error message is..." + ex.getMessage());
             Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-        return true;
+
     }
 
     public boolean login(String username, String password) {

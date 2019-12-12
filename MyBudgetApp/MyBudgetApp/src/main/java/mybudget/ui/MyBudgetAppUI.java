@@ -240,6 +240,7 @@ public class MyBudgetAppUI extends Application {
                 System.out.println(d);
                 try {
                     mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
+                    mybudgetService.updateBalanceNewExpense(user.getUsername(), d, expensedate);
                 } catch (Throwable t) {
                     System.out.println("MybudgetService.createExpense error message ..." + t.getMessage());
                 }
@@ -261,6 +262,7 @@ public class MyBudgetAppUI extends Application {
                 System.out.println(d2);
                 try {
                     mybudgetService.createIncome(user.getUsername(), d2, incomedate);
+                    mybudgetService.updateBalanceNewIncome(user.getUsername(), d2, incomedate);
                 } catch (Exception ex) {
                     System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
 
@@ -268,6 +270,7 @@ public class MyBudgetAppUI extends Application {
                 }
             }
         });
+        //create new user scene
         VBox newUserPane = new VBox(10);
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
@@ -349,7 +352,7 @@ public class MyBudgetAppUI extends Application {
     }
 
     /**
-     *
+     * 
      */
     public static void main(String[] args) {
         launch(args);

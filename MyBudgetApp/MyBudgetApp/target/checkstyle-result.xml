@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.11.2">
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/MyBudgetDatabase.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/DBUserDao.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/UserDao.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/BudgetDao.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/DBBudgetDao.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/dao/package-info.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/Main.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/MyBudgetService.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Income.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Expense.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Category.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/User.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Balance.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/package-info.java">
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudget/ui/MyBudgetAppUI.java">
+<error line="74" column="5" severity="error" message="Method length is 221 lines (max allowed is 20)." source="com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck"/>
+</file>
+<file name="/Users/anniinasainio/ohjelmistotekniikka2019/gitRep/MyBudgetApp/MyBudgetApp/src/main/java/mybudget/ui/package-info.java">
+</file>
+</checkstyle>
