@@ -1,5 +1,5 @@
 
-# työaikakirjapito
+# työaikakirjanpito
 
 | päivä |aika  | mitä tein |
 | :----:|:-----|---------|
@@ -24,8 +24,8 @@
 |8.12.|    5 |MyBudgetScenen koodaamista (datepicker), income ja expense tietokantataulujen aktivointi, editointia|
 |9.12.|    3.5 |testien koodausta, javadocien kijoittamista, editointia|
 |10.12.|    5 |testien koodausta, balance tietokantataulun aktivointi, metodeja dbmybudget mybudgetserviceen|
-|10.12.|    2 |balance tietokantataulun debuggausta.  |
-|10.12.|    3 |kayttajan balance nakyvaksy GUI:hin. Bugien fiksailua.|
+|12.12.|    2 |balance tietokantataulun debuggausta.  |
+|13.12.|    3 |kayttajan balance nakyvaksy GUI:hin. Bugien fiksailua.|
 
 
 
