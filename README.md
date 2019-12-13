@@ -5,7 +5,7 @@
 
 [Tuntikirjanpito](../master/documentation/Tuntikirjanpito.md)
 
-[Arkkitehtuurikuvaus](../master/documentation/arkkitehtuuri.md)
+[Arkkitehtuurikuvaus](../master/documentation/Arkkitehtuuri.md)
 
 [Viikko5 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko5)
 
