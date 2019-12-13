@@ -26,7 +26,7 @@ Individuals, who have a user account, can sign in with their username and passwo
 * The user should be able to add new categories of expenses. -- done
 * The user should be able remove old categories of expenses.
 * The user should be able to remove his/her account.
-* The user should be able to view his/her balance.
+* The user should be able to view his/her balance. -- done.
 * The user should be able to view financial statistics (if time).
 
 ## Development Ideas
