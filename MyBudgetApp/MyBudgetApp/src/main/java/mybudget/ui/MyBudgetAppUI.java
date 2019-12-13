@@ -222,12 +222,12 @@ public class MyBudgetAppUI extends Application {
 
             } else {
 
-                category = newCategoryInput.getText();
-                mybudgetService.createCategory(user.getUsername(), category);
-                createConfirmationMsg.setText("Category '" + category + "' created successfully");
-                createConfirmationMsg.setTextFill(Color.GREEN);
-                newCategoryInput.setText("");
                 try {
+                    category = newCategoryInput.getText();
+                    mybudgetService.createCategory(user.getUsername(), category);
+                    createConfirmationMsg.setText("Category '" + category + "' created successfully");
+                    createConfirmationMsg.setTextFill(Color.GREEN);
+                    newCategoryInput.setText("");
                     chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
@@ -252,6 +252,7 @@ public class MyBudgetAppUI extends Application {
                 try {
                     mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
                     mybudgetService.updateBalanceNewExpense(user.getUsername(), d, expensedate);
+                    currentBalance.setText(mybudgetService.updateBalanceLabel());
                 } catch (Throwable t) {
                     System.out.println("MybudgetService.createExpense error message ..." + t.getMessage());
                 }
@@ -274,6 +275,7 @@ public class MyBudgetAppUI extends Application {
                 try {
                     mybudgetService.createIncome(user.getUsername(), d2, incomedate);
                     mybudgetService.updateBalanceNewIncome(user.getUsername(), d2, incomedate);
+                    currentBalance.setText(mybudgetService.updateBalanceLabel());
                 } catch (Exception ex) {
                     System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
 
