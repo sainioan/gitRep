@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="11" failures="0" name="mybudgetapp.domain.MyBudgetServiceTest" time="0.956" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="mybudgetapp.domain.MyBudgetServiceTest" time="1.077" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre/lib"/>
@@ -59,15 +59,15 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loginReturnsFalseIfUserNull" time="0.146"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewIncome" time="0.123"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loggedInUserCanLogout" time="0.079"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseReturnsfalse" time="0.058"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpense" time="0.058"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createCategory" time="0.053"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="getLoggedUserReturnsLogged" time="0.047"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createIncome" time="0.042"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseNewCategory" time="0.066"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="listListsCategories" time="0.16"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewExpense" time="0.087"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loginReturnsFalseIfUserNull" time="0.094"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewIncome" time="0.151"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loggedInUserCanLogout" time="0.118"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseReturnsfalse" time="0.063"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpense" time="0.06"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createCategory" time="0.055"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="getLoggedUserReturnsLogged" time="0.071"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createIncome" time="0.058"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseNewCategory" time="0.075"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="listListsCategories" time="0.239"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewExpense" time="0.067"/>
 </testsuite>

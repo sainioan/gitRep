@@ -161,7 +161,7 @@ public class DBBudgetDao implements BudgetDao {
 
     public Balance findOne(String username) throws SQLException {
         Connection conn = db.connect();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM balance WHERE user_username = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM balance WHERE ID =(SELECT MAX(ID) FROM  balance WHERE user_username = ?)");
         stmt.setString(1, username);
         ResultSet rs = stmt.executeQuery();
         boolean findOne = rs.next();
