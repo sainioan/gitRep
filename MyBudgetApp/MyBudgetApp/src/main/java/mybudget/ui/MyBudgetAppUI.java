@@ -55,6 +55,7 @@ public class MyBudgetAppUI extends Application {
     private String passwordSU;
     private String category;
     private User user;
+    private Label currentBalance;
     private DatePicker dateFieldExpense = new DatePicker();
     private DatePicker dateFieldIncome = new DatePicker();
     private ComboBox chooseCategory = new ComboBox();
@@ -62,14 +63,11 @@ public class MyBudgetAppUI extends Application {
     private Label balanceLabel = new Label("BALANCE");
 
     @Override
-    public void init() throws Exception {
+    public void init() throws SQLException, Exception {
         MyBudgetDatabase database = new MyBudgetDatabase("mybudgetapp.db");
         mybudgetService = new MyBudgetService(database, username);
 
     }
-//    public void createNewUserScene(){
-//        
-//    }
 
     @Override
     public void start(Stage primarystage) throws SQLException, Exception {
@@ -133,15 +131,18 @@ public class MyBudgetAppUI extends Application {
 
             if (mybudgetService.login(username, password)) {
                 user = mybudgetService.getLoggedUser();
-                primarystage.setScene(myBudgetScene);
-                try{ 
-                System.out.println(mybudgetService.getMostRecent(user));
-                } catch (Throwable t){
-                    System.out.println("not printing balanceL" + t.getMessage());   
+                try {
+                    System.out.println("GUI" + mybudgetService.updateBalanceLabel());
+                    currentBalance.setText(mybudgetService.updateBalanceLabel());
+                    primarystage.setScene(myBudgetScene);
+                    System.out.println(mybudgetService.getMostRecent(user));
+                } catch (Throwable t) {
+                    System.out.println("not printing balanceL" + t.getMessage());
                 }
                 usernameInput.setText("");
                 passwordInput.setText("");
                 loginMessage.setText("");
+
             } else {
 
                 loginMessage.setText("Incorrect username or password.");
@@ -165,7 +166,7 @@ public class MyBudgetAppUI extends Application {
         Label incomeLabel = new Label("New income: Add amount.");
         Label expenseDate = new Label("Pick expense date");
         Label incomeDate = new Label("Pick income date");
-        Label currentBalance = new Label();
+        currentBalance = new Label();
         Button signoutButton = new Button("Sign out");
         Button createCategoryButton = new Button("Save new category");
         Button createExpenseButton = new Button("Save expense");
@@ -175,7 +176,7 @@ public class MyBudgetAppUI extends Application {
         TextField newIncomeInput = new TextField();
         GridPane mybudgetLayout = new GridPane();
         chooseCategory.setPromptText("Choose category");
-        chooseCategory.getItems().addAll(mybudgetService.createChoices());
+        chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
         chooseCategory.setEditable(true);
         mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
         mybudgetLayout.setHgap(5);
@@ -193,8 +194,8 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(dateFieldExpense, 4, 4);
         mybudgetLayout.add(createExpenseButton, 4, 5);
-        mybudgetLayout.add(balanceLabel, 4, 10);
-        mybudgetLayout.add(currentBalance, 4, 11);
+        // mybudgetLayout.add(balanceLabel, 4, 10);
+        mybudgetLayout.add(currentBalance, 4, 10);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
         mybudgetLayout.add(incomeDate, 0, 23);
@@ -226,7 +227,11 @@ public class MyBudgetAppUI extends Application {
                 createConfirmationMsg.setText("Category '" + category + "' created successfully");
                 createConfirmationMsg.setTextFill(Color.GREEN);
                 newCategoryInput.setText("");
-
+                try {
+                    chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
         });
         // new user scene  
@@ -361,7 +366,7 @@ public class MyBudgetAppUI extends Application {
     }
 
     /**
-     * 
+     *
      */
     public static void main(String[] args) {
         launch(args);

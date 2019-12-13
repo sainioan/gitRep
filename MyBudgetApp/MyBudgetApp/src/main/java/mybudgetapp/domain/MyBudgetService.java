@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import mybudgetapp.dao.BudgetDao;
 import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.dao.DBUserDao;
@@ -159,15 +160,24 @@ public class MyBudgetService {
                 double newBalance = currentBalance.getBalance();
                 currentBalance.setBalance(newBalance);
                 currentBalance.setDate(date);
-
                 dbbudgetDao.saveBalance(currentBalance);
             }
         } catch (SQLException ex) {
             System.out.println("updateBalance error message is..." + ex.getMessage());
-            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
+    }
+
+    public String updateBalanceLabel() throws SQLException, Exception {
+        if (loggedIn != null) {
+            currentBalance = dbbudgetDao.findOne(loggedIn.getUsername());
+            System.out.println(currentBalance.toString());
+            return currentBalance.toString();
+            
+        }
+      return "";
+
     }
 
     public boolean updateBalanceNewExpense(String username, double expense, LocalDate date) throws SQLException, Exception {
@@ -177,7 +187,6 @@ public class MyBudgetService {
             return false;
         }
         try {
-            //  if (currentBalance.getBalance() - expense >= 0) {
             currentBalance.deductExpense(expense);
             double newBalance = currentBalance.getBalance();
             currentBalance.setBalance(newBalance);
@@ -234,7 +243,7 @@ public class MyBudgetService {
 
     }
 
-    public ObservableList<String> createChoices() throws SQLException {
+    public ObservableList<String> createChoices(User user) throws SQLException {
         ObservableList<String> items = FXCollections.observableArrayList();
         List<Category> categories = dbbudgetDao.getAllCategories(loggedIn);
         ArrayList<String> categorynames = new ArrayList<>();
@@ -247,7 +256,6 @@ public class MyBudgetService {
             items.add(s.trim());
         }
         System.out.println(categories);
-        items.add("create new");
         System.out.println(items);
         return items;
 

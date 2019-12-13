@@ -10,7 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.ObservableList;
 import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.MyBudgetDatabase;
@@ -28,9 +30,11 @@ public class MyBudgetServiceTest {
     MyBudgetService mbs;
     MyBudgetService mbs2;
     MyBudgetDatabase testdatabase;
+    ObservableList<String> categoriesList;
     User testuser;
     DBUserDao dbuser;
     DBBudgetDao dbbudget;
+    List<Category> categories = new ArrayList<>();
     LocalDate today = LocalDate.now();
     Balance testBalance;
     private static final double DELTA = 1e-15;
@@ -83,12 +87,13 @@ public class MyBudgetServiceTest {
     }
 
     @Test
-    public void listListsCategories() throws SQLException {
+    public void listListsCategories() throws SQLException, Exception {
         Category category = new Category(testuser.getUsername(), "cars");
-        dbbudget.create(category);
-        dbbudget.getAllCategories(testuser);
-        List<String> categories = mbs.createChoices();
-        assertEquals(1, mbs.createChoices().size());
+        //  dbbudget.create(category);
+        mbs.createCategory(category.getUserName(), category.getName());
+        categories = dbbudget.getAllCategories(testuser);
+        categoriesList = mbs.createChoices(testuser);
+        assertEquals(1, categoriesList.size());
 
     }
 
