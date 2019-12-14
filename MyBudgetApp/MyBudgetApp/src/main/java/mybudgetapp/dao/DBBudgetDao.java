@@ -188,13 +188,15 @@ public class DBBudgetDao implements BudgetDao {
                 Balance b = new Balance(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
                 b.setId(rs.getInt("id"));
                 listB.add(b);
-                stmt.close();
-                rs.close();
-                con.close();
+
             }
+            stmt.close();
+            rs.close();
+            con.close();
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
+
         System.out.println(listB.toString());
         return listB;
     }
@@ -388,7 +390,8 @@ public class DBBudgetDao implements BudgetDao {
         return true;
 
     }
-     public boolean deleteBalance(User user) throws SQLException {
+
+    public boolean deleteBalance(User user) throws SQLException {
 
         Connection con = db.connect();
         PreparedStatement stmt = con.prepareStatement("DELETE FROM balance WHERE user_username = ?");
