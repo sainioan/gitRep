@@ -32,3 +32,4 @@ Individuals, who have a user account, can sign in with their username and passwo
 ## Development Ideas
 
 * The user should be able to add income to different categories (salary).
+* The user should be able to view graphical representation of user data.
