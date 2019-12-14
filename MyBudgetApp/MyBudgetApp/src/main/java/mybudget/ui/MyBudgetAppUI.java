@@ -59,10 +59,7 @@ public class MyBudgetAppUI extends Application {
     private Scene myBudgetScene;
     private Scene newUserScene;
     private Scene loginscene;
-    private DBBudgetDao dbbudgetDao;
-    private DBUserDao dbuserDao;
     private MyBudgetService mybudgetService;
-    private VBox myBudgetNodes;
     private Label menuLabel = new Label();
     private String username;
     private String password;
@@ -143,6 +140,26 @@ public class MyBudgetAppUI extends Application {
     @Override
     public void start(Stage primarystage) throws SQLException, Exception {
         init();
+        //table scene
+        tableview = new TableView();
+        
+        
+        HBox tablePane = new HBox();
+        GridPane tableGP = new GridPane();
+        Button back = new Button("Back");
+        tableGP.setPadding(new Insets(20, 20, 20, 20));
+        tableGP.setHgap(5);
+        tableGP.setVgap(5);
+        tableGP.add(back, 0, 0);
+        tableGP.add(tableview,0,5);
+        
+        tablePane.setPadding(new Insets(20, 20, 20, 30));
+        tablePane.getChildren().addAll(tableGP);
+        Scene tablescene = new Scene(tablePane);
+        back.setOnAction(e ->{
+        primarystage.setScene(myBudgetScene);    
+        });
+        //login Scene
         primarystage.setTitle("MyBudgetApp");
 
         BorderPane bp = new BorderPane();
@@ -176,7 +193,6 @@ public class MyBudgetAppUI extends Application {
         gridpane.add(loginButton, 2, 1);
         gridpane.add(loginMessage, 1, 2);
         gridpane.add(signUpButton, 2, 0);
-        
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(5);
@@ -207,6 +223,7 @@ public class MyBudgetAppUI extends Application {
                 try {
                     System.out.println("GUI" + mybudgetService.updateBalanceLabel());
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
+                    buildData(user);
                     primarystage.setScene(myBudgetScene);
                     System.out.println(mybudgetService.getMostRecent(user));
                 } catch (Throwable t) {
@@ -245,6 +262,7 @@ public class MyBudgetAppUI extends Application {
         Button createCategoryButton = new Button("Save new category");
         Button createExpenseButton = new Button("Save expense");
         Button createIncomeButton = new Button("Save income");
+        Button tableView = new Button("Balance View");
         TextField newCategoryInput = new TextField();
         TextField newExpenseInput = new TextField();
         TextField newIncomeInput = new TextField();
@@ -270,6 +288,7 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(createExpenseButton, 4, 5);
         mybudgetLayout.add(balanceLabel, 4, 10);
         mybudgetLayout.add(currentBalance, 4, 11);
+        mybudgetLayout.add(tableView, 4, 20);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
         mybudgetLayout.add(incomeDate, 0, 23);
@@ -277,7 +296,7 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(createIncomeButton, 0, 25);
         mybudgetLayout.add(createErrorMsg, 3, 0);
         mybudgetLayout.add(deleteUser, 15, 1);
-        mybudgetLayout.add(deleteMessage, 15,2);
+        mybudgetLayout.add(deleteMessage, 15, 2);
         mybudgetPane.getChildren().addAll(mybudgetLayout);
         mybudgetLayout.setId("root");
         myBudgetScene = new Scene(mybudgetPane, 1000, 1500);
@@ -288,20 +307,24 @@ public class MyBudgetAppUI extends Application {
             primarystage.setScene(loginscene);
 
         });
-         // delete useraccount
+        // table view 
+        tableView.setOnAction(e -> {
+            primarystage.setScene(tablescene);
+        });
+        // delete useraccount
         deleteUser.setOnAction(e -> {
-        try{    
-        mybudgetService.deleteUser(user);
-        mybudgetService.deleteCategory(user);
-        mybudgetService.deleteBalance(user);
-        mybudgetService.deleteIncome(user);
-        mybudgetService.deleteExpense(user);
-            deleteMessage.setText(username+ "'s user account successfully deleted.");
-            primarystage.setScene(loginscene);
-       
-        } catch (Throwable t){
-            System.out.println("delete user account error ..." + t.getMessage());
-        }
+            try {
+                mybudgetService.deleteUser(user);
+                mybudgetService.deleteCategory(user);
+                mybudgetService.deleteBalance(user);
+                mybudgetService.deleteIncome(user);
+                mybudgetService.deleteExpense(user);
+                deleteMessage.setText(username + "'s user account successfully deleted.");
+                primarystage.setScene(loginscene);
+
+            } catch (Throwable t) {
+                System.out.println("delete user account error ..." + t.getMessage());
+            }
         });
 // create a new category
         createCategoryButton.setOnAction(e -> {
