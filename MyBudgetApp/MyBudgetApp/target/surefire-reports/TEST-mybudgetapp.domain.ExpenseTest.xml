@@ -59,7 +59,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mybudgetapp.domain.ExpenseTest" name="listExpensesWorks" time="0.005"/>
+  <testcase classname="mybudgetapp.domain.ExpenseTest" name="listExpensesWorks" time="0.007"/>
   <testcase classname="mybudgetapp.domain.ExpenseTest" name="testToString" time="0"/>
   <testcase classname="mybudgetapp.domain.ExpenseTest" name="getDateWorks" time="0"/>
   <testcase classname="mybudgetapp.domain.ExpenseTest" name="constructorWorks" time="0"/>

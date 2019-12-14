@@ -293,6 +293,15 @@ public class MyBudgetService {
         try {
             dbbudgetDao.deleteIncome(user);
         } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+    public boolean deleteBalance(User user) {
+        try {
+            dbbudgetDao.deleteBalance(user);
+        } catch (Exception ex) {
+            return false;
         }
         return true;
     }

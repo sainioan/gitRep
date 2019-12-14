@@ -292,10 +292,13 @@ public class MyBudgetAppUI extends Application {
         deleteUser.setOnAction(e -> {
         try{    
         mybudgetService.deleteUser(user);
-        if(mybudgetService.deleteUser(user)){
+        mybudgetService.deleteCategory(user);
+        mybudgetService.deleteBalance(user);
+        mybudgetService.deleteIncome(user);
+        mybudgetService.deleteExpense(user);
             deleteMessage.setText(username+ "'s user account successfully deleted.");
             primarystage.setScene(loginscene);
-        }
+       
         } catch (Throwable t){
             System.out.println("delete user account error ..." + t.getMessage());
         }
