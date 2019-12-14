@@ -341,12 +341,12 @@ public class DBBudgetDao implements BudgetDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean deleteExpense(String key) throws SQLException {
+    public boolean deleteExpense(User user) throws SQLException {
 
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM expense WHERE id = ?");
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM expense WHERE user_sername = ?");
 
-        stmt.setString(1, key);
+        stmt.setString(1, user.getUsername());
 
         stmt.executeUpdate();
 
@@ -357,12 +357,12 @@ public class DBBudgetDao implements BudgetDao {
 
     }
 
-    public boolean deleteIncome(String key) throws SQLException {
+    public boolean deleteIncome(User user) throws SQLException {
 
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM income WHERE id = ?");
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM income WHERE user_username = ?");
 
-        stmt.setString(1, key);
+        stmt.setString(1, user.getUsername());
 
         stmt.executeUpdate();
 
@@ -373,12 +373,12 @@ public class DBBudgetDao implements BudgetDao {
 
     }
 
-    public boolean deleteCategory(String key) throws SQLException {
+    public boolean deleteCategory(User user) throws SQLException {
 
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM category WHERE id = ?");
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM category WHERE categoryUser = ?");
 
-        stmt.setString(1, key);
+        stmt.setString(1, user.getUsername());
 
         stmt.executeUpdate();
 
@@ -388,22 +388,19 @@ public class DBBudgetDao implements BudgetDao {
         return true;
 
     }
+     public boolean deleteBalance(User user) throws SQLException {
 
-    private int getLastId(Connection connection) {
-        int id = -1;
-        try {
-            PreparedStatement getLastId = connection.prepareStatement("SELECT last_insert_rowid() AS id;");
-            ResultSet resultSet = getLastId.executeQuery();
+        Connection con = db.connect();
+        PreparedStatement stmt = con.prepareStatement("DELETE FROM balance WHERE user_username = ?");
 
-            while (resultSet.next()) {
-                id = resultSet.getInt("id");
-            }
+        stmt.setString(1, user.getUsername());
 
-            return id;
-        } catch (SQLException ex) {
-            Logger.getLogger(DBBudgetDao.class.getName()).log(Level.SEVERE, null, ex);
+        stmt.executeUpdate();
 
-        }
-        return id;
+        stmt.close();
+        con.close();
+
+        return true;
+
     }
 }

@@ -77,12 +77,12 @@ public class DBUserDao implements UserDao {
         return true;
     }
 
-    public boolean delete(String username) throws SQLException {
-        try {
-            Connection conn = db.connect();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM user WHERE username = (?)");
-
-            stmt.setString(1, username);
+    public boolean delete(User user) throws SQLException {
+        String sql = "DELETE FROM user WHERE username = ?";
+        try 
+            (Connection conn = db.connect();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, user.getUsername());
             stmt.executeUpdate();
             stmt.close();
             conn.close();
@@ -176,21 +176,4 @@ public class DBUserDao implements UserDao {
 
         return user;
     }
-
-    public boolean deleteUser(String key) throws SQLException {
-
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM user WHERE id = ?");
-
-        stmt.setString(1, key);
-
-        stmt.executeUpdate();
-
-        stmt.close();
-        con.close();
-
-        return true;
-
-    }
-
 }

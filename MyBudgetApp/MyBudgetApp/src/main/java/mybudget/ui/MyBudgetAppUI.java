@@ -29,6 +29,21 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.ComboBox;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import mybudgetapp.dao.MyBudgetDatabase;
 import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.DBBudgetDao;
@@ -60,13 +75,69 @@ public class MyBudgetAppUI extends Application {
     private DatePicker dateFieldIncome = new DatePicker();
     private ComboBox chooseCategory = new ComboBox();
     private String amountString;
+    private Button createTableView;
     private Label balanceLabel = new Label("BALANCE");
+    private ObservableList<ObservableList> data;
+    private TableView tableview;
+    private MyBudgetDatabase database;
 
     @Override
     public void init() throws SQLException, Exception {
-        MyBudgetDatabase database = new MyBudgetDatabase("mybudgetapp.db");
+        database = new MyBudgetDatabase("mybudgetapp.db");
         mybudgetService = new MyBudgetService(database, username);
 
+    }//CONNECTION DATABASE
+
+    public void buildData(User user) throws SQLException, Exception {
+        Connection c;
+        data = FXCollections.observableArrayList();
+        try {
+            c = database.connect();
+            //SQL FOR SELECTING ALL OF CUSTOMER
+            String SQL = "SELECT*from BALANCE WHERE user_username = ?";
+            PreparedStatement stmt = c.prepareStatement(SQL);
+            //ResultSet
+            stmt.setString(1, user.getUsername());
+            ResultSet rs = stmt.executeQuery();
+
+            /**
+             * ********************************
+             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
+             */
+            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+                //We are using non property style for making dynamic table
+                final int j = i;
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+
+                tableview.getColumns().addAll(col);
+                System.out.println("Column [" + i + "] ");
+            }
+
+            /**
+             * ******************************
+             * Data added to ObservableList * ******************************
+             */
+            while (rs.next()) {
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(rs.getString(i));
+                }
+                System.out.println("Row [1] added " + row);
+                data.add(row);
+            }
+            //FINALLY ADDED TO TableView
+            tableview.setItems(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
     }
 
     @Override
@@ -93,10 +164,11 @@ public class MyBudgetAppUI extends Application {
         Button signUpButton = new Button("Sign up");
         Button backButton = new Button("Back");
         Button confirmButton = new Button("Confirm");
+        Button deleteUser = new Button("Delete user account");
         Label loginMessage = new Label();
 
         Label userCreationMessage = new Label();
-        bp.setPrefSize(500, 250);
+        bp.setPrefSize(550, 250);
         gridpane.add(usernameLabel, 0, 0);
         gridpane.add(usernameInput, 1, 0);
         gridpane.add(passwordLabel, 0, 1);
@@ -104,6 +176,7 @@ public class MyBudgetAppUI extends Application {
         gridpane.add(loginButton, 2, 1);
         gridpane.add(loginMessage, 1, 2);
         gridpane.add(signUpButton, 2, 0);
+        
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(5);
@@ -166,6 +239,7 @@ public class MyBudgetAppUI extends Application {
         Label incomeLabel = new Label("New income: Add amount.");
         Label expenseDate = new Label("Pick expense date");
         Label incomeDate = new Label("Pick income date");
+        Label deleteMessage = new Label("");
         currentBalance = new Label();
         Button signoutButton = new Button("Sign out");
         Button createCategoryButton = new Button("Save new category");
@@ -194,15 +268,16 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(dateFieldExpense, 4, 4);
         mybudgetLayout.add(createExpenseButton, 4, 5);
-        // mybudgetLayout.add(balanceLabel, 4, 10);
-        mybudgetLayout.add(currentBalance, 4, 10);
+        mybudgetLayout.add(balanceLabel, 4, 10);
+        mybudgetLayout.add(currentBalance, 4, 11);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
         mybudgetLayout.add(incomeDate, 0, 23);
         mybudgetLayout.add(dateFieldIncome, 0, 24);
         mybudgetLayout.add(createIncomeButton, 0, 25);
-
         mybudgetLayout.add(createErrorMsg, 3, 0);
+        mybudgetLayout.add(deleteUser, 15, 1);
+        mybudgetLayout.add(deleteMessage, 15,2);
         mybudgetPane.getChildren().addAll(mybudgetLayout);
         mybudgetLayout.setId("root");
         myBudgetScene = new Scene(mybudgetPane, 1000, 1500);
@@ -212,6 +287,18 @@ public class MyBudgetAppUI extends Application {
             mybudgetService.logout();
             primarystage.setScene(loginscene);
 
+        });
+         // delete useraccount
+        deleteUser.setOnAction(e -> {
+        try{    
+        mybudgetService.deleteUser(user);
+        if(mybudgetService.deleteUser(user)){
+            deleteMessage.setText(username+ "'s user account successfully deleted.");
+            primarystage.setScene(loginscene);
+        }
+        } catch (Throwable t){
+            System.out.println("delete user account error ..." + t.getMessage());
+        }
         });
 // create a new category
         createCategoryButton.setOnAction(e -> {

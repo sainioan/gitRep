@@ -95,7 +95,7 @@ public class DBUserDaoTest {
 
     @Test
     public void getAll2Works() throws SQLException, Exception {
-        dao.delete(user.getUsername());
+        dao.delete(user);
         assertEquals(0, users.size());
     }
 
@@ -133,9 +133,9 @@ public class DBUserDaoTest {
     @Test
     public void delete_Works() throws SQLException, Exception {
         try {
-            dao.delete(user.getUsername());
+            dao.delete(user);
 
-            assertEquals(true, dao.delete(user.getUsername()));
+            assertEquals(true, dao.delete(user));
 
         } catch (Throwable t) {
             System.out.println("delete_Works test error..." + t.getMessage());

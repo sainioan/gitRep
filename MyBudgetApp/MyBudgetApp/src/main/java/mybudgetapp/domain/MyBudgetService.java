@@ -171,12 +171,18 @@ public class MyBudgetService {
 
     public String updateBalanceLabel() throws SQLException, Exception {
         if (loggedIn != null) {
+            if (dbbudgetDao.findOne(loggedIn.getUsername())!= null){
             currentBalance = dbbudgetDao.findOne(loggedIn.getUsername());
-            System.out.println(currentBalance.toString());
-            return currentBalance.toString();
             
+            System.out.println(currentBalance.toString());
+            } else {
+            currentBalance = new Balance(loggedIn.getUsername(), 0.0, LocalDate.now());
+            }
+            
+            return currentBalance.toString();
+
         }
-      return "";
+        return "";
 
     }
 
@@ -265,36 +271,49 @@ public class MyBudgetService {
         return ((username != null) && username.matches("[A-Za-z0-9_]+") && username.length() >= 5);
     }
 
-    public boolean deleteCategory(String id) {
+    public boolean deleteCategory(User user) {
         try {
-            dbbudgetDao.deleteCategory(id);
+            dbbudgetDao.deleteCategory(user);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteExpense(User user) {
+        try {
+            dbbudgetDao.deleteExpense(user);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteIncome(User user) {
+        try {
+            dbbudgetDao.deleteIncome(user);
         } catch (Exception ex) {
         }
         return true;
     }
 
-    public boolean deleteExpense(String id) {
-        try {
-            dbbudgetDao.deleteExpense(id);
-        } catch (Exception ex) {
-        }
-        return true;
-    }
+    public boolean deleteUser(User user) {
+        if (loggedIn == null) {
+            return false;
+        } else {
+            try {
+                dbuserDao.delete(user);
+                dbbudgetDao.deleteCategory(user);
+                dbbudgetDao.deleteExpense(user);
+                dbbudgetDao.deleteIncome(user);
+                dbbudgetDao.deleteBalance(user);
 
-    public boolean deleteIncome(String id) {
-        try {
-            dbbudgetDao.deleteIncome(id);
-        } catch (Exception ex) {
+            } catch (Exception ex) {
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
 
-    public boolean deleteUser(String id) {
-        try {
-            dbuserDao.deleteUser(id);
-        } catch (Exception ex) {
-        }
-        return true;
     }
 
 }

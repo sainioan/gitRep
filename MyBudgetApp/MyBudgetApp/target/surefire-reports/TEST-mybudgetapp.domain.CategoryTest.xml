@@ -61,5 +61,5 @@
   </properties>
   <testcase classname="mybudgetapp.domain.CategoryTest" name="constructorWorks" time="0"/>
   <testcase classname="mybudgetapp.domain.CategoryTest" name="equalWhenSameName" time="0"/>
-  <testcase classname="mybudgetapp.domain.CategoryTest" name="equalWhenSameId" time="0"/>
+  <testcase classname="mybudgetapp.domain.CategoryTest" name="equalWhenSameId" time="0.001"/>
 </testsuite>
