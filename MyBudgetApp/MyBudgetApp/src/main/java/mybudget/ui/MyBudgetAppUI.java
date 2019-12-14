@@ -90,7 +90,6 @@ public class MyBudgetAppUI extends Application {
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            //SQL FOR SELECTING ALL OF CUSTOMER
             String SQL = "SELECT*from BALANCE WHERE user_username = ?";
             PreparedStatement stmt = c.prepareStatement(SQL);
             //ResultSet
