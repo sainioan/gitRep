@@ -25,10 +25,11 @@ Individuals, who have a user account, can sign in with their username and passwo
 * The user should be able to add his/her expenses against different categories such as groceries, gas, medical, etc. -- done
 * The user should be able to add new categories of expenses. -- done
 * The user should be able remove old categories of expenses.
-* The user should be able to remove his/her account.
-* The user should be able to view his/her balance. -- done.
+* The user should be able to remove his/her account. -- done
+* The user should be able to view his/her balance. -- done (works partially: changes saved when the next time the program is run )
 * The user should be able to view financial statistics (if time).
 
 ## Development Ideas
 
 * The user should be able to add income to different categories (salary).
+* The user should be able to view graphical representation of user data.
