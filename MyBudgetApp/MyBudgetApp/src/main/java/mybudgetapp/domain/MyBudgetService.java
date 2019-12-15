@@ -57,7 +57,7 @@ public class MyBudgetService {
 
     /**
      *
-     * @param db the database givens as a parameter
+     * @param db the database given as a parameter
      * @throws SQLException when connection to the database fails
      */
     public MyBudgetService(MyBudgetDatabase db) throws SQLException {
@@ -257,6 +257,18 @@ public class MyBudgetService {
         return true;
 
     }
+    public ObservableList<Balance> createBalanceList(User user) throws SQLException {
+        ObservableList<Balance> items2 = FXCollections.observableArrayList();
+        List<Balance> balances = dbbudgetDao.getBalanceList(loggedIn);
+   
+        for (Balance b : balances) {
+            items2.add(b);
+        }
+   
+        System.out.println(items2);
+        return items2;
+
+    }
 
     public ObservableList<String> createChoices(User user) throws SQLException {
         ObservableList<String> items = FXCollections.observableArrayList();
@@ -333,55 +345,58 @@ public class MyBudgetService {
         }
 
     }
-//      public void buildData(User user) throws SQLException, Exception {
-//        Connection c;
-//        data = FXCollections.observableArrayList();
-//        try {
-//            c = mybDatabase.connect();
-//            String SQL = "SELECT*from BALANCE WHERE user_username = ?";
-//            PreparedStatement stmt = c.prepareStatement(SQL);
-//            //ResultSet
-//            stmt.setString(1, user.getUsername());
-//            ResultSet rs = stmt.executeQuery();
-//
-//            /**
-//             * ********************************
-//             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
-//             */
-//            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-//                //We are using non property style for making dynamic table
-//                final int j = i;
-//                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-//                col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-//                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-//                        return new SimpleStringProperty(param.getValue().get(j).toString());
-//                    }
-//                });
-//
-//                tableview.getColumns().addAll(col);
-//                System.out.println("Column [" + i + "] ");
-//            }
-//
-//            /**
-//             * ******************************
-//             * Data added to ObservableList * ******************************
-//             */
-//            while (rs.next()) {
-//                //Iterate Row
-//                ObservableList<String> row = FXCollections.observableArrayList();
-//                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-//                    //Iterate Column
-//                    row.add(rs.getString(i));
-//                }
-//                System.out.println("Row [1] added " + row);
-//                data.add(row);
-//            }
-//            //FINALLY ADDED TO TableView
-//            tableview.setItems(data);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Error on Building Data");
-//        }
-//    }
+      public ObservableList buildData(User user) throws SQLException, Exception {
+        Connection c;
+        data = FXCollections.observableArrayList();
+        try {
+            c = mybDatabase.connect();
+            String SQL = "SELECT*from BALANCE WHERE user_username = ?";
+            PreparedStatement stmt = c.prepareStatement(SQL);
+            //ResultSet
+            stmt.setString(1, user.getUsername());
+            ResultSet rs = stmt.executeQuery();
+
+            /**
+             * ********************************
+             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
+             */
+            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+                //We are using non property style for making dynamic table
+                final int j = i;
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+
+                tableview.getColumns().addAll(col);
+                System.out.println("Column [" + i + "] ");
+            }
+
+            /**
+             * ******************************
+             * Data added to ObservableList * ******************************
+             */
+            while (rs.next()) {
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(rs.getString(i));
+                }
+                System.out.println("Row [1] added " + row);
+                data.add(row);
+            }
+            //FINALLY ADDED TO TableView
+          //  tableview.setItems(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+           
+            System.out.println("Error on Building Data");
+            return null;
+        }
+        return data;
+    }
 
 }

@@ -86,78 +86,29 @@ public class MyBudgetAppUI extends Application {
     }
 // CONNECTION DATABASE
 
-    public void buildData(User user) throws SQLException, Exception {
-        Connection c;
-        data = FXCollections.observableArrayList();
-        try {
-            c = database.connect();
-            String SQL = "SELECT*from BALANCE WHERE user_username = ?";
-            PreparedStatement stmt = c.prepareStatement(SQL);
-            //ResultSet
-            stmt.setString(1, user.getUsername());
-            ResultSet rs = stmt.executeQuery();
-
-            /**
-             * ********************************
-             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
-             */
-            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
-                final int j = i;
-                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
-                        return new SimpleStringProperty(param.getValue().get(j).toString());
-                    }
-                });
-
-                tableview.getColumns().addAll(col);
-                System.out.println("Column [" + i + "] ");
-            }
-
-            /**
-             * ******************************
-             * Data added to ObservableList * ******************************
-             */
-            while (rs.next()) {
-                //Iterate Row
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
-                    row.add(rs.getString(i));
-                }
-                System.out.println("Row [1] added " + row);
-                data.add(row);
-            }
-            //FINALLY ADDED TO TableView
-            tableview.setItems(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error on Building Data");
-        }
-    }
-
     @Override
     public void start(Stage primarystage) throws SQLException, Exception {
         init();
         //table scene
         tableview = new TableView();
-        
-        
+
         HBox tablePane = new HBox();
         GridPane tableGP = new GridPane();
         Button back = new Button("Back");
+        Label label = new Label("Your Balance History");
+        label.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
         tableGP.setPadding(new Insets(20, 20, 20, 20));
         tableGP.setHgap(5);
         tableGP.setVgap(5);
         tableGP.add(back, 0, 0);
-        tableGP.add(tableview,0,5);
-        
+        tableGP.add(label, 0, 1);
+        tableGP.add(tableview, 0, 5);
+
         tablePane.setPadding(new Insets(20, 20, 20, 30));
         tablePane.getChildren().addAll(tableGP);
         Scene tablescene = new Scene(tablePane);
-        back.setOnAction(e ->{
-        primarystage.setScene(myBudgetScene);    
+        back.setOnAction(e -> {
+            primarystage.setScene(myBudgetScene);
         });
         //login Scene
         primarystage.setTitle("MyBudgetApp");
@@ -341,8 +292,8 @@ public class MyBudgetAppUI extends Application {
                     createConfirmationMsg.setText("Category '" + category + "' created successfully");
                     createConfirmationMsg.setTextFill(Color.GREEN);
                     newCategoryInput.setText("");
-                   // chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
-                    chooseCategory.setItems(mybudgetService.createChoices(user));
+                    chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
+
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -367,6 +318,10 @@ public class MyBudgetAppUI extends Application {
                     mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
                     mybudgetService.updateBalanceNewExpense(user.getUsername(), d, expensedate);
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
+                    //buildData(user);
+                    tableview.refresh();
+                    chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
+
                 } catch (Throwable t) {
                     System.out.println("MybudgetService.createExpense error message ..." + t.getMessage());
                 }
@@ -390,6 +345,8 @@ public class MyBudgetAppUI extends Application {
                     mybudgetService.createIncome(user.getUsername(), d2, incomedate);
                     mybudgetService.updateBalanceNewIncome(user.getUsername(), d2, incomedate);
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
+                    //  buildData(user);
+                    tableview.refresh();
                 } catch (Exception ex) {
                     System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
 
@@ -487,4 +444,56 @@ public class MyBudgetAppUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    public void buildData(User user) throws SQLException, Exception {
+        Connection c;
+        data = FXCollections.observableArrayList();
+        try {
+            c = database.connect();
+            String SQL = "SELECT*from BALANCE WHERE user_username = ?";
+            PreparedStatement stmt = c.prepareStatement(SQL);
+            //ResultSet
+            stmt.setString(1, user.getUsername());
+            ResultSet rs = stmt.executeQuery();
+
+            /**
+             * ********************************
+             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
+             */
+            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+                //We are using non property style for making dynamic table
+                final int j = i;
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(param.getValue().get(j).toString());
+                    }
+                });
+
+                tableview.getColumns().addAll(col);
+                System.out.println("Column [" + i + "] ");
+            }
+
+            /**
+             * ******************************
+             * Data added to ObservableList * ******************************
+             */
+            while (rs.next()) {
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(rs.getString(i));
+                }
+                System.out.println("Row [1] added " + row);
+                data.add(row);
+            }
+            //FINALLY ADDED TO TableView
+            tableview.setItems(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on Building Data");
+        }
+    }
+
 }

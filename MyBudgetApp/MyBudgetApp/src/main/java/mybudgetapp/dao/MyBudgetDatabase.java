@@ -141,7 +141,7 @@ public class MyBudgetDatabase {
                     + "user_username varchar,"
                     + "category_name varchar, "
                     + "amount float, "
-                    + "time DATE,"
+                    + "time varchar,"
                     + "FOREIGN KEY (user_username) REFERENCES user(username),"
                     + "FOREIGN KEY(category_name) REFERENCES category(name)"
                     + ");"
@@ -163,7 +163,7 @@ public class MyBudgetDatabase {
                     + "id INTEGER PRIMARY KEY, "
                     + "user_username VARCHAR(100),"
                     + "amount float, "
-                    + "time DATE,"
+                    + "time varchar,"
                     + "FOREIGN KEY (user_username) REFERENCES user(username)"
                     + ");"
             );
@@ -184,7 +184,7 @@ public class MyBudgetDatabase {
                     + "id INTEGER PRIMARY KEY,"
                     + "user_username varchar(100),"
                     + "amount float, "
-                    + "time DATE,"
+                    + "time varchar,"
                     + "FOREIGN KEY (user_username) REFERENCES User(username));"
             );
             createBalanceTable.execute();
@@ -194,70 +194,4 @@ public class MyBudgetDatabase {
             System.out.println(e.getMessage());
         }
     }
-
-//    public int getLastId(Connection connection) {
-//        int id = -1;
-//        try {
-//            PreparedStatement getLastId = connection.prepareStatement("SELECT last_insert_rowid() AS id;");
-//            ResultSet resultSet = getLastId.executeQuery();
-//
-//            while (resultSet.next()) {
-//                id = resultSet.getInt("id");
-//            }
-//            return id;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return id;
-//    }
-
-//    public void saveExpense(Connection connection, int categoryid, double amount, LocalDate time) {
-//        float fAmount = (float) amount;
-//        try {
-//            PreparedStatement saveDetailsStatement = connection.prepareStatement(
-//                    "INSERT INTO expense (user_username, category_name, amount, time) VALUES (?, ?, ?);"
-//            );
-//
-//            saveDetailsStatement.setInt(1, categoryid);
-//            saveDetailsStatement.setFloat(2, fAmount);
-//            saveDetailsStatement.setDate(3, Date.valueOf(time));
-//
-//            saveDetailsStatement.executeUpdate();
-//            saveDetailsStatement.close();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    public void saveIncome(Connection connection, double amount, LocalDate time) {
-//        float fAmount = (float) amount;
-//        try {
-//            PreparedStatement saveDetailsStatement = connection.prepareStatement(
-//                    "INSERT INTO income (amount, time) VALUES (?, ?);"
-//            );
-//
-//            saveDetailsStatement.setFloat(1, fAmount);
-//            saveDetailsStatement.setDate(2, Date.valueOf(time));
-//            saveDetailsStatement.executeUpdate();
-//            saveDetailsStatement.close();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    public void saveUser(Connection connection, String username, String password) {
-//
-//        try {
-//            PreparedStatement statement = connection.prepareStatement(
-//                    "INSERT INTO user (username, password) VALUES ( ?, ?);"
-//            );
-//            statement.setString(1, username);
-//            statement.setString(2, password);
-//            statement.executeUpdate();
-//            statement.close();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(MyBudgetDatabase.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-
 }

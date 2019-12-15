@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -100,7 +101,8 @@ public class DBBudgetDao implements BudgetDao {
 
         Connection connection = db.connect();
         Float amountF = (float) expense.getAmount();
-        Date sqlDate = Date.valueOf(expense.getDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
+        String sqlDate = formatter.format(expense.getDate());
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT OR REPLACE INTO expense (user_username, category_name, amount, time) VALUES (?,?,?,?);"
@@ -108,7 +110,7 @@ public class DBBudgetDao implements BudgetDao {
             statement.setString(1, expense.getUserName());
             statement.setString(2, expense.getCategoryName());
             statement.setFloat(3, amountF);
-            statement.setDate(4, sqlDate);
+            statement.setString(4, sqlDate);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
@@ -127,14 +129,16 @@ public class DBBudgetDao implements BudgetDao {
     public void saveIncome(Income income) throws SQLException, Exception {
         Connection connection = db.connect();
         Float amountF2 = (float) income.getAmount();
-        Date sqlDate = Date.valueOf(income.getDate());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
+        String sqlDate = formatter.format(income.getDate());
         try {
             PreparedStatement statementIn = connection.prepareStatement(
                     "INSERT OR REPLACE INTO income (user_username, amount, time) VALUES (?,?,?);"
             );
             statementIn.setString(1, income.getUserName());
             statementIn.setFloat(2, amountF2);
-            statementIn.setDate(3, sqlDate);
+            statementIn.setString(3, sqlDate);
             statementIn.executeUpdate();
             statementIn.close();
         } catch (SQLException e) {
@@ -145,13 +149,16 @@ public class DBBudgetDao implements BudgetDao {
     public void saveBalance(Balance balance) throws Exception {
         Connection connection = db.connect();
         Float amount = (float) balance.getBalance();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
+        String sqldate = formatter.format(LocalDate.now());
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);"
             );
             statement.setString(1, balance.getUsername());
             statement.setFloat(2, amount);
-            statement.setDate(3, Date.valueOf(LocalDate.now()));
+            statement.setString(3, sqldate);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -185,7 +192,7 @@ public class DBBudgetDao implements BudgetDao {
             ResultSet rs = stmt.executeQuery();
             listB = new ArrayList<>();
             while (rs.next()) {
-                Balance b = new Balance(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
+                Balance b = new Balance(rs.getString("user_username").trim(), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
                 b.setId(rs.getInt("id"));
                 listB.add(b);
 
@@ -217,7 +224,7 @@ public class DBBudgetDao implements BudgetDao {
             stmt.setString(1, userUsername);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Expense expense = new Expense(rs.getString("user_username").trim(), rs.getString("category_name"), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
+                Expense expense = new Expense(rs.getString("user_username").trim(), rs.getString("category_name"), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
                 expensesByUser.add(expense);
                 stmt.close();
                 rs.close();
@@ -244,13 +251,14 @@ public class DBBudgetDao implements BudgetDao {
             stmt.setString(1, userUsername);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Income income = new Income(rs.getString("user_username").trim(), rs.getFloat("amount"), rs.getDate("time").toLocalDate());
+                Income income = new Income(rs.getString("user_username").trim(), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
                 income.setId(rs.getInt("id"));
                 incomeList.add(income);
-                stmt.close();
-                rs.close();
-                con.close();
+
             }
+            stmt.close();
+            rs.close();
+            con.close();
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
