@@ -180,14 +180,14 @@ public class MyBudgetService {
 
     public String updateBalanceLabel() throws SQLException, Exception {
         if (loggedIn != null) {
-            if (dbbudgetDao.findOne(loggedIn.getUsername())!= null){
-            currentBalance = dbbudgetDao.findOne(loggedIn.getUsername());
-            
-            System.out.println(currentBalance.toString());
+            if (dbbudgetDao.findOne(loggedIn.getUsername()) != null) {
+                currentBalance = dbbudgetDao.findOne(loggedIn.getUsername());
+
+                System.out.println(currentBalance.toString());
             } else {
-            currentBalance = new Balance(loggedIn.getUsername(), 0.0, LocalDate.now());
+                currentBalance = new Balance(loggedIn.getUsername(), 0.0, LocalDate.now());
             }
-            
+
             return currentBalance.toString();
 
         }
@@ -257,14 +257,15 @@ public class MyBudgetService {
         return true;
 
     }
+
     public ObservableList<Balance> createBalanceList(User user) throws SQLException {
         ObservableList<Balance> items2 = FXCollections.observableArrayList();
         List<Balance> balances = dbbudgetDao.getBalanceList(loggedIn);
-   
+
         for (Balance b : balances) {
             items2.add(b);
         }
-   
+
         System.out.println(items2);
         return items2;
 
@@ -318,6 +319,7 @@ public class MyBudgetService {
         }
         return true;
     }
+
     public boolean deleteBalance(User user) {
         try {
             dbbudgetDao.deleteBalance(user);
@@ -345,58 +347,4 @@ public class MyBudgetService {
         }
 
     }
-      public ObservableList buildData(User user) throws SQLException, Exception {
-        Connection c;
-        data = FXCollections.observableArrayList();
-        try {
-            c = mybDatabase.connect();
-            String SQL = "SELECT*from BALANCE WHERE user_username = ?";
-            PreparedStatement stmt = c.prepareStatement(SQL);
-            //ResultSet
-            stmt.setString(1, user.getUsername());
-            ResultSet rs = stmt.executeQuery();
-
-            /**
-             * ********************************
-             * TABLE COLUMN ADDED DYNAMICALLY * ********************************
-             */
-            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
-                final int j = i;
-                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                        return new SimpleStringProperty(param.getValue().get(j).toString());
-                    }
-                });
-
-                tableview.getColumns().addAll(col);
-                System.out.println("Column [" + i + "] ");
-            }
-
-            /**
-             * ******************************
-             * Data added to ObservableList * ******************************
-             */
-            while (rs.next()) {
-                //Iterate Row
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    //Iterate Column
-                    row.add(rs.getString(i));
-                }
-                System.out.println("Row [1] added " + row);
-                data.add(row);
-            }
-            //FINALLY ADDED TO TableView
-          //  tableview.setItems(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-           
-            System.out.println("Error on Building Data");
-            return null;
-        }
-        return data;
-    }
-
 }

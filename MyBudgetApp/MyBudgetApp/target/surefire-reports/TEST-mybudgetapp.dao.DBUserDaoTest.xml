@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="mybudgetapp.dao.DBUserDaoTest" time="0.834" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="mybudgetapp.dao.DBUserDaoTest" time="0.435" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre/lib"/>
@@ -59,11 +59,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="getAll1Works" time="0.125"/>
-  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="getAll2Works" time="0.071"/>
-  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="getAll3Works" time="0.125"/>
-  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="findByUsernameReturnsUser" time="0.107"/>
-  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="createWorks" time="0.103"/>
-  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="delete_Works" time="0.122"/>
-  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="findOneWorks" time="0.098"/>
+  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="getAll1Works" time="0.061"/>
+  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="getAll2Works" time="0.066"/>
+  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="getAll3Works" time="0.064"/>
+  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="findByUsernameReturnsUser" time="0.086"/>
+  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="createWorks" time="0.068"/>
+  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="delete_Works" time="0.041"/>
+  <testcase classname="mybudgetapp.dao.DBUserDaoTest" name="findOneWorks" time="0.044"/>
 </testsuite>

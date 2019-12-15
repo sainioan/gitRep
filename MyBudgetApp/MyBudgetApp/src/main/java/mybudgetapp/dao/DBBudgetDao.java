@@ -226,10 +226,11 @@ public class DBBudgetDao implements BudgetDao {
             while (rs.next()) {
                 Expense expense = new Expense(rs.getString("user_username").trim(), rs.getString("category_name"), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
                 expensesByUser.add(expense);
-                stmt.close();
-                rs.close();
-                con.close();
+
             }
+            stmt.close();
+            rs.close();
+            con.close();
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
