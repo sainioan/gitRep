@@ -113,10 +113,30 @@ public class MyBudgetServiceTest {
 
     @Test
     public void createIncome() throws SQLException, Exception {
-        dbbudget.create(i);
+     //   dbbudget.create(i);
         assertEquals(true, mbs.createIncome(testuser.getUsername(), 1000.0, today));
     }
-
+    @Test
+    public void deleteIncome() throws SQLException, Exception {
+     //   dbbudget.create(i);
+        assertEquals(true, mbs.deleteIncome(testuser));
+    }
+    @Test
+    public void deleteExpense() throws SQLException, Exception {
+     //   dbbudget.create(i);
+        assertEquals(true, mbs.deleteExpense(testuser));
+    }
+    @Test
+    public void deleteCateogry() throws SQLException, Exception {
+     //   dbbudget.create(i);
+        assertEquals(true, mbs.deleteCategory(testuser));
+    }
+    @Test
+    public void deleteBalance() throws SQLException, Exception {
+     //   dbbudget.create(i);
+        assertEquals(true, mbs.deleteBalance(testuser));
+    }
+ 
     @Test
     public void createExpenseNewCategory() throws SQLException {
         Expense expense = new Expense(testuser.getUsername(), "create new", 150.0, today);

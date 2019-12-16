@@ -126,4 +126,35 @@ public class DBBudgetDaoTest {
 
     }
 
+    @Test
+    public void deleteCategory() throws SQLException {
+        dao.deleteCategory(testUser);
+        assertEquals(true, dao.deleteCategory(testUser));
+
+    }
+
+    @Test
+    public void deleteExpense() throws SQLException {
+        dao.deleteExpense(testUser);
+        assertEquals(true, dao.deleteExpense(testUser));
+
+    }
+
+    @Test
+    public void deleteIncome() throws SQLException {
+        dao.deleteIncome(testUser);
+        assertEquals(true, dao.deleteIncome(testUser));
+
+    }
+
+    @Test
+    public void getBalanceList2Works() throws SQLException, Exception {
+        try {
+            dao.saveBalance(testBalance);
+            assertTrue(dao.getBalanceList(testUser) != null);
+        } catch (SQLException ex) {
+            System.out.println("getBalanceList test error..." + ex.getMessage());
+        }
+    }
+
 }
