@@ -26,6 +26,9 @@
 |10.12.|    5 |testien koodausta, balance tietokantataulun aktivointi, metodeja dbmybudget mybudgetserviceen|
 |12.12.|    2 |balance tietokantataulun debuggausta.  |
 |13.12.|    3 |kayttajan balance nakyvaksy GUI:hin. Bugien fiksailua.|
+|14.12.|    2 |Tableview ui:hin.Bugien fiksailua.|
+|15.12.|    5 |SQLITE Busy -- database locked Error viestien selvittelya. Bugien fiksailua.|
+|16.12.|    4 |Error viestien selvittelya. .gitignore häiriön korjaus, yms. Bugien fiksailua. Testien lisäämistä.|
 
 
 
