@@ -81,6 +81,9 @@ public class MyBudgetAppUI extends Application {
     private TableView tableview2;
     private TableView tableview3;
     private MyBudgetDatabase database;
+    private Connection c = null;
+    private ResultSet rs = null;
+    private PreparedStatement stmt = null;
 
     @Override
     public void init() throws SQLException, Exception {
@@ -188,9 +191,6 @@ public class MyBudgetAppUI extends Application {
                 try {
                     System.out.println("GUI" + mybudgetService.updateBalanceLabel());
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
-                    buildData(user);
-                    buildData2(user);
-                    buildData3(user);
                     primarystage.setScene(myBudgetScene);
                     System.out.println(mybudgetService.getMostRecent(user));
                 } catch (Throwable t) {
@@ -276,6 +276,13 @@ public class MyBudgetAppUI extends Application {
         });
         // table view 
         tableView.setOnAction(e -> {
+            try {
+             buildData(user);
+             buildData2(user);
+             buildData3(user);
+            } catch(Exception exc){
+                System.out.println(exc.getMessage());
+            }    
             primarystage.setScene(tablescene);
         });
         // delete useraccount
@@ -315,7 +322,6 @@ public class MyBudgetAppUI extends Application {
                 }
             }
         });
-        // new user scene  
         //create a new expense
         createExpenseButton.setOnAction(e -> {
             if (newExpenseInput.getText().isEmpty()) {
@@ -334,10 +340,6 @@ public class MyBudgetAppUI extends Application {
                     mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
                     mybudgetService.updateBalanceNewExpense(user.getUsername(), d, expensedate);
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
-                   
-                    tableview.refresh();
-                    tableview2.refresh();
-                    tableview3.refresh();
                     chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
 
                 } catch (Throwable t) {
@@ -363,9 +365,6 @@ public class MyBudgetAppUI extends Application {
                     mybudgetService.createIncome(user.getUsername(), d2, incomedate);
                     mybudgetService.updateBalanceNewIncome(user.getUsername(), d2, incomedate);
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
-                    tableview.refresh();
-                    tableview2.refresh();
-                    tableview3.refresh();
                 } catch (Exception ex) {
                     System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
 
@@ -465,15 +464,15 @@ public class MyBudgetAppUI extends Application {
     }
 
     public void buildData(User user) throws SQLException, Exception {
-        Connection c;
+
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
             String SQL = "SELECT*from BALANCE WHERE user_username = ?";
-            PreparedStatement stmt = c.prepareStatement(SQL);
+            stmt = c.prepareStatement(SQL);
             //ResultSet
             stmt.setString(1, user.getUsername());
-            ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
 
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 final int j = i;
@@ -504,19 +503,27 @@ public class MyBudgetAppUI extends Application {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
+        } finally {
+            try {
+                c.close();
+                rs.close();
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
     public void buildData2(User user) throws SQLException, Exception {
-        Connection c;
+
         data2 = FXCollections.observableArrayList();
         try {
             c = database.connect();
             String SQL = "SELECT*FROM income WHERE user_username = ?";
-            PreparedStatement stmt = c.prepareStatement(SQL);
+            stmt = c.prepareStatement(SQL);
             //ResultSet
             stmt.setString(1, user.getUsername());
-            ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
 
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 //We are using non property style for making dynamic table
@@ -544,23 +551,31 @@ public class MyBudgetAppUI extends Application {
             }
             //FINALLY ADDED TO TableView
             tableview2.setItems(data2);
-             c.close();
+            c.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
+        } finally {
+            try {
+                c.close();
+                rs.close();
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
     public void buildData3(User user) throws SQLException, Exception {
-        Connection c;
+
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
             String SQL = "SELECT*from expense WHERE user_username = ?";
-            PreparedStatement stmt = c.prepareStatement(SQL);
+            stmt = c.prepareStatement(SQL);
             //ResultSet
             stmt.setString(1, user.getUsername());
-            ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
 
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
                 //We are using non property style for making dynamic table
@@ -592,7 +607,15 @@ public class MyBudgetAppUI extends Application {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
+        } finally {
+            try {
+                c.close();
+                rs.close();
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
-    }
 
+    }
 }

@@ -63,6 +63,9 @@ public class DBBudgetDao implements BudgetDao {
                 category.setName(rs.getString("name"));
                 categories.add(category);
             }
+            conn.close();
+            rs.close();
+            stmt.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -86,6 +89,7 @@ public class DBBudgetDao implements BudgetDao {
             statement.setString(2, category.getName());
             statement.executeUpdate();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -113,6 +117,7 @@ public class DBBudgetDao implements BudgetDao {
             statement.setString(4, sqlDate);
             statement.executeUpdate();
             statement.close();
+            connection.close();
         } catch (SQLException e) {
             System.out.println("saveExpense message is... " + e.getMessage());
         }
@@ -141,6 +146,7 @@ public class DBBudgetDao implements BudgetDao {
             statementIn.setString(3, sqlDate);
             statementIn.executeUpdate();
             statementIn.close();
+            connection.close();
         } catch (SQLException e) {
             System.out.println("saveIncome error message is... " + e.getMessage());
         }
@@ -161,6 +167,7 @@ public class DBBudgetDao implements BudgetDao {
             statement.setString(3, sqldate);
             statement.executeUpdate();
             statement.close();
+            connection.close();
         } catch (Exception e) {
             System.out.println("saveBAlance error" + e.getMessage());
         }
@@ -284,10 +291,10 @@ public class DBBudgetDao implements BudgetDao {
                 Category category = new Category(rs.getString("categoryUser").trim(), rs.getString("name"));
                 category.setId(rs.getInt("id"));
                 categories.add(category);
-                stmt.close();
-                rs.close();
-                con.close();
             }
+            stmt.close();
+            rs.close();
+            con.close();
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
