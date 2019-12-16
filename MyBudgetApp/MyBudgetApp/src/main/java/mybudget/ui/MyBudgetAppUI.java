@@ -466,6 +466,7 @@ public class MyBudgetAppUI extends Application {
     public void buildData(User user) throws SQLException, Exception {
 
         tableview.getItems().clear();
+        tableview.getColumns().clear();
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -515,6 +516,7 @@ public class MyBudgetAppUI extends Application {
 
     public void buildData2(User user) throws SQLException, Exception {
         tableview2.getItems().clear();
+        tableview2.getColumns().clear();
         data2 = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -565,6 +567,7 @@ public class MyBudgetAppUI extends Application {
 
     public void buildData3(User user) throws SQLException, Exception {
         tableview3.getItems().clear();
+        tableview3.getColumns().clear();
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -604,7 +607,6 @@ public class MyBudgetAppUI extends Application {
             e.printStackTrace();
             System.out.println("Error on Building Data");
         } finally {
-
             c.close();
             rs.close();
         }

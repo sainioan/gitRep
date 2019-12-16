@@ -330,10 +330,6 @@ public class MyBudgetService {
         } else {
             try {
                 dbuserDao.delete(user);
-//                dbbudgetDao.deleteCategory(user);
-//                dbbudgetDao.deleteExpense(user);
-//                dbbudgetDao.deleteIncome(user);
-//                dbbudgetDao.deleteBalance(user);
 
             } catch (Exception ex) {
                 System.out.println("deleteUser error message is ..." + ex.getMessage());

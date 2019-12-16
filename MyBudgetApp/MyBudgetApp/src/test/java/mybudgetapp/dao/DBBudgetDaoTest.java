@@ -112,4 +112,10 @@ public class DBBudgetDaoTest {
         balanceL.add(dao.findOne(testUser.getUsername()));
         assertEquals(1, balanceL.size());
     }
+
+    @Test
+    public void deleteBalanceWorkss() throws SQLException {
+        dao.deleteBalance(testUser);
+        assertTrue(dao.findOne(testUser.getUsername()) == null);
+    }
 }
