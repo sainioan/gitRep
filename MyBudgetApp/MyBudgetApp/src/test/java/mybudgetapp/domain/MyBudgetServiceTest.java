@@ -158,7 +158,7 @@ public class MyBudgetServiceTest {
     public void updateBalanceNewExpense() throws SQLException, Exception {
         dbbudget.saveBalance(testBalance);
         double expense = e.getAmount();
-        boolean result = mbs.updateBalanceNewIncome(testuser.getUsername(), expense, LocalDate.now());
+        boolean result = mbs.updateBalanceNewExpense(testuser.getUsername(), expense, LocalDate.now());
         assertEquals(true, result);
     }
 
@@ -183,6 +183,11 @@ public class MyBudgetServiceTest {
     @Test
     public void loginReturnsFalseIfUserNull() throws SQLException {
         assertEquals(false, mbs.login("fakeuser", "fakeid"));
+    }
+    @Test
+    public void validateUsernameInputWorks() throws SQLException {
+        assertEquals(false, mbs.validateUsernameInput("a"));
+        assertEquals(true, mbs.validateUsernameInput("annie"));
     }
 
 }
