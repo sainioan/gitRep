@@ -113,30 +113,34 @@ public class MyBudgetServiceTest {
 
     @Test
     public void createIncome() throws SQLException, Exception {
-     //   dbbudget.create(i);
+        //   dbbudget.create(i);
         assertEquals(true, mbs.createIncome(testuser.getUsername(), 1000.0, today));
     }
+
     @Test
     public void deleteIncome() throws SQLException, Exception {
-     //   dbbudget.create(i);
+        //   dbbudget.create(i);
         assertEquals(true, mbs.deleteIncome(testuser));
     }
+
     @Test
     public void deleteExpense() throws SQLException, Exception {
-     //   dbbudget.create(i);
+        //   dbbudget.create(i);
         assertEquals(true, mbs.deleteExpense(testuser));
     }
+
     @Test
     public void deleteCateogry() throws SQLException, Exception {
-     //   dbbudget.create(i);
+        //   dbbudget.create(i);
         assertEquals(true, mbs.deleteCategory(testuser));
     }
+
     @Test
     public void deleteBalance() throws SQLException, Exception {
-     //   dbbudget.create(i);
+        //   dbbudget.create(i);
         assertEquals(true, mbs.deleteBalance(testuser));
     }
- 
+
     @Test
     public void createExpenseNewCategory() throws SQLException {
         Expense expense = new Expense(testuser.getUsername(), "create new", 150.0, today);
@@ -184,10 +188,21 @@ public class MyBudgetServiceTest {
     public void loginReturnsFalseIfUserNull() throws SQLException {
         assertEquals(false, mbs.login("fakeuser", "fakeid"));
     }
+
     @Test
     public void validateUsernameInputWorks() throws SQLException {
         assertEquals(false, mbs.validateUsernameInput("a"));
         assertEquals(true, mbs.validateUsernameInput("annie"));
+    }
+
+    @Test
+    public void deleteUserWorks() throws SQLException {
+        User user = new User("testabc", "ta1234");
+        mbs.createUser(user.getUsername(), user.getPassword());
+//        System.out.println("does create work: testing " + user);
+//        mbs.deleteUser(user);
+//        System.out.println("testing " + dbuser.findOne(user.getUsername()));
+        assertEquals(true, mbs.deleteUser(user));
     }
 
 }

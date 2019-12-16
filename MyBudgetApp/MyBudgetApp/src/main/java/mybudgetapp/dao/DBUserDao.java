@@ -21,7 +21,6 @@ import mybudgetapp.domain.User;
 public class DBUserDao implements UserDao {
 
     private List<User> users;
-    private String database;
     private MyBudgetDatabase db;
     private String password;
 
@@ -79,16 +78,21 @@ public class DBUserDao implements UserDao {
 
     public boolean delete(User user) throws SQLException {
         String sql = "DELETE FROM user WHERE username = ?";
-        try (Connection conn = db.connect();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, user.getUsername());
-            stmt.executeUpdate();
-//            stmt.close();
-//            conn.close();
-        } catch (Throwable t) {
-            System.out.println("delete user error..." + t.getMessage());
-            return false;
-        }
+        Connection conn = db.connect();
+        // try {
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, user.getUsername());
+        stmt.executeUpdate();
+        stmt.close();
+
+        // } catch (Throwable t) {
+       // System.out.println("delete user error..." + t.getMessage());
+        //     return false;
+        // } finally {
+        //      if(conn!=null){
+        conn.close();
+        //      }
+        //  }
         return true;
     }
 

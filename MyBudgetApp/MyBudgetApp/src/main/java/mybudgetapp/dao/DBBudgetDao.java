@@ -39,6 +39,7 @@ public class DBBudgetDao implements BudgetDao {
     private List<Income> incomeByUser = new ArrayList<>();
     private List<Expense> expensesByUser = new ArrayList<>();
     private List<Balance> listB = new ArrayList<>();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
 
     /**
      *
@@ -102,7 +103,6 @@ public class DBBudgetDao implements BudgetDao {
 
         Connection connection = db.connect();
         Float amountF = (float) expense.getAmount();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
         String sqlDate = formatter.format(expense.getDate());
         try {
             PreparedStatement statement = connection.prepareStatement(
@@ -131,8 +131,6 @@ public class DBBudgetDao implements BudgetDao {
     public void saveIncome(Income income) throws SQLException, Exception {
         Connection connection = db.connect();
         Float amountF2 = (float) income.getAmount();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
         String sqlDate = formatter.format(income.getDate());
         try {
             PreparedStatement statementIn = connection.prepareStatement(
@@ -152,19 +150,15 @@ public class DBBudgetDao implements BudgetDao {
     public void saveBalance(Balance balance) throws Exception {
         Connection connection = db.connect();
         Float amount = (float) balance.getBalance();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
         String sqldate = formatter.format(LocalDate.now());
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);"
-            );
+                    "INSERT OR REPLACE INTO Balance (user_username, amount, time) VALUES (?, ?, ?);");
             statement.setString(1, balance.getUsername());
             statement.setFloat(2, amount);
             statement.setString(3, sqldate);
             statement.executeUpdate();
             statement.close();
-            // connection.close();
         } catch (Exception e) {
             System.out.println("saveBalance error message" + e.getMessage());
         } finally {
@@ -196,7 +190,6 @@ public class DBBudgetDao implements BudgetDao {
     public List<Balance> getBalanceList(User user) throws SQLException {
         Connection con = db.connect();
         try {
-
             PreparedStatement stmt = con.prepareStatement("SELECT*FROM balance WHERE user_username = ?");
             stmt.setString(1, user.getUsername());
             ResultSet rs = stmt.executeQuery();
@@ -205,7 +198,6 @@ public class DBBudgetDao implements BudgetDao {
                 Balance b = new Balance(rs.getString("user_username").trim(), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
                 b.setId(rs.getInt("id"));
                 listB.add(b);
-
             }
             stmt.close();
             rs.close();
@@ -217,8 +209,6 @@ public class DBBudgetDao implements BudgetDao {
                 con.close();
             }
         }
-
-        System.out.println(listB.toString());
         return listB;
     }
 
@@ -233,7 +223,6 @@ public class DBBudgetDao implements BudgetDao {
     public List<Expense> getAllExpenses(User user) throws SQLException {
         Connection con = db.connect();
         try {
-
             String userUsername = user.getUsername();
             PreparedStatement stmt = con.prepareStatement(sql3);
             stmt.setString(1, userUsername);
@@ -241,7 +230,6 @@ public class DBBudgetDao implements BudgetDao {
             while (rs.next()) {
                 Expense expense = new Expense(rs.getString("user_username").trim(), rs.getString("category_name"), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
                 expensesByUser.add(expense);
-
             }
             stmt.close();
             rs.close();
@@ -252,7 +240,6 @@ public class DBBudgetDao implements BudgetDao {
                 con.close();
             }
         }
-        System.out.println(expensesByUser);
         return expensesByUser;
     }
 
@@ -265,7 +252,6 @@ public class DBBudgetDao implements BudgetDao {
     public List<Income> getAllIncome(User user) throws SQLException {
         Connection con = db.connect();
         try {
-
             String userUsername = user.getUsername();
             PreparedStatement stmt = con.prepareStatement(sql2);
             stmt.setString(1, userUsername);
@@ -274,7 +260,6 @@ public class DBBudgetDao implements BudgetDao {
                 Income income = new Income(rs.getString("user_username").trim(), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
                 income.setId(rs.getInt("id"));
                 incomeList.add(income);
-
             }
             stmt.close();
             rs.close();
@@ -286,7 +271,6 @@ public class DBBudgetDao implements BudgetDao {
             }
         }
         return incomeByUser;
-
     }
 
     /**
@@ -298,7 +282,6 @@ public class DBBudgetDao implements BudgetDao {
     public List<Category> getAllCategories(User user) throws SQLException {
         Connection con = db.connect();
         try {
-
             PreparedStatement stmt = con.prepareStatement("SELECT*FROM category WHERE categoryUser = ?");
             stmt.setString(1, user.getUsername());
             ResultSet rs = stmt.executeQuery();

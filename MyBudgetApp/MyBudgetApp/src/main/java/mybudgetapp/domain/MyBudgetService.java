@@ -324,19 +324,19 @@ public class MyBudgetService {
         return true;
     }
 
-    public boolean deleteUser(User user) {
-        if (loggedIn == null) {
+    public boolean deleteUser(User user) throws SQLException {
+        if (user == null) {
             return false;
         } else {
-            try {
-                dbuserDao.delete(user);
+//            try {
+            dbuserDao.delete(user);
 
-            } catch (Exception ex) {
-                System.out.println("deleteUser error message is ..." + ex.getMessage());
-                return false;
-            }
-            return true;
+//            } catch (Exception ex) {
+//                System.out.println("deleteUser error message is ..." + ex.getMessage());
+//                return false;
         }
+        return true;
+//    }
 
     }
 }

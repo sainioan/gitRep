@@ -470,8 +470,8 @@ public class MyBudgetAppUI extends Application {
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String SQL = "SELECT*from BALANCE WHERE user_username = ?";
-            stmt = c.prepareStatement(SQL);
+            String sql = "SELECT*from BALANCE WHERE user_username = ?";
+            stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
             rs = stmt.executeQuery();
@@ -520,8 +520,8 @@ public class MyBudgetAppUI extends Application {
         data2 = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String SQL = "SELECT*FROM income WHERE user_username = ?";
-            stmt = c.prepareStatement(SQL);
+            String sql = "SELECT*FROM income WHERE user_username = ?";
+            stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
             rs = stmt.executeQuery();
@@ -571,8 +571,8 @@ public class MyBudgetAppUI extends Application {
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String SQL = "SELECT*from expense WHERE user_username = ?";
-            stmt = c.prepareStatement(SQL);
+            String sql = "SELECT*from expense WHERE user_username = ?";
+            stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
             rs = stmt.executeQuery();
