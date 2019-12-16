@@ -277,12 +277,12 @@ public class MyBudgetAppUI extends Application {
         // table view 
         tableView.setOnAction(e -> {
             try {
-             buildData(user);
-             buildData2(user);
-             buildData3(user);
-            } catch(Exception exc){
-                System.out.println(exc.getMessage());
-            }    
+                buildData(user);
+                buildData2(user);
+                buildData3(user);
+            } catch (Exception exc) {
+                System.out.println("tableView setOnAction error message" + exc.getMessage());
+            }
             primarystage.setScene(tablescene);
         });
         // delete useraccount
@@ -318,7 +318,7 @@ public class MyBudgetAppUI extends Application {
                     chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
 
                 } catch (SQLException ex) {
-                    System.out.println(ex.getMessage());
+                    System.out.println("createCategoryButton setOnAction error message..." + ex.getMessage());
                 }
             }
         });
@@ -465,6 +465,7 @@ public class MyBudgetAppUI extends Application {
 
     public void buildData(User user) throws SQLException, Exception {
 
+        tableview.getItems().clear();
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -499,23 +500,21 @@ public class MyBudgetAppUI extends Application {
             }
             //FINALLY ADDED TO TableView
             tableview.setItems(data);
-            c.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
         } finally {
-            try {
-                c.close();
-                rs.close();
-                stmt.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
+            c.close();
+            rs.close();
+            stmt.close();
+
         }
     }
 
     public void buildData2(User user) throws SQLException, Exception {
-
+        tableview2.getItems().clear();
         data2 = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -551,23 +550,21 @@ public class MyBudgetAppUI extends Application {
             }
             //FINALLY ADDED TO TableView
             tableview2.setItems(data2);
-            c.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
         } finally {
-            try {
-                c.close();
-                rs.close();
-                stmt.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
+            c.close();
+            rs.close();
+            stmt.close();
+
         }
     }
 
     public void buildData3(User user) throws SQLException, Exception {
-
+        tableview3.getItems().clear();
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -603,18 +600,13 @@ public class MyBudgetAppUI extends Application {
             }
             //FINALLY ADDED TO TableView
             tableview3.setItems(data3);
-            c.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
         } finally {
-            try {
-                c.close();
-                rs.close();
-                stmt.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+
+            c.close();
+            rs.close();
         }
 
     }

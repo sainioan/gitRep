@@ -59,9 +59,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mybudgetapp.domain.UserTest" name="nonEqualWhenDifferentType" time="0"/>
+  <testcase classname="mybudgetapp.domain.UserTest" name="nonEqualWhenDifferentType" time="0.001"/>
   <testcase classname="mybudgetapp.domain.UserTest" name="nonEqualWhenDifferentUsername" time="0"/>
-  <testcase classname="mybudgetapp.domain.UserTest" name="equalWhenSameUsername" time="0"/>
-  <testcase classname="mybudgetapp.domain.UserTest" name="constructorWorks" time="0"/>
-  <testcase classname="mybudgetapp.domain.UserTest" name="usersPasswordIsCorrect" time="0.001"/>
+  <testcase classname="mybudgetapp.domain.UserTest" name="equalWhenSameUsername" time="0.001"/>
+  <testcase classname="mybudgetapp.domain.UserTest" name="constructorWorks" time="0.001"/>
+  <testcase classname="mybudgetapp.domain.UserTest" name="usersPasswordIsCorrect" time="0"/>
 </testsuite>

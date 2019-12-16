@@ -116,22 +116,17 @@ public class MyBudgetService {
     public boolean createExpense(String username, String category, double amount, LocalDate date) throws SQLException {
         Expense expense = new Expense(username, category, amount, date);
         try {
-            if (!category.equals("create new") && (!username.equals("") && (date != null) && (amount > 0))) {
+            if ((!username.equals("") && (date != null) && (amount > 0))) {
                 dbbudgetDao.create(expense);
                 return true;
 
-            } else if ((amount < 0) || (username.equals("")) || (date == null)) {
-                return false;
             } else {
-                Category newCategory = new Category(username, category);
-                dbbudgetDao.create(newCategory);
-                dbbudgetDao.create(expense);
+                return false;
             }
         } catch (SQLException ex) {
             System.out.println("createExpense error message is..." + ex.getMessage());
             return false;
         }
-        return true;
     }
 
     public boolean createIncome(String username, double amount, LocalDate date) throws SQLException, Exception {
@@ -210,7 +205,6 @@ public class MyBudgetService {
 
         } catch (SQLException ex) {
             System.out.println("updateBalance error message is..." + ex.getMessage());
-            Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
 
@@ -251,6 +245,7 @@ public class MyBudgetService {
         try {
             dbuserDao.create(user);
         } catch (Exception e) {
+            System.out.println("createUser error message is ..." + e.getMessage());
             return false;
         }
 
@@ -335,12 +330,13 @@ public class MyBudgetService {
         } else {
             try {
                 dbuserDao.delete(user);
-                dbbudgetDao.deleteCategory(user);
-                dbbudgetDao.deleteExpense(user);
-                dbbudgetDao.deleteIncome(user);
-                dbbudgetDao.deleteBalance(user);
+//                dbbudgetDao.deleteCategory(user);
+//                dbbudgetDao.deleteExpense(user);
+//                dbbudgetDao.deleteIncome(user);
+//                dbbudgetDao.deleteBalance(user);
 
             } catch (Exception ex) {
+                System.out.println("deleteUser error message is ..." + ex.getMessage());
                 return false;
             }
             return true;

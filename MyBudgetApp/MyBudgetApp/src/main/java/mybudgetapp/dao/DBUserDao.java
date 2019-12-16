@@ -79,13 +79,12 @@ public class DBUserDao implements UserDao {
 
     public boolean delete(User user) throws SQLException {
         String sql = "DELETE FROM user WHERE username = ?";
-        try 
-            (Connection conn = db.connect();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = db.connect();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getUsername());
             stmt.executeUpdate();
-            stmt.close();
-            conn.close();
+//            stmt.close();
+//            conn.close();
         } catch (Throwable t) {
             System.out.println("delete user error..." + t.getMessage());
             return false;
@@ -165,15 +164,18 @@ public class DBUserDao implements UserDao {
         boolean findOne = rs.next();
 
         if (!findOne) {
+            conn.close();
             return null;
+
+        } else {
+
+            User user = new User(rs.getString("username"), rs.getString("password"));
+
+            stmt.close();
+            rs.close();
+            conn.close();
+            return user;
+
         }
-
-        User user = new User(rs.getString("username"), rs.getString("password"));
-
-        stmt.close();
-        rs.close();
-        conn.close();
-
-        return user;
     }
 }

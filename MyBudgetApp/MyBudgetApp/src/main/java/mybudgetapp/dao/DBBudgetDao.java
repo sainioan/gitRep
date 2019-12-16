@@ -6,7 +6,6 @@
 package mybudgetapp.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -15,8 +14,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mybudgetapp.domain.Balance;
 import mybudgetapp.domain.Category;
 import mybudgetapp.domain.Expense;
@@ -167,13 +164,18 @@ public class DBBudgetDao implements BudgetDao {
             statement.setString(3, sqldate);
             statement.executeUpdate();
             statement.close();
-            connection.close();
+            // connection.close();
         } catch (Exception e) {
-            System.out.println("saveBAlance error" + e.getMessage());
+            System.out.println("saveBalance error message" + e.getMessage());
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 
     public Balance findOne(String username) throws SQLException {
+
         Connection conn = db.connect();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM balance WHERE ID =(SELECT MAX(ID) FROM  balance WHERE user_username = ?)");
         stmt.setString(1, username);
@@ -181,19 +183,20 @@ public class DBBudgetDao implements BudgetDao {
         boolean findOne = rs.next();
         if (!findOne) {
             return null;
+        } else {
+            double balanceAmount = Double.parseDouble(rs.getString("amount"));
+            Balance b = new Balance(rs.getString("user_username"), balanceAmount, LocalDate.now());
+            stmt.close();
+            rs.close();
+            conn.close();
+            return b;
         }
-        double balanceAmount = Double.parseDouble(rs.getString("amount"));
-        Balance b = new Balance(rs.getString("user_username"), balanceAmount, LocalDate.now());
-        stmt.close();
-        rs.close();
-        conn.close();
-
-        return b;
     }
 
     public List<Balance> getBalanceList(User user) throws SQLException {
+        Connection con = db.connect();
         try {
-            Connection con = db.connect();
+
             PreparedStatement stmt = con.prepareStatement("SELECT*FROM balance WHERE user_username = ?");
             stmt.setString(1, user.getUsername());
             ResultSet rs = stmt.executeQuery();
@@ -208,7 +211,11 @@ public class DBBudgetDao implements BudgetDao {
             rs.close();
             con.close();
         } catch (Throwable t) {
-            System.out.println(t.getMessage());
+            System.out.println("getBalanceList error message is ..." + t.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
 
         System.out.println(listB.toString());
@@ -224,8 +231,9 @@ public class DBBudgetDao implements BudgetDao {
      *
      */
     public List<Expense> getAllExpenses(User user) throws SQLException {
+        Connection con = db.connect();
         try {
-            Connection con = db.connect();
+
             String userUsername = user.getUsername();
             PreparedStatement stmt = con.prepareStatement(sql3);
             stmt.setString(1, userUsername);
@@ -237,9 +245,12 @@ public class DBBudgetDao implements BudgetDao {
             }
             stmt.close();
             rs.close();
-            con.close();
         } catch (Throwable t) {
             System.out.println(t.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         System.out.println(expensesByUser);
         return expensesByUser;
@@ -252,8 +263,9 @@ public class DBBudgetDao implements BudgetDao {
      * @throws SQLException if data retrieval fails
      */
     public List<Income> getAllIncome(User user) throws SQLException {
+        Connection con = db.connect();
         try {
-            Connection con = db.connect();
+
             String userUsername = user.getUsername();
             PreparedStatement stmt = con.prepareStatement(sql2);
             stmt.setString(1, userUsername);
@@ -266,9 +278,12 @@ public class DBBudgetDao implements BudgetDao {
             }
             stmt.close();
             rs.close();
-            con.close();
         } catch (Throwable t) {
             System.out.println(t.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return incomeByUser;
 
@@ -281,8 +296,9 @@ public class DBBudgetDao implements BudgetDao {
      * @throws SQLException when retrieving data from the database fails
      */
     public List<Category> getAllCategories(User user) throws SQLException {
+        Connection con = db.connect();
         try {
-            Connection con = db.connect();
+
             PreparedStatement stmt = con.prepareStatement("SELECT*FROM category WHERE categoryUser = ?");
             stmt.setString(1, user.getUsername());
             ResultSet rs = stmt.executeQuery();
@@ -294,9 +310,12 @@ public class DBBudgetDao implements BudgetDao {
             }
             stmt.close();
             rs.close();
-            con.close();
         } catch (Throwable t) {
-            System.out.println(t.getMessage());
+            System.out.println("getAllCategories error message is ..." + t.getMessage());
+        } finally {
+            if (con != null) {
+                con.close();
+            }
         }
         return categories;
     }
@@ -315,7 +334,7 @@ public class DBBudgetDao implements BudgetDao {
         try {
             saveCategory(category);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("create(category) error message is ..." + e.getMessage());
         }
         return category;
     }
@@ -332,7 +351,7 @@ public class DBBudgetDao implements BudgetDao {
             incomeList.add(income);
             saveIncome(income);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("create(income) error message is..." + e.getMessage());
         }
         return income;
     }
@@ -349,7 +368,7 @@ public class DBBudgetDao implements BudgetDao {
             expenses.add(expense);
             saveExpense(expense);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("create expense error message is..." + e.getMessage());
         }
         return expense;
     }
@@ -362,14 +381,22 @@ public class DBBudgetDao implements BudgetDao {
     public boolean deleteExpense(User user) throws SQLException {
 
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM expense WHERE user_sername = ?");
+        try {
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM expense WHERE user_username = ?");
 
-        stmt.setString(1, user.getUsername());
+            stmt.setString(1, user.getUsername());
 
-        stmt.executeUpdate();
+            stmt.executeUpdate();
 
-        stmt.close();
-        con.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.out.println("deleteExpense error message is..." + e.getMessage());
+            return false;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
 
         return true;
 
@@ -378,15 +405,22 @@ public class DBBudgetDao implements BudgetDao {
     public boolean deleteIncome(User user) throws SQLException {
 
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM income WHERE user_username = ?");
+        try {
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM income WHERE user_username = ?");
 
-        stmt.setString(1, user.getUsername());
+            stmt.setString(1, user.getUsername());
 
-        stmt.executeUpdate();
+            stmt.executeUpdate();
 
-        stmt.close();
-        con.close();
-
+            stmt.close();
+        } catch (Throwable t) {
+            System.out.println("deleteIncome error message is ..." + t.getMessage());
+            return false;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
         return true;
 
     }
@@ -394,15 +428,23 @@ public class DBBudgetDao implements BudgetDao {
     public boolean deleteCategory(User user) throws SQLException {
 
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM category WHERE categoryUser = ?");
+        try {
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM category WHERE categoryUser = ?");
 
-        stmt.setString(1, user.getUsername());
+            stmt.setString(1, user.getUsername());
 
-        stmt.executeUpdate();
+            stmt.executeUpdate();
 
-        stmt.close();
-        con.close();
+            stmt.close();
 
+        } catch (Throwable t) {
+            System.out.println("deleteCategory error message is ..." + t.getMessage());
+            return false;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
         return true;
 
     }
@@ -410,15 +452,22 @@ public class DBBudgetDao implements BudgetDao {
     public boolean deleteBalance(User user) throws SQLException {
 
         Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("DELETE FROM balance WHERE user_username = ?");
+        try {
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM balance WHERE user_username = ?");
 
-        stmt.setString(1, user.getUsername());
+            stmt.setString(1, user.getUsername());
 
-        stmt.executeUpdate();
+            stmt.executeUpdate();
 
-        stmt.close();
-        con.close();
-
+            stmt.close();
+        } catch (Throwable t) {
+            System.out.println("deleteBalance error message is..." + t.getMessage());
+            return false;
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
         return true;
 
     }
