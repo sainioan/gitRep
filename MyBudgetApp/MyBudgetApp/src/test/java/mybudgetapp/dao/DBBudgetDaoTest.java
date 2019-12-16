@@ -114,8 +114,16 @@ public class DBBudgetDaoTest {
     }
 
     @Test
-    public void deleteBalanceWorkss() throws SQLException {
+    public void findOne2Works() throws SQLException {
         dao.deleteBalance(testUser);
         assertTrue(dao.findOne(testUser.getUsername()) == null);
     }
+
+    @Test
+    public void getAllExpensesWork() throws SQLException, Exception {
+        dao.saveExpense(testExpense);
+        assertTrue(dao.getAllExpenses(testUser) != null);
+
+    }
+
 }

@@ -77,9 +77,9 @@ public class MyBudgetAppUI extends Application {
     private ObservableList<ObservableList> data;
     private ObservableList<ObservableList> data2;
     private ObservableList<ObservableList> data3;
-    private TableView tableview;
-    private TableView tableview2;
-    private TableView tableview3;
+    private TableView tableviewBalance;
+    private TableView tableviewIncome;
+    private TableView tableviewExpense;
     private MyBudgetDatabase database;
     private Connection c = null;
     private ResultSet rs = null;
@@ -97,9 +97,9 @@ public class MyBudgetAppUI extends Application {
     public void start(Stage primarystage) throws SQLException, Exception {
         init();
         //table scene
-        tableview = new TableView();
-        tableview2 = new TableView();
-        tableview3 = new TableView();
+        tableviewBalance = new TableView();
+        tableviewIncome = new TableView();
+        tableviewExpense = new TableView();
 
         HBox tablePane = new HBox();
         GridPane tableGP = new GridPane();
@@ -115,9 +115,9 @@ public class MyBudgetAppUI extends Application {
         tableGP.setVgap(5);
         tableGP.add(back, 0, 0);
         tableGP.add(label, 0, 1);
-        tableGP.add(tableview, 0, 5);
-        tableGP.add(tableview2, 0, 10);
-        tableGP.add(tableview3, 0, 15);
+        tableGP.add(tableviewBalance, 0, 5);
+        tableGP.add(tableviewIncome, 0, 10);
+        tableGP.add(tableviewExpense, 0, 15);
         tableGP.add(label2, 0, 9);
         tableGP.add(label3, 0, 14);
 
@@ -465,8 +465,8 @@ public class MyBudgetAppUI extends Application {
 
     public void buildData(User user) throws SQLException, Exception {
 
-        tableview.getItems().clear();
-        tableview.getColumns().clear();
+        tableviewBalance.getItems().clear();
+        tableviewBalance.getColumns().clear();
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -485,7 +485,7 @@ public class MyBudgetAppUI extends Application {
                     }
                 });
 
-                tableview.getColumns().addAll(col);
+                tableviewBalance.getColumns().addAll(col);
                 System.out.println("Column [" + i + "] ");
             }
 
@@ -500,7 +500,7 @@ public class MyBudgetAppUI extends Application {
                 data.add(row);
             }
             //FINALLY ADDED TO TableView
-            tableview.setItems(data);
+            tableviewBalance.setItems(data);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -515,8 +515,8 @@ public class MyBudgetAppUI extends Application {
     }
 
     public void buildData2(User user) throws SQLException, Exception {
-        tableview2.getItems().clear();
-        tableview2.getColumns().clear();
+        tableviewIncome.getItems().clear();
+        tableviewIncome.getColumns().clear();
         data2 = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -536,7 +536,7 @@ public class MyBudgetAppUI extends Application {
                     }
                 });
 
-                tableview2.getColumns().addAll(col);
+                tableviewIncome.getColumns().addAll(col);
                 System.out.println("Column [" + i + "] ");
             }
 
@@ -551,7 +551,7 @@ public class MyBudgetAppUI extends Application {
                 data2.add(row);
             }
             //FINALLY ADDED TO TableView
-            tableview2.setItems(data2);
+            tableviewIncome.setItems(data2);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -566,8 +566,8 @@ public class MyBudgetAppUI extends Application {
     }
 
     public void buildData3(User user) throws SQLException, Exception {
-        tableview3.getItems().clear();
-        tableview3.getColumns().clear();
+        tableviewExpense.getItems().clear();
+        tableviewExpense.getColumns().clear();
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
@@ -587,7 +587,7 @@ public class MyBudgetAppUI extends Application {
                     }
                 });
 
-                tableview3.getColumns().addAll(col);
+                tableviewExpense.getColumns().addAll(col);
                 System.out.println("Column [" + i + "] ");
             }
 
@@ -602,7 +602,7 @@ public class MyBudgetAppUI extends Application {
                 data3.add(row);
             }
             //FINALLY ADDED TO TableView
-            tableview3.setItems(data3);
+            tableviewExpense.setItems(data3);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error on Building Data");
