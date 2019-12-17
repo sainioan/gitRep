@@ -81,7 +81,7 @@ public class MyBudgetService {
     public boolean createCategory(String username, String description) {
         Category category = new Category(username, description);
         try {
-            dbbudgetDao.create(category);
+            dbbudgetDao.createCategory(category);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -103,7 +103,7 @@ public class MyBudgetService {
         Expense expense = new Expense(username, category, amount, date);
         try {
             if ((!username.equals("") && (date != null) && (amount > 0))) {
-                dbbudgetDao.create(expense);
+                dbbudgetDao.createExpense(expense);
                 return true;
 
             } else {
@@ -128,7 +128,7 @@ public class MyBudgetService {
         Income income = new Income(username, amount, date);
 
         try {
-            dbbudgetDao.create(income);
+            dbbudgetDao.createIncome(income);
         } catch (SQLException ex) {
             System.out.println("createIncome error message is..." + ex.getMessage());
             return false;
@@ -240,17 +240,25 @@ public class MyBudgetService {
         loggedIn = user;
         return true;
     }
-////GET LOGGED USER
 
+    /**
+     * get logged user
+     *
+     * @return the logged user
+     */
     public User getLoggedUser() {
         System.out.println(loggedIn);
         return loggedIn;
     }
-//////LOGOUT
 
+    /**
+     * logging out
+     *
+     */
     public void logout() {
         loggedIn = null;
     }
+
     /**
      * signing up as a new new user
      *
@@ -258,7 +266,7 @@ public class MyBudgetService {
      * @param password given by the user
      *
      * @return true if the signing up is successful, otherwise false
-     * @throws SQLException  if the database operations fail
+     * @throws SQLException if the database operations fail
      */
     public boolean createUser(String username, String password) throws SQLException {
 
@@ -277,19 +285,14 @@ public class MyBudgetService {
 
     }
 
-    public ObservableList<Balance> createBalanceList(User user) throws SQLException {
-        ObservableList<Balance> items2 = FXCollections.observableArrayList();
-        List<Balance> balances = dbbudgetDao.getBalanceList(loggedIn);
-
-        for (Balance b : balances) {
-            items2.add(b);
-        }
-
-        System.out.println(items2);
-        return items2;
-
-    }
-
+    /**
+     * The method creates and observable list of names for expense categories
+     *
+     * @param user
+     *
+     * @return and observable list
+     * @throws SQLException if the database operations fail
+     */
     public ObservableList<String> createChoices(User user) throws SQLException {
         ObservableList<String> items = FXCollections.observableArrayList();
         List<Category> categories = dbbudgetDao.getAllCategories(loggedIn);
@@ -308,10 +311,25 @@ public class MyBudgetService {
 
     }
 
+    /**
+     * The method checks if the username inputted by the user is valid
+     *
+     * @param username
+     *
+     * @return true if the username input meets the requirements
+     */
     public Boolean validateUsernameInput(String username) {
         return ((username != null) && username.matches("[A-Za-z0-9_]+") && username.length() >= 5);
     }
 
+    /**
+     * The method deletes a category by invoking a method by the same name in
+     * DBBudgetDao class.
+     *
+     * @param user
+     *
+     * @return true if the username input meets the requirements
+     */
     public boolean deleteCategory(User user) {
         try {
             dbbudgetDao.deleteCategory(user);
@@ -321,6 +339,14 @@ public class MyBudgetService {
         return true;
     }
 
+    /**
+     * The method deletes the user's expense entries by calling a method by the
+     * same name in DBBudgetDao class.
+     *
+     * @param user
+     *
+     * @return true if the username input meets the requirements
+     */
     public boolean deleteExpense(User user) {
         try {
             dbbudgetDao.deleteExpense(user);
@@ -330,6 +356,14 @@ public class MyBudgetService {
         return true;
     }
 
+    /**
+     * The method deletes the user's income entries by calling a method by the
+     * same name in DBBudgetDao class.
+     *
+     * @param user
+     *
+     * @return true if the username input meets the requirements
+     */
     public boolean deleteIncome(User user) {
         try {
             dbbudgetDao.deleteIncome(user);
@@ -339,6 +373,14 @@ public class MyBudgetService {
         return true;
     }
 
+    /**
+     * The method deletes the user's balance entries by calling a method by the
+     * same name in DBBudgetDao class.
+     *
+     * @param user
+     *
+     * @return true if the username input meets the requirements
+     */
     public boolean deleteBalance(User user) {
         try {
             dbbudgetDao.deleteBalance(user);
@@ -348,6 +390,14 @@ public class MyBudgetService {
         return true;
     }
 
+    /**
+     * The method deletes the user by calling a method by the same name in
+     * DBUserDao class.
+     *
+     * @param user
+     *
+     * @return true if the username input meets the requirements
+     */
     public boolean deleteUser(User user) throws SQLException {
         if (user == null) {
             return false;
@@ -356,4 +406,5 @@ public class MyBudgetService {
         }
         return true;
     }
+
 }

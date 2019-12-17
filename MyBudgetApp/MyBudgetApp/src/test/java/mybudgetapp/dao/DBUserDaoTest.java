@@ -98,31 +98,6 @@ public class DBUserDaoTest {
         dao.delete(user);
         assertEquals(0, users.size());
     }
-
-    @Test
-    public void getAll3Works() throws SQLException, Exception {
-        try{
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement("SELECT * FROM user");
-        users = new ArrayList<>();
-
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            User user = new User(rs.getString("username"), rs.getString("password"));
-            user.setUsername(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
-            
-        }
-        stmt.close();
-        rs.close();
-        con.close();
-        users.add(user);
-        assertEquals(1, users.size());
-        } catch (Exception e){
-            System.out.println("getAll3_Works test error..." + e.getMessage() );
-        }
-    }
-
     @Test
     public void findOneWorks() throws SQLException {
         dao.create(user);
@@ -141,6 +116,5 @@ public class DBUserDaoTest {
             System.out.println("delete_Works test error..." + t.getMessage());
         }
     }
-    
 
 }

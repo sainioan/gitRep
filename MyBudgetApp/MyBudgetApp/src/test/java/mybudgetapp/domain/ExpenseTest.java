@@ -56,16 +56,6 @@ public class ExpenseTest {
         }
     }
 
-    @Test
-    public void getExpensesTotalWorks() {
-        e.listExpenses(testList, e);
-        try {
-            assertEquals(500.0, e.getExpensesTotal(), DELTA);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public void getAmountWorks() {
         try {
 

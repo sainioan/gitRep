@@ -60,7 +60,7 @@ public class DBBudgetDaoTest {
     public void createCategoryWorks() throws SQLException {
         try {
             dao.saveCategory(testCategory);
-            dao.create(testCategory);
+            dao.createCategory(testCategory);
             assertEquals("testCategory", testCategory.getName());
         } catch (Throwable t) {
             System.out.println(t.getMessage());
@@ -81,7 +81,7 @@ public class DBBudgetDaoTest {
     public void createExpenseWorks() throws SQLException {
         try {
             dao.saveExpense(testExpense);
-            dao.create(testExpense);
+            dao.createExpense(testExpense);
             assertEquals(testExpense.getAmount(), 50.50, DELTA);
         } catch (Throwable t) {
             System.out.println(t.getMessage());
@@ -92,7 +92,7 @@ public class DBBudgetDaoTest {
     public void createIncomeWorks() throws SQLException {
         try {
             dao.saveIncome(testIncome);
-            dao.create(testIncome);
+            dao.createIncome(testIncome);
             assertEquals(testIncome.getAmount(), 1500.00, DELTA);
         } catch (Throwable t) {
             System.out.println(t.getMessage());
@@ -117,13 +117,6 @@ public class DBBudgetDaoTest {
     public void findOne2Works() throws SQLException {
         dao.deleteBalance(testUser);
         assertTrue(dao.findOne(testUser.getUsername()) == null);
-    }
-
-    @Test
-    public void getAllExpensesWork() throws SQLException, Exception {
-        dao.saveExpense(testExpense);
-        assertTrue(dao.getAllExpenses(testUser) != null);
-
     }
 
     @Test

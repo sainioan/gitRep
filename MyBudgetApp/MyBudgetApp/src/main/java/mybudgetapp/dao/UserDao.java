@@ -16,6 +16,4 @@ public interface UserDao {
 
     User findOne(String username) throws SQLException;
 
-    List<User> getAll() throws SQLException;
-
 }

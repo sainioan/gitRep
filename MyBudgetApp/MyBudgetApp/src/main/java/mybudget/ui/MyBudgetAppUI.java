@@ -479,10 +479,8 @@ public class MyBudgetAppUI extends Application {
         launch(args);
     }
 
-    public void buildDataBalance(User user) throws SQLException, Exception {
+    public void buildDataBalance(User useR) throws SQLException, Exception {
 
-        tableviewBalance.getItems().clear();
-        tableviewBalance.getColumns().clear();
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();

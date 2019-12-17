@@ -18,7 +18,6 @@ public class Expense {
     private String categoryName;
     private double amount;
     private LocalDate date;
-    private ArrayList<Expense> expenses = new ArrayList<>();
     private String userName;
 
     public Expense() {
@@ -78,20 +77,6 @@ public class Expense {
      */
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public void listExpenses(ArrayList<Expense> list, Expense e) {
-        this.expenses = list;
-        e = new Expense(getUserName(), getCategoryName(), getAmount(), getDate());
-        expenses.add(e);
-    }
-
-    public double getExpensesTotal() {
-        double total = 0.0;
-        for (Expense e : expenses) {
-            total = total + e.getAmount();
-        }
-        return total;
     }
 
     @Override

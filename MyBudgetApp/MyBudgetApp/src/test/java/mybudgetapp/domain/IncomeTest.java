@@ -94,16 +94,6 @@ public class IncomeTest {
     }
 
     @Test
-    public void getExpensesTotalWorks() {
-        i.listIncome(testList, i);
-        try {
-            assertEquals(2500.0, i.getIncomeTotal(), DELTA);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test
     public void testToString() {
 
         Income i1 = new Income("Tester", 1500.0, LocalDate.now());

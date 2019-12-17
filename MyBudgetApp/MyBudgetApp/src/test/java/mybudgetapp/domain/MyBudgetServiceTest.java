@@ -98,14 +98,14 @@ public class MyBudgetServiceTest {
     @Test
     public void createExpense() throws SQLException {
         Expense expense = new Expense(testuser.getUsername(), "groceries", 150.0, today);
-        dbbudget.create(expense);
+        dbbudget.createExpense(expense);
         assertEquals(true, mbs.createExpense(testuser.getUsername(), "groceries", 150.0, today));
     }
 
     @Test
     public void createCategory() throws SQLException {
         Category cat = new Category(testuser.getUsername(), "vacations");
-        dbbudget.create(cat);
+        dbbudget.createCategory(cat);
         assertEquals(true, mbs.createCategory(testuser.getUsername(), "vacations"));
     }
 
@@ -143,8 +143,8 @@ public class MyBudgetServiceTest {
     public void createExpenseNewCategory() throws SQLException {
         Expense expense = new Expense(testuser.getUsername(), "create new", 150.0, today);
         Category cat = new Category(testuser.getUsername(), "vacations");
-        dbbudget.create(expense);
-        dbbudget.create(cat);
+        dbbudget.createExpense(expense);
+        dbbudget.createCategory(cat);
         assertEquals(true, mbs.createExpense(testuser.getUsername(), "groceries", 150.0, today));
     }
 
@@ -198,6 +198,12 @@ public class MyBudgetServiceTest {
         User user = new User("testabc", "ta1234");
         mbs.createUser(user.getUsername(), user.getPassword());
         assertEquals(true, mbs.deleteUser(user));
+    }
+    @Test 
+    public void updateBalanceLabelWorks() throws SQLException, Exception{
+        dbbudget.findOne("newbie");
+        assertEquals("", mbs.updateBalanceLabel());
+        
     }
 
 }

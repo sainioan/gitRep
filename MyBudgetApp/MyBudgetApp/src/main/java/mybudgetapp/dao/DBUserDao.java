@@ -75,6 +75,13 @@ public class DBUserDao implements UserDao {
         }
         return true;
     }
+    /**
+     * deletes the user given as a parameter. 
+     * Method is used when deleting a user account.
+     * @param user
+     * @return true when executed successfully
+     * @throws SQLException if data retrieval from the database fails
+     */
 
     public boolean delete(User user) throws SQLException {
         String sql = "DELETE FROM user WHERE username = ?";
@@ -84,21 +91,13 @@ public class DBUserDao implements UserDao {
         stmt.setString(1, user.getUsername());
         stmt.executeUpdate();
         stmt.close();
-
-        // } catch (Throwable t) {
-       // System.out.println("delete user error..." + t.getMessage());
-        //     return false;
-        // } finally {
-        //      if(conn!=null){
         conn.close();
-        //      }
-        //  }
         return true;
     }
 
     /**
-     * The medhod creates a new user given as a parameter by calling the
-     * saveuser method
+     * The method creates a new user given as a parameter by calling the
+     * saveUser method
      *
      * @param user user object
      * @return returns the user object
@@ -130,25 +129,6 @@ public class DBUserDao implements UserDao {
         }
         return null;
 
-    }
-
-    @Override
-    public List<User> getAll() throws SQLException {
-        Connection con = db.connect();
-        PreparedStatement stmt = con.prepareStatement(selectStmt);
-        users = new ArrayList<>();
-
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            User user = new User(rs.getString("username"), rs.getString("password"));
-            user.setUsername(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
-            users.add(user);
-        }
-        stmt.close();
-        rs.close();
-        con.close();
-        return users;
     }
 
     /**
