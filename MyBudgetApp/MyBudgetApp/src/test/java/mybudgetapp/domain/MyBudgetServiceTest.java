@@ -199,9 +199,6 @@ public class MyBudgetServiceTest {
     public void deleteUserWorks() throws SQLException {
         User user = new User("testabc", "ta1234");
         mbs.createUser(user.getUsername(), user.getPassword());
-//        System.out.println("does create work: testing " + user);
-//        mbs.deleteUser(user);
-//        System.out.println("testing " + dbuser.findOne(user.getUsername()));
         assertEquals(true, mbs.deleteUser(user));
     }
 

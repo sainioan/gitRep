@@ -328,15 +328,8 @@ public class MyBudgetService {
         if (user == null) {
             return false;
         } else {
-//            try {
             dbuserDao.delete(user);
-
-//            } catch (Exception ex) {
-//                System.out.println("deleteUser error message is ..." + ex.getMessage());
-//                return false;
         }
         return true;
-//    }
-
     }
 }

@@ -94,7 +94,7 @@
                 <version>2.17</version>
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
-                    <exclude>mybudget/ui/*</exclude>
+                    <excludes>mybudget/ui/*</excludes>
                 </configuration>
             </plugin>
             <plugin>
