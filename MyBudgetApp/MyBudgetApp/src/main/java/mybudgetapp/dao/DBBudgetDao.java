@@ -362,7 +362,7 @@ public class DBBudgetDao implements BudgetDao {
      * deletes all expense entries inputted by the user given as a parameter.
      * Method is used when deleting a user account.
      *
-     * @param user
+     * @param user given as a parameter is the logged in user
      * @return true when executed successfully
      * @throws SQLException if data retrieval from the database fails
      */
@@ -395,7 +395,7 @@ public class DBBudgetDao implements BudgetDao {
      * deletes all income entries inputted by the user given as a parameter.
      * Method is used when deleting a user account.
      *
-     * @param user
+     * @param user given as a parameter is the logged in user
      * @return true when executed successfully
      * @throws SQLException if data retrieval from the database fails
      */
@@ -427,7 +427,7 @@ public class DBBudgetDao implements BudgetDao {
      * deletes all category inputted by the user given as a parameter. Method is
      * used when deleting a user account.
      *
-     * @param user
+     * @param user given as a parameter is the logged in user
      * @return true when executed successfully
      * @throws SQLException if data retrieval from the database fails
      */
@@ -460,7 +460,7 @@ public class DBBudgetDao implements BudgetDao {
      * deletes all of the user's Balance entries. Method is used when deleting a
      * user account.
      *
-     * @param user
+     * @param user given as a parameter is the logged in user
      * @return true when executed successfully
      * @throws SQLException if data retrieval from the database fails
      */

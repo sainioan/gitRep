@@ -78,7 +78,7 @@ public class DBUserDao implements UserDao {
     /**
      * deletes the user given as a parameter. 
      * Method is used when deleting a user account.
-     * @param user
+     * @param user given as a parameter is the logged in user
      * @return true when executed successfully
      * @throws SQLException if data retrieval from the database fails
      */

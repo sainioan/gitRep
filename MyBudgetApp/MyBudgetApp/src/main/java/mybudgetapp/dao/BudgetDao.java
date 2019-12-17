@@ -16,7 +16,8 @@ import mybudgetapp.domain.User;
 /**
  *
  * @author anniinasainio
- * @param <Object>
+ * @param <Object> The objects of BudgetDao interface are instance of
+ * the following classes: Category, Expense, Income, and Balance
  * 
  */
 public interface BudgetDao<Object> {

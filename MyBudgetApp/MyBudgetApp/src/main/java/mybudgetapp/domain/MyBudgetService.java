@@ -5,38 +5,18 @@
  */
 package mybudgetapp.domain;
 
-import java.sql.Connection;
-import javafx.beans.property.*;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.sql.SQLException;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
-import mybudgetapp.dao.BudgetDao;
 import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.dao.DBUserDao;
 import mybudgetapp.dao.MyBudgetDatabase;
-import mybudgetapp.dao.UserDao;
-import mybudgetapp.domain.User;
 
 /**
  *
@@ -225,8 +205,8 @@ public class MyBudgetService {
     /**
      * logging in
      *
-     * @param username
-     * @param password
+     * @param username the username inputted by the user at login
+     * @param password the password inputted by the user at login
      *
      * @return true if username and password are correct, otherwise false
      * @throws java.sql.SQLException if the database operations fail
@@ -243,7 +223,7 @@ public class MyBudgetService {
 
     /**
      * get logged user
-     *
+     * 
      * @return the logged user
      */
     public User getLoggedUser() {
@@ -288,7 +268,7 @@ public class MyBudgetService {
     /**
      * The method creates and observable list of names for expense categories
      *
-     * @param user
+     * @param user gives as a parameter is the logged in user
      *
      * @return and observable list
      * @throws SQLException if the database operations fail
@@ -314,7 +294,7 @@ public class MyBudgetService {
     /**
      * The method checks if the username inputted by the user is valid
      *
-     * @param username
+     * @param username inputted by the user who is attempting a login or a sign-up
      *
      * @return true if the username input meets the requirements
      */
@@ -326,7 +306,7 @@ public class MyBudgetService {
      * The method deletes a category by invoking a method by the same name in
      * DBBudgetDao class.
      *
-     * @param user
+     * @param user given as parameter is the logged in user
      *
      * @return true if the username input meets the requirements
      */
@@ -343,7 +323,7 @@ public class MyBudgetService {
      * The method deletes the user's expense entries by calling a method by the
      * same name in DBBudgetDao class.
      *
-     * @param user
+     * @param user given as parameter is the logged in user
      *
      * @return true if the username input meets the requirements
      */
@@ -360,7 +340,7 @@ public class MyBudgetService {
      * The method deletes the user's income entries by calling a method by the
      * same name in DBBudgetDao class.
      *
-     * @param user
+     * @param user given as a parameter is the logged in user
      *
      * @return true if the username input meets the requirements
      */
@@ -377,7 +357,7 @@ public class MyBudgetService {
      * The method deletes the user's balance entries by calling a method by the
      * same name in DBBudgetDao class.
      *
-     * @param user
+     * @param user given as a parameter is the logged in user
      *
      * @return true if the username input meets the requirements
      */
@@ -394,9 +374,10 @@ public class MyBudgetService {
      * The method deletes the user by calling a method by the same name in
      * DBUserDao class.
      *
-     * @param user
+     * @param user given as a parameter is the logged in user 
      *
      * @return true if the username input meets the requirements
+     * @throws java.sql.SQLException when the database connection fails
      */
     public boolean deleteUser(User user) throws SQLException {
         if (user == null) {
