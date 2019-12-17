@@ -203,7 +203,7 @@ public class MyBudgetAppUI extends Application {
 
         });
 
-        // main scene
+        // creating the main scene
         BorderPane bpMain = new BorderPane();
         bpMain.setPadding(new Insets(10, 50, 50, 50));
         VBox mybudgetPane = new VBox(10);
@@ -580,7 +580,7 @@ public class MyBudgetAppUI extends Application {
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String sql = "SELECT category_name, amount, time from expense WHERE user_username = ?  ORDER BY time";
+            String sql = "SELECT amount, time, category_name from expense WHERE user_username = ?  ORDER BY time";
             stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
