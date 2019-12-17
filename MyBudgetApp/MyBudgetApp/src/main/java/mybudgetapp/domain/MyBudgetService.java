@@ -56,19 +56,12 @@ public class MyBudgetService {
     private TableView tableview;
 
     /**
+     * the contructor for MyBudgetService
      *
      * @param db the database given as a parameter
+     * @param username the loggedin user's username is given as a parameter
      * @throws SQLException when connection to the database fails
      */
-    public MyBudgetService(MyBudgetDatabase db) throws SQLException {
-        this.mybDatabase = db;
-        this.mybDatabase.initializeDatabase();
-        dbuserDao = new DBUserDao(mybDatabase);
-        dbbudgetDao = new DBBudgetDao(mybDatabase);
-        this.date = LocalDate.now();
-
-    }
-
     public MyBudgetService(MyBudgetDatabase db, String username) throws SQLException {
         this.username = username;
         this.mybDatabase = db;
@@ -76,13 +69,6 @@ public class MyBudgetService {
         dbuserDao = new DBUserDao(mybDatabase);
         dbbudgetDao = new DBBudgetDao(mybDatabase);
         this.date = LocalDate.now();
-    }
-
-    public MyBudgetService() {
-
-        this.mybDatabase.initializeDatabase();
-        dbuserDao = new DBUserDao(mybDatabase);
-
     }
 
     /**
@@ -129,6 +115,15 @@ public class MyBudgetService {
         }
     }
 
+    /**
+     * the method creates a new income entry
+     *
+     * @param username the username of the logged in user
+     * @param amount the income amount as double inputted by the user
+     * @param date the date of the income entry
+     * @return returns true if the entry succeeds
+     * @throws SQLException if the entry fails
+     */
     public boolean createIncome(String username, double amount, LocalDate date) throws SQLException, Exception {
         Income income = new Income(username, amount, date);
 
@@ -141,17 +136,16 @@ public class MyBudgetService {
         return true;
     }
 
-    public String getMostRecent(User user) throws SQLException {
-        user = loggedIn;
-        List<Balance> list = dbbudgetDao.getBalanceList(loggedIn);
-        System.out.println(list.toString());
-        Balance mostR = list.get(list.size() - 1);
-        if (mostR == null) {
-            return "";
-        }
-        return mostR.toString();
-    }
-
+    /**
+     * updates the balance when a new expense entry is added
+     *
+     * @param username the logged in user
+     * @param income the amount deposited
+     * @param date (always the present day)
+     * @return true if there is the execution is successful, otherwise false
+     * @throws SQLException if the database operations fail
+     * @throws Exception if the the code fails to be executed
+     */
     public boolean updateBalanceNewIncome(String username, double income, LocalDate date) throws SQLException, Exception {
 
         try {
@@ -161,8 +155,8 @@ public class MyBudgetService {
                 dbbudgetDao.saveBalance(balance);
             } else {
                 currentBalance.addIncome(income);
-                double newBalance = currentBalance.getBalance();
-                currentBalance.setBalance(newBalance);
+                double newBalance = currentBalance.getAmount();
+                currentBalance.setAmount(newBalance);
                 currentBalance.setDate(date);
                 dbbudgetDao.saveBalance(currentBalance);
             }
@@ -173,6 +167,13 @@ public class MyBudgetService {
         return true;
     }
 
+    /**
+     * updates the string that the balance label displays on MyBudgetApp scene
+     *
+     * @return the user's current balance in string format.
+     * @throws SQLException if the database operations fail
+     * @throws Exception if the the code fails to be executed
+     */
     public String updateBalanceLabel() throws SQLException, Exception {
         if (loggedIn != null) {
             if (dbbudgetDao.findOne(loggedIn.getUsername()) != null) {
@@ -180,7 +181,7 @@ public class MyBudgetService {
 
                 System.out.println(currentBalance.toString());
             } else {
-                currentBalance = new Balance(loggedIn.getUsername(), 0.0, LocalDate.now());
+                currentBalance = new Balance(loggedIn.getUsername().toUpperCase(), 0.0, LocalDate.now());
             }
 
             return currentBalance.toString();
@@ -190,6 +191,17 @@ public class MyBudgetService {
 
     }
 
+    /**
+     * updates the balance when a new expense entry is added
+     *
+     * @param username the logged in user
+     * @param expense the amount deducted from the balance
+     * @param date (always the present day)
+     * @return true if there is money on the balance, and false if the balance
+     * is null.
+     * @throws SQLException if the database operations fail
+     * @throws Exception if the the code fails to be executed
+     */
     public boolean updateBalanceNewExpense(String username, double expense, LocalDate date) throws SQLException, Exception {
 
         currentBalance = dbbudgetDao.findOne(username);
@@ -198,8 +210,8 @@ public class MyBudgetService {
         }
         try {
             currentBalance.deductExpense(expense);
-            double newBalance = currentBalance.getBalance();
-            currentBalance.setBalance(newBalance);
+            double newBalance = currentBalance.getAmount();
+            currentBalance.setAmount(newBalance);
             dbbudgetDao.saveBalance(currentBalance);
             return true;
 
@@ -210,7 +222,16 @@ public class MyBudgetService {
 
     }
 
-    public boolean login(String username, String password) {
+    /**
+     * logging in
+     *
+     * @param username
+     * @param password
+     *
+     * @return true if username and password are correct, otherwise false
+     * @throws java.sql.SQLException if the database operations fail
+     */
+    public boolean login(String username, String password) throws SQLException {
         User user = dbuserDao.findByUsername(username);
         if (user == null) {
             return false;
@@ -219,29 +240,32 @@ public class MyBudgetService {
         loggedIn = user;
         return true;
     }
+////GET LOGGED USER
 
     public User getLoggedUser() {
         System.out.println(loggedIn);
         return loggedIn;
     }
+//////LOGOUT
 
     public void logout() {
         loggedIn = null;
     }
+    /**
+     * signing up as a new new user
+     *
+     * @param username given by the user
+     * @param password given by the user
+     *
+     * @return true if the signing up is successful, otherwise false
+     * @throws SQLException  if the database operations fail
+     */
+    public boolean createUser(String username, String password) throws SQLException {
 
-    public boolean createUser(String username, String password) {
         User user = new User(username, password);
-        if (!user.validateUsername().isEmpty()) {
+        if ((dbuserDao.findOne(username) != null) || (!user.validateUsername().isEmpty()) || (!user.validatePassword().isEmpty())) {
             return false;
         }
-        if (!user.validatePassword().isEmpty()) {
-            return false;
-        }
-
-        if (dbuserDao.findByUsername(username) != null) {
-            return false;
-        }
-
         try {
             dbuserDao.create(user);
         } catch (Exception e) {

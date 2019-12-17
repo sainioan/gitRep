@@ -71,7 +71,7 @@ public class DBBudgetDaoTest {
     public void saveBalanceWorks() throws SQLException {
         try {
             dao.saveBalance(testBalance);
-            assertEquals(7000.0, testBalance.getBalance(), DELTA);
+            assertEquals(7000.0, testBalance.getAmount(), DELTA);
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
@@ -104,7 +104,7 @@ public class DBBudgetDaoTest {
         Balance b = new Balance("tester", 7000.0, LocalDate.now());
         dao.saveBalance(b);
         Balance d = dao.findOne("tester");
-        assertEquals(7000.0, d.getBalance(), DELTA);
+        assertEquals(7000.0, d.getAmount(), DELTA);
     }
 
     @Test

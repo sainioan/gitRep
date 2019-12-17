@@ -48,10 +48,8 @@ public class MyBudgetServiceTest {
 
         dbuser = new DBUserDao(testdatabase);
         dbbudget = new DBBudgetDao(testdatabase);
-        mbs = new MyBudgetService(testdatabase);
-
         testuser = new User("testUser", "TU123");
-        dbuser.saveUser(testuser);
+        mbs = new MyBudgetService(testdatabase, testuser.getUsername());
         mbs.login("testUser", "TU123");
         dbuser = new DBUserDao(testdatabase);
         mbs2 = new MyBudgetService(testdatabase, testuser.getUsername());
@@ -79,7 +77,7 @@ public class MyBudgetServiceTest {
     }
 
     @Test
-    public void loggedInUserCanLogout() {
+    public void loggedInUserCanLogout() throws SQLException {
         mbs.login("testUser", "TU123");
         mbs.logout();
 

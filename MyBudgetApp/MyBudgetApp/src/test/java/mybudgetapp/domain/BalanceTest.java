@@ -37,8 +37,8 @@ public class BalanceTest {
 
         balance = new Balance(user.getUsername(), 2500.0, date);
         try {
-            balance.setBalance(2500.0);
-            assertEquals(2500.0, balance.getBalance(), DELTA);
+            balance.setAmount(2500.0);
+            assertEquals(2500.0, balance.getAmount(), DELTA);
         } catch (Exception ex) {
             System.out.println("getBalanceWorkTest fail ..." + ex.getMessage());
         }
@@ -63,23 +63,23 @@ public class BalanceTest {
 
     @Test
     public void addIncomeIsCorrect() {
-        balance.setBalance(2500.0);
+        balance.setAmount(2500.0);
         balance.addIncome(200);
-        assertEquals(2700.0, balance.getBalance(), DELTA);
+        assertEquals(2700.0, balance.getAmount(), DELTA);
     }
 
     @Test
     public void deductExpenseIsCorrect() {
-        balance.setBalance(2500.0);
+        balance.setAmount(2500.0);
         balance.deductExpense(200);
-        assertEquals(2300.0, balance.getBalance(), DELTA);
+        assertEquals(2300.0, balance.getAmount(), DELTA);
     }
 
     @Test
     public void constructorWorks() {
-        balance.setBalance(2500.0);
+        balance.setAmount(2500.0);
         try {
-            assertEquals(2500.0, balance.getBalance(), DELTA);
+            assertEquals(2500.0, balance.getAmount(), DELTA);
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
@@ -99,10 +99,10 @@ public class BalanceTest {
 
     @Test
     public void testToString() {
-
+   //     return this.username + ": (Balance): " + this.balance + " (Date): " + this.date;
         Balance b1 = new Balance("Ballerina", 2500.0, LocalDate.now());
-        b1.setBalance(2500.0);
-        String expected = "Ballerina: (Balance): 2500.0 on " + LocalDate.now().toString();
+        b1.setAmount(2500.0);
+        String expected = "Ballerina: (Balance): 2500.0 (Date): " + LocalDate.now().toString();
         assertEquals(expected, b1.toString());
     }
 

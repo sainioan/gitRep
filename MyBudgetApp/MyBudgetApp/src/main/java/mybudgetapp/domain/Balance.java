@@ -16,18 +16,10 @@ public class Balance {
 
     private double balance;
     private int id;
-    private double incomeTotal;
-    private double expenseTotal;
     private String username;
     private Expense e;
     private Income i;
     private LocalDate date;
-
-    public Balance(double incomeTotal, double expenseTotal) {
-
-        this.incomeTotal = incomeTotal;
-        this.expenseTotal = expenseTotal;
-    }
 
     /**
      * the constructor that takes two parameters:
@@ -105,11 +97,11 @@ public class Balance {
         }
     }
 
-    public double getBalance() {
+    public double getAmount() {
         return this.balance;
     }
 
-    public void setBalance(double b) {
+    public void setAmount(double b) {
         this.balance = b;
         //this.balance = (this.balance + i.getIncomeTotal()) - e.getExpensesTotal();
 
@@ -135,29 +127,9 @@ public class Balance {
         this.id = id;
     }
 
-    /**
-     *
-     * @return returns total income as double
-     */
-    public double getIncomeTotal() {
-        return incomeTotal;
-    }
-
-    public void setIncomeTotal(double incomeTotal) {
-        this.incomeTotal = incomeTotal;
-    }
-
-    public double getExpenseTotal() {
-        return expenseTotal;
-    }
-
-    public void setExpenseTotal(double expenseTotal) {
-        this.expenseTotal = expenseTotal;
-    }
-
     @Override
     public String toString() {
-        return this.username + ": (Balance): " + this.balance + " on " + this.date;
+        return this.username + ": (Balance): " + this.balance + " (Date): " + this.date;
     }
 
 }

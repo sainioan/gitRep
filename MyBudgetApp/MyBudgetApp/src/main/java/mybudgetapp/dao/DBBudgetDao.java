@@ -149,7 +149,7 @@ public class DBBudgetDao implements BudgetDao {
 
     public void saveBalance(Balance balance) throws Exception {
         Connection connection = db.connect();
-        Float amount = (float) balance.getBalance();
+        Float amount = (float) balance.getAmount();
         String sqldate = formatter.format(LocalDate.now());
         try {
             PreparedStatement statement = connection.prepareStatement(

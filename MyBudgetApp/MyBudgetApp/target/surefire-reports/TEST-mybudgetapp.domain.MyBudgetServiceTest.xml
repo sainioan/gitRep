@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="17" failures="0" name="mybudgetapp.domain.MyBudgetServiceTest" time="1.338" errors="0" skipped="0">
+<testsuite tests="17" failures="0" name="mybudgetapp.domain.MyBudgetServiceTest" time="1.618" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre/lib"/>
@@ -59,21 +59,21 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteCateogry" time="0.145"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loginReturnsFalseIfUserNull" time="0.103"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteExpense" time="0.084"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewIncome" time="0.057"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteIncome" time="0.041"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loggedInUserCanLogout" time="0.048"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="validateUsernameInputWorks" time="0.039"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteBalance" time="0.064"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseReturnsfalse" time="0.049"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpense" time="0.059"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createCategory" time="0.055"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteUserWorks" time="0.052"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="getLoggedUserReturnsLogged" time="0.055"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createIncome" time="0.052"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseNewCategory" time="0.075"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="listListsCategories" time="0.16"/>
-  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewExpense" time="0.116"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteCateogry" time="0.235"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loginReturnsFalseIfUserNull" time="0.1"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteExpense" time="0.079"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewIncome" time="0.074"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteIncome" time="0.079"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="loggedInUserCanLogout" time="0.082"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="validateUsernameInputWorks" time="0.036"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteBalance" time="0.072"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseReturnsfalse" time="0.047"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpense" time="0.066"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createCategory" time="0.073"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="deleteUserWorks" time="0.078"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="getLoggedUserReturnsLogged" time="0.084"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createIncome" time="0.072"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="createExpenseNewCategory" time="0.081"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="listListsCategories" time="0.2"/>
+  <testcase classname="mybudgetapp.domain.MyBudgetServiceTest" name="updateBalanceNewExpense" time="0.081"/>
 </testsuite>

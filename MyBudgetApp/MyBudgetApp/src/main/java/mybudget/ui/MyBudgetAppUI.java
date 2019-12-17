@@ -73,7 +73,7 @@ public class MyBudgetAppUI extends Application {
     private ComboBox chooseCategory = new ComboBox();
     private String amountString;
     private Button createTableView;
-    private Label balanceLabel = new Label("BALANCE");
+    private Label balanceLabel = new Label("YOUR BALANCE TODAY:");
     private ObservableList<ObservableList> data;
     private ObservableList<ObservableList> data2;
     private ObservableList<ObservableList> data3;
@@ -185,25 +185,25 @@ public class MyBudgetAppUI extends Application {
 
             username = usernameInput.getText();
             password = passwordInput.getText();
+            try {
+                if (mybudgetService.login(username, password)) {
+                    user = mybudgetService.getLoggedUser();
 
-            if (mybudgetService.login(username, password)) {
-                user = mybudgetService.getLoggedUser();
-                try {
                     System.out.println("GUI" + mybudgetService.updateBalanceLabel());
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
                     primarystage.setScene(myBudgetScene);
-                    System.out.println(mybudgetService.getMostRecent(user));
-                } catch (Throwable t) {
-                    System.out.println("not printing balanceL" + t.getMessage());
+
+                    usernameInput.setText("");
+                    passwordInput.setText("");
+                    loginMessage.setText("");
+
+                } else {
+
+                    loginMessage.setText("Incorrect username or password.");
+                    loginMessage.setTextFill(Color.RED);
                 }
-                usernameInput.setText("");
-                passwordInput.setText("");
-                loginMessage.setText("");
-
-            } else {
-
-                loginMessage.setText("Incorrect username or password.");
-                loginMessage.setTextFill(Color.RED);
+            } catch (Throwable t) {
+                System.out.println("not printing balanceL" + t.getMessage());
             }
 
         });
@@ -277,9 +277,9 @@ public class MyBudgetAppUI extends Application {
         // table view 
         tableView.setOnAction(e -> {
             try {
-                buildData(user);
-                buildData2(user);
-                buildData3(user);
+                buildDataBalance(user);
+                buildDataIncome(user);
+                buildDataExpense(user);
             } catch (Exception exc) {
                 System.out.println("tableView setOnAction error message" + exc.getMessage());
             }
@@ -434,13 +434,29 @@ public class MyBudgetAppUI extends Application {
             String passworderror = user.validatePassword();
             errorMessage2.setText(passworderror);
             errorMessage2.setTextFill(Color.RED);
-            mybudgetService.createUser(usernameSU, passwordSU);
-            if (usernameerror.equals("") && (passworderror.equals(""))) {
-                primarystage.setScene(loginscene);
-                errorMessage.setText("");
-                usernameInput.setText("");
-                passwordInput.setText("");
-                loginMessage.setText("");
+            try {
+
+                if (usernameerror.equals("") && (passworderror.equals("")) && mybudgetService.createUser(usernameSU, passwordSU)) {
+                    mybudgetService.createUser(usernameSU, passwordSU);
+                    primarystage.setScene(loginscene);
+                    errorMessage.setText("");
+                    usernameInput.setText("");
+                    passwordInput.setText("");
+                    loginMessage.setText("");
+                } else if (!mybudgetService.createUser(usernameSU, passwordSU)) {
+                    errorMessage.setText(usernameerror);
+                    errorMessage.setTextFill(Color.RED);
+                    errorMessage2.setText(passworderror);
+                    errorMessage2.setTextFill(Color.RED);
+                    errorMessage.setText("invalid username");
+                    errorMessage.setTextFill(Color.RED);
+                } else {
+
+                    errorMessage.setText("invalid username");
+                    errorMessage.setTextFill(Color.RED);
+                }
+            } catch (Throwable t) {
+                System.out.println("confirmButton error message is..." + t.getMessage());
             }
 
         });
@@ -463,14 +479,14 @@ public class MyBudgetAppUI extends Application {
         launch(args);
     }
 
-    public void buildData(User user) throws SQLException, Exception {
+    public void buildDataBalance(User user) throws SQLException, Exception {
 
         tableviewBalance.getItems().clear();
         tableviewBalance.getColumns().clear();
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String sql = "SELECT*from BALANCE WHERE user_username = ?";
+            String sql = "SELECT amount, time FROM balance WHERE user_username = ? ORDER BY time";
             stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
@@ -514,13 +530,13 @@ public class MyBudgetAppUI extends Application {
         }
     }
 
-    public void buildData2(User user) throws SQLException, Exception {
+    public void buildDataIncome(User user) throws SQLException, Exception {
         tableviewIncome.getItems().clear();
         tableviewIncome.getColumns().clear();
         data2 = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String sql = "SELECT*FROM income WHERE user_username = ?";
+            String sql = "SELECT amount, time FROM income WHERE user_username = ?  ORDER BY time";
             stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
@@ -565,13 +581,13 @@ public class MyBudgetAppUI extends Application {
         }
     }
 
-    public void buildData3(User user) throws SQLException, Exception {
+    public void buildDataExpense(User user) throws SQLException, Exception {
         tableviewExpense.getItems().clear();
         tableviewExpense.getColumns().clear();
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String sql = "SELECT*from expense WHERE user_username = ?";
+            String sql = "SELECT category_name, amount, time from expense WHERE user_username = ?  ORDER BY time";
             stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
