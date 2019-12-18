@@ -5,26 +5,11 @@
  */
 package mybudgetapp.dao;
 
-import mybudgetapp.domain.Category;
-import mybudgetapp.domain.Expense;
-import mybudgetapp.domain.Expense;
-import mybudgetapp.domain.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
-import java.sql.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.lang.Object;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.io.*;
 
 /**
  *
@@ -36,6 +21,7 @@ public class MyBudgetDatabase {
 
     /**
      * constructor where user gives the name for the database when invoked
+     *
      * @param databaseName the address of database given as a parameter
      * @throws SQLException when connection fails
      */
@@ -72,6 +58,7 @@ public class MyBudgetDatabase {
 
     /**
      * initializeDatabase method initializes the five database tables
+     *
      * @return returns true if the database tables are created
      */
     public boolean initializeDatabase() {
@@ -90,12 +77,15 @@ public class MyBudgetDatabase {
         return true;
     }
 
+    /**
+     * initialize category table
+     */
     public void initializeCategory() {
         try {
             Connection connection = connect();
             PreparedStatement createCategoryTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS category ("
                     + "id INTEGER PRIMARY KEY,"
-                    + "categoryUser varchar, "
+                    + "categoryUser varchar,"
                     + "name varchar(100),"
                     + "FOREIGN KEY (categoryUser) REFERENCES user(username));"
             );
@@ -109,7 +99,7 @@ public class MyBudgetDatabase {
     }
 
     /**
-     *
+     * initialize user table
      */
     public void initializeUser() {
         try {
@@ -131,6 +121,9 @@ public class MyBudgetDatabase {
         }
     }
 
+    /**
+     * initialize user table
+     */
     public void initializeExpense() {
         try {
 
@@ -139,8 +132,8 @@ public class MyBudgetDatabase {
             PreparedStatement createExpenseTable = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expense ("
                     + "id INTEGER PRIMARY KEY, "
                     + "user_username varchar,"
-                    + "category_name varchar, "
-                    + "amount float, "
+                    + "category_name varchar,"
+                    + "amount float,"
                     + "time varchar,"
                     + "FOREIGN KEY (user_username) REFERENCES user(username),"
                     + "FOREIGN KEY(category_name) REFERENCES category(name)"
@@ -155,6 +148,9 @@ public class MyBudgetDatabase {
 
     }
 
+    /**
+     * initialize income table
+     */
     public void initializeIncome() {
         try {
             Connection connection = connect();
@@ -176,6 +172,9 @@ public class MyBudgetDatabase {
         }
     }
 
+    /**
+     * initialize balance table
+     */
     public void initializeBalance() {
         try {
             Connection connection = connect();

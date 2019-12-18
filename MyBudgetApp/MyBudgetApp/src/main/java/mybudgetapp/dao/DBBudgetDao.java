@@ -40,12 +40,14 @@ public class DBBudgetDao implements BudgetDao {
     private List<Expense> expensesByUser = new ArrayList<>();
     private List<Balance> listB = new ArrayList<>();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
-    //  private ObservableList<ObservableList> data;
     private Connection c = null;
     private ResultSet rs = null;
     private PreparedStatement stmt = null;
+   
 
     /**
+     * MyBudgetDao class constructor The database is initialized in the
+     * constructor.
      *
      * @param db database given as a parameter
      */
@@ -154,8 +156,16 @@ public class DBBudgetDao implements BudgetDao {
         }
     }
 
+    /**
+     * Saves a balance entry into the database
+     *
+     * @param balance balance object
+     * @throws SQLException if the saving into the database fails
+     *
+     * @throws Exception if execution fails
+     */
     @Override
-    public void saveBalance(Balance balance) throws Exception {
+    public void saveBalance(Balance balance) throws SQLException, Exception {
         c = db.connect();
         Float amount = (float) balance.getAmount();
         String sqldate = formatter.format(LocalDate.now());
@@ -176,6 +186,14 @@ public class DBBudgetDao implements BudgetDao {
         }
     }
 
+    /**
+     * Finds the most recent balance entry created by the user to a list
+     *
+     * @param username user's username
+     * @return the logged in user's most recent Balance entry
+     * @throws SQLException if retrieving data from the database fails
+     *
+     */
     @Override
     public Balance findOne(String username) throws SQLException {
         c = db.connect();
@@ -195,6 +213,14 @@ public class DBBudgetDao implements BudgetDao {
         }
     }
 
+    /**
+     * Adds a new balance entry created by the user to a list
+     *
+     * @param user user object
+     * @return an ArrayList with all of the users Balance entries
+     * @throws SQLException if retrieving data from the database fails
+     *
+     */
     @Override
     public List<Balance> getBalanceList(User user) throws SQLException {
         c = db.connect();
@@ -216,64 +242,6 @@ public class DBBudgetDao implements BudgetDao {
         }
         return listB;
     }
-
-    /**
-     * Adds a new expense entered by a user given as a parameter to a list
-     *
-     * @param user user object
-     * @return an ArrayList with all of the users expenses
-     * @throws SQLException if retrieving data from the database fails
-     *
-     */
-//    @Override
-//    public List<Expense> getAllExpenses(User user) throws SQLException {
-//        c = db.connect();
-//        try {
-//            PreparedStatement stmt = c.prepareStatement(sql3);
-//            stmt.setString(1, user.getUsername());
-//            rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                Expense expense = new Expense(rs.getString("user_username").trim(), rs.getString("category_name"), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
-//                expensesByUser.add(expense);
-//            }
-//            stmt.close();
-//            rs.close();
-//        } catch (Throwable t) {
-//            System.out.println(t.getMessage());
-//        } finally {
-//            c.close();
-//        }
-//        return expensesByUser;
-//    }
-
-    /**
-     *
-     * @param user user given as a parameter
-     * @return returns a List with all given user's income entries
-     * @throws SQLException if data retrieval fails
-     */
-//    @Override
-//    public List<Income> getAllIncome(User user) throws SQLException {
-//        c = db.connect();
-//        try {
-//            PreparedStatement stmt = c.prepareStatement(sql2);
-//            stmt.setString(1, user.getUsername());
-//            rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                Income income = new Income(rs.getString("user_username").trim(), rs.getFloat("amount"), LocalDate.parse(rs.getString("time")));
-//                income.setId(rs.getInt("id"));
-//                incomeList.add(income);
-//            }
-//            stmt.close();
-//            rs.close();
-//        } catch (Throwable t) {
-//            System.out.println(t.getMessage());
-//        } finally {
-//            c.close();
-//        }
-//        return incomeByUser;
-//    }
-
     /**
      *
      * @param user user object
@@ -486,6 +454,32 @@ public class DBBudgetDao implements BudgetDao {
         }
         return true;
 
+    } 
+    
+    public List<Expense> getExensesByCategory(User user) throws SQLException {
+    
+        List<Expense> expensesByCategory = new ArrayList<>(); 
+        c = db.connect();
+        try {
+            PreparedStatement stmt = c.prepareStatement("select category_name, amount FROM expense WHERE user_username = ? GROUP BY category_name");
+            stmt.setString(1, user.getUsername());
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                
+                Expense exp = new Expense(rs.getString("category_name").trim(), rs.getFloat("amount"));
+                expensesByCategory.add(exp);
+            }
+            stmt.close();
+            rs.close();
+        } catch (Throwable t) {
+            System.out.println("getExpenses error message is ..." + t.getMessage());
+        } finally {
+            c.close();
+        }
+        System.out.println("TESTING THE METHOD EXPENSES BY CATEGORY" + expensesByCategory.toString());
+        return expensesByCategory;
     }
+
+//    
 
 }

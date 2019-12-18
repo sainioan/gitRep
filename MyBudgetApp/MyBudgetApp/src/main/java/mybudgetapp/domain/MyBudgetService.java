@@ -5,7 +5,6 @@
  */
 package mybudgetapp.domain;
 
-
 import java.util.List;
 
 import java.sql.SQLException;
@@ -13,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableView;
 import mybudgetapp.dao.DBBudgetDao;
 import mybudgetapp.dao.DBUserDao;
@@ -223,7 +223,7 @@ public class MyBudgetService {
 
     /**
      * get logged user
-     * 
+     *
      * @return the logged user
      */
     public User getLoggedUser() {
@@ -290,11 +290,24 @@ public class MyBudgetService {
         return items;
 
     }
+    public ObservableList<PieChart.Data> expenseByCategory(User user) throws SQLException {
+        ObservableList<PieChart.Data> itemsE = FXCollections.observableArrayList();
+        
+        List<Expense> expenses = dbbudgetDao.getExensesByCategory(loggedIn);
+       
+        for (Expense e : expenses) {
+        itemsE.add(new PieChart.Data(e.getCategoryName(), e.getAmount()));
+        }
+        System.out.println(itemsE);
+        return itemsE;
+
+    }
 
     /**
      * The method checks if the username inputted by the user is valid
      *
-     * @param username inputted by the user who is attempting a login or a sign-up
+     * @param username inputted by the user who is attempting a login or a
+     * sign-up
      *
      * @return true if the username input meets the requirements
      */
@@ -374,7 +387,7 @@ public class MyBudgetService {
      * The method deletes the user by calling a method by the same name in
      * DBUserDao class.
      *
-     * @param user given as a parameter is the logged in user 
+     * @param user given as a parameter is the logged in user
      *
      * @return true if the username input meets the requirements
      * @throws java.sql.SQLException when the database connection fails
@@ -387,5 +400,4 @@ public class MyBudgetService {
         }
         return true;
     }
-
 }

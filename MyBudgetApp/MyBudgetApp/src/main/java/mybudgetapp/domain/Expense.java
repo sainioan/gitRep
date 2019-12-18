@@ -38,6 +38,12 @@ public class Expense {
         this.amount = amount;
         this.date = date;
     }
+     public Expense(String categoryName, double amount) {
+
+        this.categoryName = categoryName;
+        this.amount = amount;
+
+    }
 
     /**
      *

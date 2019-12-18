@@ -129,7 +129,7 @@ public class Balance {
 
     @Override
     public String toString() {
-        return this.username + ": (Balance): " + this.balance + " (Date): " + this.date;
+        return this.username + ": (Balance): " + this.balance + " € (Date): " + this.date;
     }
 
 }

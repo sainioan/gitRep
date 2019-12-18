@@ -37,6 +37,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -54,6 +56,7 @@ public class MyBudgetAppUI extends Application {
     private Scene myBudgetScene;
     private Scene newUserScene;
     private Scene loginscene;
+    private Scene pieScene;
     private MyBudgetService mybudgetService;
     private Label menuLabel = new Label();
     private String username;
@@ -68,6 +71,7 @@ public class MyBudgetAppUI extends Application {
     private ComboBox chooseCategory = new ComboBox();
     private String amountString;
     private Button createTableView;
+    private Button back2 = new Button("Back");
     private Label balanceLabel = new Label("YOUR BALANCE TODAY:");
     private ObservableList<ObservableList> data;
     private ObservableList<ObservableList> data2;
@@ -79,6 +83,7 @@ public class MyBudgetAppUI extends Application {
     private Connection c = null;
     private ResultSet rs = null;
     private PreparedStatement stmt = null;
+    private ObservableList dataPie;
 
     @Override
     public void init() throws SQLException, Exception {
@@ -86,11 +91,11 @@ public class MyBudgetAppUI extends Application {
         mybudgetService = new MyBudgetService(database, username);
 
     }
-// CONNECTION DATABASE
 
     @Override
     public void start(Stage primarystage) throws SQLException, Exception {
         init();
+
         //table scene
         tableviewBalance = new TableView();
         tableviewIncome = new TableView();
@@ -173,9 +178,10 @@ public class MyBudgetAppUI extends Application {
 
         bp.setTop(inputPane);
         bp.setCenter(gridpane);
-//         
-        //Adding BorderPane to the scene 
+
+        //Adding BorderPane to the loginscene 
         loginscene = new Scene(bp);
+        //loginscene set on action  
         loginButton.setOnAction(e -> {
 
             username = usernameInput.getText();
@@ -183,8 +189,16 @@ public class MyBudgetAppUI extends Application {
             try {
                 if (mybudgetService.login(username, password)) {
                     user = mybudgetService.getLoggedUser();
+                    pieScene = new Scene(new Group());
 
-                    System.out.println("GUI" + mybudgetService.updateBalanceLabel());
+                    ObservableList<PieChart.Data> pieChartData = mybudgetService.expenseByCategory(user);
+                    final PieChart pieChart = new PieChart(pieChartData);
+                    pieChart.setTitle("Expenses by category");
+                    GridPane piePane = new GridPane();
+                    piePane.add(back2, 5, 0);
+                    piePane.add(pieChart, 1, 1);
+                    ((Group) pieScene.getRoot()).getChildren().add(piePane);
+
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
                     primarystage.setScene(myBudgetScene);
 
@@ -224,7 +238,8 @@ public class MyBudgetAppUI extends Application {
         Button createCategoryButton = new Button("Save new category");
         Button createExpenseButton = new Button("Save expense");
         Button createIncomeButton = new Button("Save income");
-        Button tableView = new Button("Balance View");
+        Button tableView = new Button("Budget History Table View");
+        Button pieSceneB = new Button("Expenses by Category Piechart");
         TextField newCategoryInput = new TextField();
         TextField newExpenseInput = new TextField();
         TextField newIncomeInput = new TextField();
@@ -251,6 +266,7 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(balanceLabel, 4, 10);
         mybudgetLayout.add(currentBalance, 4, 11);
         mybudgetLayout.add(tableView, 4, 20);
+        mybudgetLayout.add(pieSceneB, 4, 25);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
         mybudgetLayout.add(incomeDate, 0, 23);
@@ -280,7 +296,22 @@ public class MyBudgetAppUI extends Application {
             }
             primarystage.setScene(tablescene);
         });
-        // delete useraccount
+
+        // pieScene 
+        pieSceneB.setOnAction(e -> {
+            try {
+
+            } catch (Throwable t) {
+                System.out.println("pieSceneB set on action failure.." + t.getMessage());
+            }
+            primarystage.setScene(pieScene);
+        });
+
+          back2.setOnAction(e -> {
+         
+            primarystage.setScene(myBudgetScene);
+        });
+//        // delete useraccount
         deleteUser.setOnAction(e -> {
             try {
                 mybudgetService.deleteUser(user);
@@ -417,6 +448,7 @@ public class MyBudgetAppUI extends Application {
             primarystage.setScene(loginscene);
 
         });
+
         confirmButton.setOnAction(e -> {
 
             usernameSU = newUsernameInput.getText();
@@ -479,7 +511,7 @@ public class MyBudgetAppUI extends Application {
         data = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String sql = "SELECT amount, time FROM balance WHERE user_username = ? ORDER BY time";
+            String sql = "SELECT amount, time FROM balance WHERE user_username = ? ORDER BY time desc limit 30";
             stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
@@ -529,7 +561,7 @@ public class MyBudgetAppUI extends Application {
         data2 = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String sql = "SELECT amount, time FROM income WHERE user_username = ?  ORDER BY time";
+            String sql = "SELECT amount, time FROM income WHERE user_username = ?  ORDER BY time desc limit 30";
             stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());
@@ -580,7 +612,7 @@ public class MyBudgetAppUI extends Application {
         data3 = FXCollections.observableArrayList();
         try {
             c = database.connect();
-            String sql = "SELECT amount, time, category_name from expense WHERE user_username = ?  ORDER BY time";
+            String sql = "SELECT amount, time, category_name from expense WHERE user_username = ?  ORDER BY time desc limit 30";
             stmt = c.prepareStatement(sql);
             //ResultSet
             stmt.setString(1, user.getUsername());

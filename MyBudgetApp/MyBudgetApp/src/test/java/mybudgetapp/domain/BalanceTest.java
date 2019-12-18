@@ -102,7 +102,7 @@ public class BalanceTest {
    //     return this.username + ": (Balance): " + this.balance + " (Date): " + this.date;
         Balance b1 = new Balance("Ballerina", 2500.0, LocalDate.now());
         b1.setAmount(2500.0);
-        String expected = "Ballerina: (Balance): 2500.0 (Date): " + LocalDate.now().toString();
+        String expected = "Ballerina: (Balance): 2500.0 € (Date): " + LocalDate.now().toString();
         assertEquals(expected, b1.toString());
     }
 
