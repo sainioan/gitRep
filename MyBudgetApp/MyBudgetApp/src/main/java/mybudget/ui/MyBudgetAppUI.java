@@ -245,7 +245,8 @@ public class MyBudgetAppUI extends Application {
         TextField newIncomeInput = new TextField();
         GridPane mybudgetLayout = new GridPane();
         chooseCategory.setPromptText("Choose category");
-        chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
+        //   chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
+        chooseCategory.setItems(mybudgetService.createChoices(user));
         chooseCategory.setEditable(true);
         mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
         mybudgetLayout.setHgap(5);
@@ -307,8 +308,8 @@ public class MyBudgetAppUI extends Application {
             primarystage.setScene(pieScene);
         });
 
-          back2.setOnAction(e -> {
-         
+        back2.setOnAction(e -> {
+
             primarystage.setScene(myBudgetScene);
         });
 //        // delete useraccount
@@ -341,8 +342,8 @@ public class MyBudgetAppUI extends Application {
                     createConfirmationMsg.setText("Category '" + category + "' created successfully");
                     createConfirmationMsg.setTextFill(Color.GREEN);
                     newCategoryInput.setText("");
-                    chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
-
+                    //   chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
+                    chooseCategory.setItems(mybudgetService.createChoices(user));
                 } catch (SQLException ex) {
                     System.out.println("createCategoryButton setOnAction error message..." + ex.getMessage());
                 }
