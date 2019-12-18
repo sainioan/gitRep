@@ -455,8 +455,15 @@ public class DBBudgetDao implements BudgetDao {
         return true;
 
     } 
-    
-    public List<Expense> getExensesByCategory(User user) throws SQLException {
+    /**
+     * The method creates an ArrayList list the user's expenses grouped by category
+     *
+     * @param user gives as a parameter is the logged in user
+     *
+     * @return an observable list
+     * @throws SQLException if the database operations fail
+     */
+    public List<Expense> getExpensesByCategory(User user) throws SQLException {
     
         List<Expense> expensesByCategory = new ArrayList<>(); 
         c = db.connect();

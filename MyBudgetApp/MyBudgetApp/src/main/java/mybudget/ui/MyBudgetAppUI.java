@@ -79,6 +79,7 @@ public class MyBudgetAppUI extends Application {
     private TableView tableviewBalance;
     private TableView tableviewIncome;
     private TableView tableviewExpense;
+    private PieChart pieChart;
     private MyBudgetDatabase database;
     private Connection c = null;
     private ResultSet rs = null;
@@ -192,7 +193,7 @@ public class MyBudgetAppUI extends Application {
                     pieScene = new Scene(new Group());
 
                     ObservableList<PieChart.Data> pieChartData = mybudgetService.expenseByCategory(user);
-                    final PieChart pieChart = new PieChart(pieChartData);
+                    PieChart pieChart = new PieChart(pieChartData);
                     pieChart.setTitle("Expenses by category");
                     GridPane piePane = new GridPane();
                     piePane.add(back2, 5, 0);

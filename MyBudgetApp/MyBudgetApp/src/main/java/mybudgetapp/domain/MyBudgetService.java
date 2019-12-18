@@ -266,11 +266,11 @@ public class MyBudgetService {
     }
 
     /**
-     * The method creates and observable list of names for expense categories
+     * The method creates an observable list of names for expense categories
      *
      * @param user gives as a parameter is the logged in user
      *
-     * @return and observable list
+     * @return an observable list
      * @throws SQLException if the database operations fail
      */
     public ObservableList<String> createChoices(User user) throws SQLException {
@@ -288,12 +288,20 @@ public class MyBudgetService {
         System.out.println(categories);
         System.out.println(items);
         return items;
+/**
+     * The method creates an observable list the user's expenses grouped by category
+     *
+     * @param user gives as a parameter is the logged in user
+     *
+     * @return an observable list
+     * @throws SQLException if the database operations fail
+     */
 
     }
     public ObservableList<PieChart.Data> expenseByCategory(User user) throws SQLException {
         ObservableList<PieChart.Data> itemsE = FXCollections.observableArrayList();
         
-        List<Expense> expenses = dbbudgetDao.getExensesByCategory(loggedIn);
+        List<Expense> expenses = dbbudgetDao.getExpensesByCategory(loggedIn);
        
         for (Expense e : expenses) {
         itemsE.add(new PieChart.Data(e.getCategoryName(), e.getAmount()));

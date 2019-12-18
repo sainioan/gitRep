@@ -84,6 +84,9 @@ public class Expense {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+      /**
+     * @return expense object to String
+     */
 
     @Override
     public String toString() {

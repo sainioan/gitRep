@@ -126,7 +126,9 @@ public class Balance {
     public void setId(int id) {
         this.id = id;
     }
-
+  /**
+     * @return balance object to String
+     */
     @Override
     public String toString() {
         return this.username + ": (Balance): " + this.balance + " € (Date): " + this.date;
