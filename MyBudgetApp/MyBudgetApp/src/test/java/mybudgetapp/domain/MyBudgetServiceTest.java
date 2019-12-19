@@ -85,13 +85,19 @@ public class MyBudgetServiceTest {
     }
 
     @Test
-    public void listListsCategories() throws SQLException, Exception {
+    public void listAllCategories() throws SQLException, Exception {
         Category category = new Category(testuser.getUsername(), "cars");
-        //  dbbudget.create(category);
         mbs.createCategory(category.getUserName(), category.getName());
         categories = dbbudget.getAllCategories(testuser);
         categoriesList = mbs.createChoices(testuser);
         assertEquals(1, categoriesList.size());
+
+    }
+    @Test
+    public void listExpensesbyCategory() throws SQLException, Exception {
+        
+        dbbudget.getExpensesByCategory(testuser);
+        assertTrue(mbs.expenseByCategory(testuser)!=null);
 
     }
 

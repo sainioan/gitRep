@@ -295,7 +295,7 @@ public class MyBudgetService {
      *
      * @return an observable list
      * @throws SQLException if the database operations fail
-     */
+     */     
 
     public ObservableList<PieChart.Data> expenseByCategory(User user) throws SQLException {
         ObservableList<PieChart.Data> itemsE = FXCollections.observableArrayList();
