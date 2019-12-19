@@ -277,7 +277,6 @@ public class MyBudgetService {
         ObservableList<String> items = FXCollections.observableArrayList();
         List<Category> categories = dbbudgetDao.getAllCategories(loggedIn);
         ArrayList<String> categorynames = new ArrayList<>();
-
         for (Category c : categories) {
             String name = c.getName();
             categorynames.add(name);
@@ -285,11 +284,12 @@ public class MyBudgetService {
         for (String s : categorynames) {
             items.add(s.trim());
         }
-        System.out.println(categories);
-        System.out.println(items);
         return items;
-/**
-     * The method creates an observable list the user's expenses grouped by category
+    }
+
+    /**
+     * The method creates an observable list the user's expenses grouped by
+     * category
      *
      * @param user gives as a parameter is the logged in user
      *
@@ -297,14 +297,13 @@ public class MyBudgetService {
      * @throws SQLException if the database operations fail
      */
 
-    }
     public ObservableList<PieChart.Data> expenseByCategory(User user) throws SQLException {
         ObservableList<PieChart.Data> itemsE = FXCollections.observableArrayList();
-        
+
         List<Expense> expenses = dbbudgetDao.getExpensesByCategory(loggedIn);
-       
+
         for (Expense e : expenses) {
-        itemsE.add(new PieChart.Data(e.getCategoryName(), e.getAmount()));
+            itemsE.add(new PieChart.Data(e.getCategoryName(), e.getAmount()));
         }
         System.out.println(itemsE);
         return itemsE;

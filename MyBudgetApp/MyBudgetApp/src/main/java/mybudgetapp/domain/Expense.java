@@ -38,7 +38,8 @@ public class Expense {
         this.amount = amount;
         this.date = date;
     }
-     public Expense(String categoryName, double amount) {
+
+    public Expense(String categoryName, double amount) {
 
         this.categoryName = categoryName;
         this.amount = amount;
@@ -84,10 +85,10 @@ public class Expense {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-      /**
+
+    /**
      * @return expense object to String
      */
-
     @Override
     public String toString() {
         return this.userName + ": (Expense catetegory): " + this.categoryName + ", (Amount): " + this.amount + ", (Date): " + this.date;

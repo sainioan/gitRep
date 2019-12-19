@@ -80,6 +80,7 @@ public class MyBudgetAppUI extends Application {
     private TableView tableviewIncome;
     private TableView tableviewExpense;
     private PieChart pieChart;
+    private   ObservableList<PieChart.Data> pieChartData;
     private MyBudgetDatabase database;
     private Connection c = null;
     private ResultSet rs = null;
@@ -190,15 +191,15 @@ public class MyBudgetAppUI extends Application {
             try {
                 if (mybudgetService.login(username, password)) {
                     user = mybudgetService.getLoggedUser();
-                    pieScene = new Scene(new Group());
-
-                    ObservableList<PieChart.Data> pieChartData = mybudgetService.expenseByCategory(user);
-                    PieChart pieChart = new PieChart(pieChartData);
-                    pieChart.setTitle("Expenses by category");
-                    GridPane piePane = new GridPane();
-                    piePane.add(back2, 5, 0);
-                    piePane.add(pieChart, 1, 1);
-                    ((Group) pieScene.getRoot()).getChildren().add(piePane);
+//                    pieScene = new Scene(new Group());
+//
+//                    pieChartData = mybudgetService.expenseByCategory(user);
+//                    pieChart = new PieChart(pieChartData);
+//                    pieChart.setTitle("Expenses by category");
+//                    GridPane piePane = new GridPane();
+//                    piePane.add(back2, 5, 0);
+//                    piePane.add(pieChart, 1, 1);
+//                    ((Group) pieScene.getRoot()).getChildren().add(piePane);
 
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
                     primarystage.setScene(myBudgetScene);
@@ -302,7 +303,15 @@ public class MyBudgetAppUI extends Application {
         // pieScene 
         pieSceneB.setOnAction(e -> {
             try {
+            pieScene = new Scene(new Group());
 
+                    pieChartData = mybudgetService.expenseByCategory(user);
+                    pieChart = new PieChart(pieChartData);
+                    pieChart.setTitle("Expenses by category");
+                    GridPane piePane = new GridPane();
+                    piePane.add(back2, 5, 0);
+                    piePane.add(pieChart, 1, 1);
+                    ((Group) pieScene.getRoot()).getChildren().add(piePane);
             } catch (Throwable t) {
                 System.out.println("pieSceneB set on action failure.." + t.getMessage());
             }

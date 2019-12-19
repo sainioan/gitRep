@@ -43,7 +43,6 @@ public class DBBudgetDao implements BudgetDao {
     private Connection c = null;
     private ResultSet rs = null;
     private PreparedStatement stmt = null;
-   
 
     /**
      * MyBudgetDao class constructor The database is initialized in the
@@ -242,6 +241,7 @@ public class DBBudgetDao implements BudgetDao {
         }
         return listB;
     }
+
     /**
      *
      * @param user user object
@@ -454,9 +454,11 @@ public class DBBudgetDao implements BudgetDao {
         }
         return true;
 
-    } 
+    }
+
     /**
-     * The method creates an ArrayList list the user's expenses grouped by category
+     * The method creates an ArrayList list the user's expenses grouped by
+     * category
      *
      * @param user gives as a parameter is the logged in user
      *
@@ -464,16 +466,15 @@ public class DBBudgetDao implements BudgetDao {
      * @throws SQLException if the database operations fail
      */
     public List<Expense> getExpensesByCategory(User user) throws SQLException {
-    
-        List<Expense> expensesByCategory = new ArrayList<>(); 
+        List<Expense> expensesByCategory = new ArrayList<>();
         c = db.connect();
         try {
-            PreparedStatement stmt = c.prepareStatement("select category_name, amount FROM expense WHERE user_username = ? GROUP BY category_name");
+            PreparedStatement stmt = c.prepareStatement("select category_name, sum(amount) FROM expense WHERE user_username = ? GROUP BY category_name");
             stmt.setString(1, user.getUsername());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                
-                Expense exp = new Expense(rs.getString("category_name").trim(), rs.getFloat("amount"));
+
+                Expense exp = new Expense(rs.getString("category_name").trim(), rs.getFloat("sum(amount)"));
                 expensesByCategory.add(exp);
             }
             stmt.close();
@@ -483,10 +484,8 @@ public class DBBudgetDao implements BudgetDao {
         } finally {
             c.close();
         }
-        System.out.println("TESTING THE METHOD EXPENSES BY CATEGORY" + expensesByCategory.toString());
         return expensesByCategory;
     }
 
 //    
-
 }
