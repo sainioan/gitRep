@@ -29,6 +29,8 @@
 |14.12.|    2 |Tableview ui:hin.Bugien fiksailua.|
 |15.12.|    5 |SQLITE Busy -- database locked Error viestien selvittelya. Bugien fiksailua.|
 |16.12.|    4 |Error viestien selvittelya. .gitignore häiriön korjaus, yms. Bugien fiksailua. Testien lisäämistä.|
+|17.12.|    4 |Epäonnistunutta yritystä rakentaa Tableviewn metodeja daon ja serviceen.Java docien täydennystä.|
+|19.12.|    5 | PieChart Scenen metodien koodaus, testin lisääminen, checkstyle virheiden poistoa.|
 
 
 
