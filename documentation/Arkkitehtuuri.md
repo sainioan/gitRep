@@ -24,7 +24,7 @@ The user interface has been separated from the application logic for the most pa
 
 ## Application Logic
 The application's logical data model consists of the following classes:
-- [User](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/User.java) User has 
+- [User](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/User.java) 
 - [Balance](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Balance.java)
 - [Income](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Income.java)
 - [Expense](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Expense.java)
@@ -32,10 +32,17 @@ The application's logical data model consists of the following classes:
 
 The user has one balance, which is the amount of money the user owns. The balance is changed every time the to inputs an income or expense. The expenses are grouped by category. The user can also add new expense categories to the existing ones.
 
-MyBudgetService is responsible for the interaction between the Graphical User Interface and the database.
+MyBudgetService is responsible for the interaction between the Graphical User Interface and the database. The class
+contains, for example, the following methods:
+- boolean createUser(String username, String password)
+- boolean createCategory(String username, String description)
+- boolean createIncome(String username, double amount, LocalDate date)
+- boolean updateBalanceNewIncome(String username, double income, LocalDate date)
+- boolean updateBalanceNewExpense(String username, double expense, LocalDate date)
+- String updateBalanceLabel()
 
 ### MyBudgetApp Class Diagram 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppClassDiagram.png" width= "500" height= "500">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppClassDiagram.png" width= "600" height= "500">
 
 
 ### MyBudgetApp Package Diagram
