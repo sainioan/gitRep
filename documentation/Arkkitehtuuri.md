@@ -35,7 +35,7 @@ The user has one balance, which is the amount of money the user owns. The balanc
 MyBudgetService is responsible for the interaction between the Graphical User Interface and the database.
 
 ### MyBudgetApp Class Diagram 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppClassDiagram.png" >
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppClassDiagram.png" "width = "300" height = "500" >
 
 
 ### MyBudgetApp Package Diagram
@@ -135,11 +135,11 @@ In the sign up window, the user creates a new username and password and click on
 
 After logging in, the user can input data regarding his/her income or expense as well create new expense cateogories. The data regarding the amount of money is entered into the corresponding textfields and the datepicker object is used to set the time of transaction.
 
-When a new category is created, the gui invokes the createCateogory method in MyBudgetService class, with the username and the category as its parameters.
+When a new category is created, the GUI invokes the createCateogory method in MyBudgetService class, with username and category as its parameters.
 
-When a new expense is recorded, the gui invokes the createExpense method of the MyBudgetService class, with the username, category name, amount, and date as its parameters.
+When a new expense is recorded, the GUI invokes the createExpense method of the MyBudgetService class, with username, category name, amount, and date as its parameters.
 
-When a new income is recorded, the gui invokes the createIncome method of the MyBudgetService class, with the username, amount, and date as its parameters.
+When a new income is recorded, the GUI invokes the createIncome method of the MyBudgetService class, with username, amount, and date as its parameters.
 
 ## Main weaknesses
 
