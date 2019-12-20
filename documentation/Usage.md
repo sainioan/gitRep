@@ -16,5 +16,6 @@ After logging in, the main scene will open. The GUI main scene, allows the user 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppLogin.png"  width="400" height="250">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp_Sign_up.png" width="400" height="250">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppScene.png" width="700" height="500">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppBudgetHistory.png" width="300" height="600">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="400" height="300">
 	
