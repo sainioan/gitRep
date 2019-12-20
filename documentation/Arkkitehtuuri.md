@@ -4,18 +4,33 @@
 
 The program uses a three-tier architecture, and the package structure of the code is following:
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Structure.png" width = "300" height = "500">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Structure.png">
+
+The package mybudget.ui contains the JavaFX-based graphical user interface(GUI), the package mybudgetapp.domain contains the the classes responsible for the application logic, and the package mybudgetapp.dao contains the classes responsible for storing data permanently into the database.
 
 ## Graphical User Interface
 
-The GUI consistis of three scenese:
-- login
-- sign up 
+The GUI consistis of five scenes:
+- User login scene
+- Sign up scene
 - MyBudgetApp scene
+- Table view (budget history)
+- Pie chart scene (spending by category)
+
+
+User interface scenes are Scene objects created in the classes of the *ui* package. The user interface has been created programmatically in the mybudget.ui.MyBudgetAppUI.
+
+The user interface has been separated from the application logic for the most part. The user interface calls methods that implement application logic through MyBudgetAppService, with only a little application logic in the user interface class.
 
 ## Application Logic
+The application's logical data model consists of the following classes:
+- [User](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/User.java) User has 
+- [Balance](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Balance.java)
+- [Income](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Income.java)
+- [Expense](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Expense.java)
+- [Category](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Category.java)
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Sovelluslogiikka.png" width = "650" height = "270">>
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Sovelluslogiikka.png">
 
 MyBudgetService is responsible for the interaction between the Graphical User Interface and the database.
 
@@ -28,8 +43,8 @@ The application follows the  [Data Access Object](https://en.wikipedia.org/wiki/
 
 ## Database
 
-Data about the users and their financial transactions is saved into mybudgetapp.db, which is an SQLite database. 
-The database creates the database 
+Data about the users and their financial transactions is saved into mybudgetapp.db, which is an SQLite database. Mybudgetapp.db consists of 5 tables: category, user, expense, income, and balance.
+The SQL statements for creating the database tables.
 
 CREATE TABLE IF NOT EXISTS category (
 id INTEGER PRIMARY KEY,
@@ -50,7 +65,7 @@ FOREIGN KEY (categoryUser) REFERENCES user(username)
  user_username VARCHAR(100),
  category_name varchar,
  amount float,
- time DATE,
+ time varchar,
  FOREIGN KEY (user_username) REFERENCES user(username),
  FOREIGN KEY(category_name) REFERENCES category(name)
  );
@@ -59,7 +74,7 @@ FOREIGN KEY (categoryUser) REFERENCES user(username)
  id INTEGER PRIMARY KEY, 
  user_username VARCHAR(100),
  amount float,
- time DATE,
+ time varchar,
  FOREIGN KEY (user_username) REFERENCES user(username),
  );
  
@@ -67,7 +82,7 @@ FOREIGN KEY (categoryUser) REFERENCES user(username)
  id INTEGER PRIMARY KEY, 
  user_username VARCHAR(100),
  amount float,
- time DATE,
+ time varchar,
  FOREIGN KEY (user_username) REFERENCES user(username),
  );
  
@@ -97,6 +112,10 @@ When a new expense is recorded, the gui invokes the createExpense method of the 
 
 When a new income is recorded, the gui invokes the createIncome method of the MyBudgetService class, with the username, amount, and date as its parameters.
 
+## Main weaknesses
+
+### Graphical user interface
+All of the GUI logic is in onemethod making it difficult to handle. A possible fix would be to create separate methods for building up each scene, but despite trying to create separate code blocks for building up the different scene, I was not able to get it to work.
 
 
 
