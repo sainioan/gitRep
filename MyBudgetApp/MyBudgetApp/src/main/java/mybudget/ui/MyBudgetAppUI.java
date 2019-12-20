@@ -191,16 +191,6 @@ public class MyBudgetAppUI extends Application {
             try {
                 if (mybudgetService.login(username, password)) {
                     user = mybudgetService.getLoggedUser();
-//                    pieScene = new Scene(new Group());
-//
-//                    pieChartData = mybudgetService.expenseByCategory(user);
-//                    pieChart = new PieChart(pieChartData);
-//                    pieChart.setTitle("Expenses by category");
-//                    GridPane piePane = new GridPane();
-//                    piePane.add(back2, 5, 0);
-//                    piePane.add(pieChart, 1, 1);
-//                    ((Group) pieScene.getRoot()).getChildren().add(piePane);
-
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
                     primarystage.setScene(myBudgetScene);
 
@@ -240,14 +230,13 @@ public class MyBudgetAppUI extends Application {
         Button createCategoryButton = new Button("Save new category");
         Button createExpenseButton = new Button("Save expense");
         Button createIncomeButton = new Button("Save income");
-        Button tableView = new Button("Budget History Table View");
-        Button pieSceneB = new Button("Expenses by Category Piechart");
+        Button tableView = new Button("Budget history tableview");
+        Button pieSceneB = new Button("Expenses by category piechart");
         TextField newCategoryInput = new TextField();
         TextField newExpenseInput = new TextField();
         TextField newIncomeInput = new TextField();
         GridPane mybudgetLayout = new GridPane();
         chooseCategory.setPromptText("Choose category");
-        //   chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
         chooseCategory.setItems(mybudgetService.createChoices(user));
         chooseCategory.setEditable(true);
         mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
@@ -352,7 +341,6 @@ public class MyBudgetAppUI extends Application {
                     createConfirmationMsg.setText("Category '" + category + "' created successfully");
                     createConfirmationMsg.setTextFill(Color.GREEN);
                     newCategoryInput.setText("");
-                    //   chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
                     chooseCategory.setItems(mybudgetService.createChoices(user));
                 } catch (SQLException ex) {
                     System.out.println("createCategoryButton setOnAction error message..." + ex.getMessage());
