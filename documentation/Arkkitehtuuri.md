@@ -4,7 +4,7 @@
 
 The program uses a three-tier architecture, and the package structure of the code is following:
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Structure.png">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Structure.png" width = "300" height = "500">
 
 ## Graphical User Interface
 
@@ -15,7 +15,7 @@ The GUI consistis of three scenese:
 
 ## Application Logic
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Sovelluslogiikka.png">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Sovelluslogiikka.png" width = "650" height = "270">>
 
 MyBudgetService is responsible for the interaction between the Graphical User Interface and the database.
 
