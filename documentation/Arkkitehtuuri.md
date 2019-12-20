@@ -4,7 +4,7 @@
 
 The program uses a three-tier architecture, and the package structure of the code is following:
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Structure.png">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Structure.png" width = "300" height = "700">
 
 The package mybudget.ui contains the JavaFX-based graphical user interface(GUI), the package mybudgetapp.domain contains the the classes responsible for the application logic, and the package mybudgetapp.dao contains the classes responsible for storing data permanently into the database.
 
@@ -30,11 +30,15 @@ The application's logical data model consists of the following classes:
 - [Expense](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Expense.java)
 - [Category](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain/Category.java)
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/Sovelluslogiikka.png">
+The user has one balance, which is the amount of money the user owns. The balance is changed every time the to inputs an income or expense. The expenses are grouped by category. The user can also add new expense categories to the existing ones.
 
 MyBudgetService is responsible for the interaction between the Graphical User Interface and the database.
 
-### Class/Package Diagram
+### MyBudgetApp Class Diagram 
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppClassDiagram.png" >
+
+
+### MyBudgetApp Package Diagram
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/class diagram.png">
 
 ## Data storage
@@ -97,9 +101,34 @@ In the login window, the user inputs his/her username and password into the appr
 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp Login Sequence Diagram.png">
 
-#### New User Sign Up
+### New User Sign Up
 
 In the sign up window, the user creates a new username and password and click on the confirm button.
+
+#### Sequence Diagram
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppCreateUserSequenceDiagram.png">
+
+### Create New Income
+
+#### Sequence Diagram
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppCreateIncome.png">
+
+### Create New Cateogry
+
+#### Sequence Diagram
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppCreateCategory.png">
+
+### Create New Expense
+
+#### Sequence Diagram
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppCreateExpense.png">
+
+
+
 
 #### Other Functionalities
 ##### Recording Financial Transactions
