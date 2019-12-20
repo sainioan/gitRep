@@ -29,10 +29,21 @@ public class MyBudgetDatabase {
         this.dbName = databaseName;
     }
 
+    /**
+     * constructor without parameters
+     *
+     * @throws SQLException when connection fails
+     */
     public MyBudgetDatabase() throws SQLException {
         this.dbName = "myBudget.db";
     }
 
+    /**
+     * Connects to the database
+     *
+     * @return connection to the database
+     * @throws java.sql.SQLException when the connection to the database fails
+     */
     public Connection connect() throws SQLException {
         Connection connection = null;
         try {
@@ -45,25 +56,13 @@ public class MyBudgetDatabase {
         return connection;
     }
 
-    public void disconnect(Connection connection, PreparedStatement stmt, ResultSet rs) throws SQLException {
-        rs.close();
-        stmt.close();
-        connection.close();
-    }
-
-    public void disconnect(Connection conn, PreparedStatement stmt) throws SQLException {
-        stmt.close();
-        conn.close();
-    }
-
     /**
      * initializeDatabase method initializes the five database tables
      *
      * @return returns true if the database tables are created
      */
     public boolean initializeDatabase() {
-        // The following methods will create required tables if they do not already exist in the database
-        try {
+         try {
             initializeCategory();
             initializeExpense();
             initializeIncome();
@@ -78,7 +77,8 @@ public class MyBudgetDatabase {
     }
 
     /**
-     * initialize category table
+     * The method initializeCategory will create the table category if it does not already exist 
+     * in the database
      */
     public void initializeCategory() {
         try {
@@ -99,7 +99,8 @@ public class MyBudgetDatabase {
     }
 
     /**
-     * initialize user table
+     * The method initializeUser will create the table user if it does not already exist 
+     * in the database
      */
     public void initializeUser() {
         try {
@@ -121,8 +122,9 @@ public class MyBudgetDatabase {
         }
     }
 
-    /**
-     * initialize user table
+     /**
+     * The method initializeExpense will create the table expense if it does not already exist 
+     * in the database
      */
     public void initializeExpense() {
         try {
@@ -149,7 +151,8 @@ public class MyBudgetDatabase {
     }
 
     /**
-     * initialize income table
+     * The method initializeIncome will create the table income if it does not already exist 
+     * in the database
      */
     public void initializeIncome() {
         try {
@@ -172,8 +175,9 @@ public class MyBudgetDatabase {
         }
     }
 
-    /**
-     * initialize balance table
+   /**
+     * The method initializeBalance will create the table Balance if it does not already exist 
+     * in the database
      */
     public void initializeBalance() {
         try {
