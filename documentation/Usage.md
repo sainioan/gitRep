@@ -13,7 +13,7 @@ Once the app opens, the Login screen appears. If you have already signed up as a
 After logging in, the main scene will open. The GUI main scene, allows the user to enter an income entry or an expense entry as well as create a new expense category. The required input for income consists of amount as double and the date, which the user can choose by clicking on the datepicker calendar. The required input for expense consists category, amount as double and the date, which the user can choose by clicking on the datepicker calendar.
 
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppLogin.png">
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp_Sign_up.png">
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppMainScene.png">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppLogin.png"  width="400" height="250">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp_Sign_up.png" width="400" height="250">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppScene.png" width="500" height="350">
 	
