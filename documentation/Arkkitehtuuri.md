@@ -35,11 +35,11 @@ The user has one balance, which is the amount of money the user owns. The balanc
 MyBudgetService is responsible for the interaction between the Graphical User Interface and the database.
 
 ### MyBudgetApp Class Diagram 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppClassDiagram.png" "width = "300" height = "500" >
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppClassDiagram.png" width= "500" height= "500">
 
 
 ### MyBudgetApp Package Diagram
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/class diagram.png">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/class diagram.png" width= "300" height= "400">
 
 ## Data storage
 
