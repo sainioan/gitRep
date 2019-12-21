@@ -26,8 +26,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.ComboBox;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -375,6 +373,7 @@ public class MyBudgetAppUI extends Application {
                         expenseMsg.setText("expense data entered successfully");
                         expenseMsg.setTextFill(Color.GREEN);
                         newExpenseInput.setText("");
+                        
                         chooseCategory.getSelectionModel().clearSelection();
                         dateFieldExpense.getEditor().clear();
                     } else {
@@ -385,6 +384,7 @@ public class MyBudgetAppUI extends Application {
                 } catch (Throwable t) {
                     System.out.println("MybudgetService.createExpense error message ..." + t.getMessage());
                 }
+                expenseMsg.setText("");
             }
         });
 
@@ -392,7 +392,6 @@ public class MyBudgetAppUI extends Application {
         createIncomeButton.setOnAction(e -> {
 
             createErrorMsg.setText("");
-            incomeMsg.setText("");
             if (newIncomeInput.getText().isEmpty()) {
 
                 createErrorMsg.setTextFill(Color.RED);
@@ -411,6 +410,7 @@ public class MyBudgetAppUI extends Application {
                         incomeMsg.setText("input data entered successfully");
                         incomeMsg.setTextFill(Color.GREEN);
                         newIncomeInput.setText("");
+                        
                         dateFieldIncome.getEditor().clear();
                     } else {
 
@@ -420,6 +420,7 @@ public class MyBudgetAppUI extends Application {
                 } catch (Exception ex) {
                     System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
                 }
+                incomeMsg.setText("");
             }
         });
         //create new user scene

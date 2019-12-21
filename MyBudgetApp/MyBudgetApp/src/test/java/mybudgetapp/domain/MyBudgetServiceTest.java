@@ -30,7 +30,7 @@ public class MyBudgetServiceTest {
     MyBudgetService mbs;
     MyBudgetService mbs2;
     MyBudgetDatabase testdatabase;
-    ObservableList<String> categoriesList;
+    List<Category> categoriesList = new ArrayList<>();
     User testuser;
     DBUserDao dbuser;
     DBBudgetDao dbbudget;
@@ -50,12 +50,16 @@ public class MyBudgetServiceTest {
         dbbudget = new DBBudgetDao(testdatabase);
         testuser = new User("testUser", "TU123");
         mbs = new MyBudgetService(testdatabase, testuser.getUsername());
-        mbs.login("testUser", "TU123");
+
         dbuser = new DBUserDao(testdatabase);
-        mbs2 = new MyBudgetService(testdatabase, testuser.getUsername());
+        // dbuser.saveUser(testuser);
+        mbs.createUser(testuser.getUsername(), testuser.getPassword());
+        mbs.login(testuser.getUsername(), testuser.getPassword());
         testBalance = new Balance(testuser.getUsername(), 1000.0, today);
 
         i = new Income(testuser.getUsername(), 1000.0, today);
+
+        mbs.createIncome(i.getUserName(), i.getAmount(), i.getDate());
         e = new Expense(testuser.getUsername(), "testCategory", 500.0, today);
     }
 
@@ -77,6 +81,19 @@ public class MyBudgetServiceTest {
     }
 
     @Test
+    public void createUserWorks() throws SQLException {
+
+        try {
+
+            User loggedIn = mbs.getLoggedUser();
+            System.out.println("loggedIn");
+            assertEquals("testUser", loggedIn.getUsername());
+        } catch (Exception e) {
+            System.out.println("balanceupdateworks error message..." + e.getMessage());
+        }
+    }
+
+    @Test
     public void loggedInUserCanLogout() throws SQLException {
         mbs.login("testUser", "TU123");
         mbs.logout();
@@ -86,18 +103,24 @@ public class MyBudgetServiceTest {
 
     @Test
     public void listAllCategories() throws SQLException, Exception {
-        Category category = new Category(testuser.getUsername(), "cars");
-        mbs.createCategory(category.getUserName(), category.getName());
-        categories = dbbudget.getAllCategories(testuser);
-        categoriesList = mbs.createChoices(testuser);
-        assertEquals(1, categoriesList.size());
+        try {
+            Category category = new Category(testuser.getUsername(), "cars");
+            mbs.createCategory(category.getUserName(), category.getName());
+            categoriesList = dbbudget.getAllCategories(testuser);
+            // categoriesList = mbs.createChoices(testuser);
+            System.out.println(categoriesList.toString());
+            assertEquals(1, categoriesList.size());
+        } catch (Exception e) {
+            System.out.println("listallcategories error message " + e.getMessage());
+        }
 
     }
+
     @Test
     public void listExpensesbyCategory() throws SQLException, Exception {
-        
+
         dbbudget.getExpensesByCategory(testuser);
-        assertTrue(mbs.expenseByCategory(testuser)!=null);
+        assertTrue(mbs.expenseByCategory(testuser) != null);
 
     }
 
@@ -205,11 +228,12 @@ public class MyBudgetServiceTest {
         mbs.createUser(user.getUsername(), user.getPassword());
         assertEquals(true, mbs.deleteUser(user));
     }
-    @Test 
-    public void updateBalanceLabelWorks() throws SQLException, Exception{
-        dbbudget.findOne("newbie");
-        assertEquals("", mbs.updateBalanceLabel());
-        
+
+    @Test
+    public void updateBalanceLabelWorks() throws SQLException, Exception {
+
+        assertEquals("TESTUSER: (Balance): 0.0 € (Date): 2019-12-21", mbs.updateBalanceLabel());
+
     }
 
 }
