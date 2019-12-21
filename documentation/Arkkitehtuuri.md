@@ -111,7 +111,6 @@ user
 category
 <pre>
 1|testUser|food
-1|testUser|food
 2|testUser|travel
 3|testUser|entertainment
 4|elephant|groceries
