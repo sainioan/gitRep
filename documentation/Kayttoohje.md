@@ -27,6 +27,7 @@ expense category, amount as double, and date.
 - **Budget history table view** button will open a new scene with three tables that shows the user's budget history from the most recent transaction to the oldest. The three tables are: Your Balance History, Your Income History, and Your Expense History. Upto 30 entries will be shown.
 - **Expenses by category piechart** button will open a new scene with a piechart that shows a piechart of the user's speding grouped by categories.
 - **Your Balance Today** label shows the user's current balance.
+
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppLogin.png"  width="400" height="250">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp_Sign_up.png" width="400" height="250">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppScene.png" width="700" height="500">
