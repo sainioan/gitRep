@@ -30,7 +30,7 @@ The required input for income consists of amount as double and the date, which t
 
 The required input for expense consists category, amount as double and the date, which the user can choose by clicking on the datepicker calendar. To confirm, click  _Save expense_.
 
-To add a new category, enter category description and click  _Save category_.
+To add a new category, enter category description and click  _Save new category_.
 
 MyBudgetScene gives you the following functions:
 
