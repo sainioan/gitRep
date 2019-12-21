@@ -428,7 +428,7 @@ public class MyBudgetAppUI extends Application {
         newUsernamePane.setPadding(new Insets(10));
         Text textNewUser = new Text("MyBudgetApp Sign Up");
         textNewUser.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
-
+        textNewUser.setEffect(dropShadow);
         BorderPane bpNewUser = new BorderPane();
         bpNewUser.setPadding(new Insets(10, 50, 50, 50));
 
@@ -443,7 +443,7 @@ public class MyBudgetAppUI extends Application {
         HBox newPasswordPane = new HBox(10);
         newPasswordPane.setPadding(new Insets(10));
         GridPane newUserGridPane = new GridPane();
-        newUserGridPane.setPadding(new Insets(20, 20, 20, 20));
+        newUserGridPane.setPadding(new Insets(40, 20, 20, 20));
         newUserGridPane.setHgap(5);
         newUserGridPane.setVgap(5);
 
@@ -459,7 +459,7 @@ public class MyBudgetAppUI extends Application {
         bpNewUser.setCenter(newUserGridPane);
         textNewUser.setId("text");
         newUsernamePane.getChildren().addAll(newUserGridPane);
-        newUserPane.getChildren().addAll(textNewUser, newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
+        newUserPane.getChildren().addAll( textNewUser, newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
 
         signUpButton.setOnAction(e -> {
 
