@@ -26,9 +26,11 @@ The GUI main scene, allows the user to input income and expenses, add new expens
 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppScene.png" width="700" height="500">
 
-The required input for income consists of amount as double and the date, which the user can choose by clicking on the datepicker calendar. 
+The required input for income consists of amount as double and the date, which the user can choose by clicking on the datepicker calendar. To confirm, click  _Save income_.
 
-The required input for expense consists category, amount as double and the date, which the user can choose by clicking on the datepicker calendar.
+The required input for expense consists category, amount as double and the date, which the user can choose by clicking on the datepicker calendar. To confirm, click  _Save expense_.
+
+To add a new category, enter category description and click  _Save category_.
 
 MyBudgetScene gives you the following functions:
 
@@ -53,7 +55,7 @@ To view your budgethistory, click _Budget history tableview_
 
 To view the spending pie chart, click _Expenses by category pie chart_ 
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="380" height="350">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="390" height="350">
 	
 ### Logout	
 To logout of the application, click _sign out_
