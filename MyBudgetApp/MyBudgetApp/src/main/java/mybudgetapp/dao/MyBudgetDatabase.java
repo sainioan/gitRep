@@ -8,7 +8,6 @@ package mybudgetapp.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -62,7 +61,7 @@ public class MyBudgetDatabase {
      * @return returns true if the database tables are created
      */
     public boolean initializeDatabase() {
-         try {
+        try {
             initializeCategory();
             initializeExpense();
             initializeIncome();
@@ -77,8 +76,8 @@ public class MyBudgetDatabase {
     }
 
     /**
-     * The method initializeCategory will create the table category if it does not already exist 
-     * in the database
+     * The method initializeCategory will create the table category if it does
+     * not already exist in the database
      */
     public void initializeCategory() {
         try {
@@ -99,8 +98,8 @@ public class MyBudgetDatabase {
     }
 
     /**
-     * The method initializeUser will create the table user if it does not already exist 
-     * in the database
+     * The method initializeUser will create the table user if it does not
+     * already exist in the database
      */
     public void initializeUser() {
         try {
@@ -122,9 +121,9 @@ public class MyBudgetDatabase {
         }
     }
 
-     /**
-     * The method initializeExpense will create the table expense if it does not already exist 
-     * in the database
+    /**
+     * The method initializeExpense will create the table expense if it does not
+     * already exist in the database
      */
     public void initializeExpense() {
         try {
@@ -151,8 +150,8 @@ public class MyBudgetDatabase {
     }
 
     /**
-     * The method initializeIncome will create the table income if it does not already exist 
-     * in the database
+     * The method initializeIncome will create the table income if it does not
+     * already exist in the database
      */
     public void initializeIncome() {
         try {
@@ -175,9 +174,9 @@ public class MyBudgetDatabase {
         }
     }
 
-   /**
-     * The method initializeBalance will create the table Balance if it does not already exist 
-     * in the database
+    /**
+     * The method initializeBalance will create the table Balance if it does not
+     * already exist in the database
      */
     public void initializeBalance() {
         try {

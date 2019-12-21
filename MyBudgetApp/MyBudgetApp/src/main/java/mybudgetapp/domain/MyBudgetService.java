@@ -211,7 +211,7 @@ public class MyBudgetService {
      * @return true if username and password are correct, otherwise false
      * @throws java.sql.SQLException if the database operations fail
      */
-        public boolean login(String username, String password) throws SQLException {
+    public boolean login(String username, String password) throws SQLException {
         User user = dbuserDao.findByUsername(username);
         if (user == null) {
             return false;
@@ -295,8 +295,7 @@ public class MyBudgetService {
      *
      * @return an observable list
      * @throws SQLException if the database operations fail
-     */     
-
+     */
     public ObservableList<PieChart.Data> expenseByCategory(User user) throws SQLException {
         ObservableList<PieChart.Data> itemsE = FXCollections.observableArrayList();
 

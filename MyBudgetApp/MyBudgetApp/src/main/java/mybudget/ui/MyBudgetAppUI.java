@@ -125,7 +125,7 @@ public class MyBudgetAppUI extends Application {
 
         tablePane.setPadding(new Insets(20, 20, 20, 30));
         tablePane.getChildren().addAll(tableGP);
-        Scene tablescene = new Scene(tablePane);
+        Scene tableScene = new Scene(tablePane);
         back.setOnAction(e -> {
             primaryStage.setScene(myBudgetScene);
         });
@@ -286,7 +286,7 @@ public class MyBudgetAppUI extends Application {
             } catch (Exception exc) {
                 System.out.println("tableView setOnAction error message" + exc.getMessage());
             }
-            primaryStage.setScene(tablescene);
+            primaryStage.setScene(tableScene);
         });
 
         // pieScene 
