@@ -9,13 +9,17 @@ MyBudgetApp application saves data about user expenses and income into a databas
 
 ## Login
 
-Once the app opens, the Login screen appears. If you have already signed up as a user enter the username and password to access the application. If you have not yet signed up for MyBudgetApp, create a new username and password. 
-After logging in, the main scene will open. The GUI main scene, allows the user to enter an income entry or an expense entry as well as create a new expense category. The required input for income consists of amount as double and the date, which the user can choose by clicking on the datepicker calendar. The required input for expense consists category, amount as double and the date, which the user can choose by clicking on the datepicker calendar.
+Once the app opens, the Login screen appears. If you have already signed up as a user enter the username and password to access the application. . 
 
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppLogin.png"  width="400" height="250">
+
+If you have not yet signed up for MyBudgetApp, create a new username and password
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp_Sign_up.png" width="400" height="250">
 
 ## MyBudgetScene
 
-MyBudgetScene gives you the following functions
+After logging in, the main scene will open. The GUI main scene, allows the user to enter an income entry or an expense entry as well as create a new expense category. The required input for income consists of amount as double and the date, which the user can choose by clicking on the datepicker calendar. The required input for expense consists category, amount as double and the date, which the user can choose by clicking on the datepicker calendar.
+MyBudgetScene gives you the following functions:
 
 - **Logout** button will log you out and open the login view.
 - **Delete user account** button will delete the user's account and erase all data regarding the user from the database. 
@@ -28,8 +32,6 @@ expense category, amount as double, and date.
 - **Expenses by category piechart** button will open a new scene with a piechart that shows a piechart of the user's speding grouped by categories.
 - **Your Balance Today** label shows the user's current balance.
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppLogin.png"  width="400" height="250">
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetApp_Sign_up.png" width="400" height="250">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppScene.png" width="700" height="500">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppBudgetHistory.png" width="300" height="600">
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="400" height="300">
