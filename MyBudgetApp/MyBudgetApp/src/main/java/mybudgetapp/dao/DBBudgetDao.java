@@ -263,7 +263,6 @@ public class DBBudgetDao implements BudgetDao {
             stmt.close();
             rs.close();
         } catch (Throwable t) {
-            System.out.println("getAllCategories error message is ..." + t.getMessage());
         } finally {
             c.close();
         }

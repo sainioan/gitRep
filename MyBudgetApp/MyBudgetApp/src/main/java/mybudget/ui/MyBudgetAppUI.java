@@ -246,11 +246,11 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.setVgap(5);;
 
         mybudgetLayout.add(welcome, 0, 0);
-        mybudgetLayout.add(chooseCategory, 0, 1);
-        mybudgetLayout.add(categoryLabel, 0, 2);
-        mybudgetLayout.add(newCategoryInput, 0, 3);
-        mybudgetLayout.add(createCategoryButton, 0, 4);
-        mybudgetLayout.add(createConfirmationMsg, 0, 5);
+        mybudgetLayout.add(chooseCategory, 0, 2);
+        mybudgetLayout.add(categoryLabel, 0, 3);
+        mybudgetLayout.add(newCategoryInput, 0, 4);
+        mybudgetLayout.add(createCategoryButton, 0, 5);
+        mybudgetLayout.add(createConfirmationMsg, 0, 6);
         mybudgetLayout.add(signoutButton, 15, 0);
         mybudgetLayout.add(expenseLabel, 4, 1);
         mybudgetLayout.add(newExpenseInput, 4, 2);
@@ -260,7 +260,7 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(createExpenseButton, 4, 5);
         mybudgetLayout.add(balanceLabel, 4, 10);
         mybudgetLayout.add(currentBalance, 4, 11);
-        mybudgetLayout.add(tableView, 4, 20);
+        mybudgetLayout.add(tableView, 4, 22);
         mybudgetLayout.add(pieSceneButton, 4, 25);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
