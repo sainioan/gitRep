@@ -183,22 +183,31 @@ When a new expense is recorded, the GUI invokes the createExpense method of the 
 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppCreateExpense.png">
 
-
-## Other Functionalities
 ### Viewing Financial Transactions
+
 #### Sequence Diagram
+
 View Budget History 
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppViewBudgetHistorySequenceDiagram.png">
+
 #### Sequence Diagram
 
 View Spending by Category
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/">
-## Main weaknesses
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppViewPieChartSequenceDiagram.png">
 
-### Graphical user interface
-All of the GUI logic is in onemethod making it difficult to handle. A possible fix would be to create separate methods for building up each scene, but despite trying to create separate code blocks for building up the different scene, I was not able to get it to work.
+### Other Functionalities
+
+The user can delete his/her account permanently.
+
+### Main weaknesses
+
+#### Graphical user interface
+
+All of the GUI logic is in one method making it difficult to handle. A possible fix would be to create separate methods for building up each scene, but despite trying to create separate code blocks for building up the different scenes, I was not able to get it to work. 
+
+In addition, the buildup (buildUpBalance, buildUpIncome, buildUpExpense) methods for creating the tableviews shown in the tableScene are in the GUI class. I tried placing these methods in the DBBudgetDao class, but the methods did not work correctly.
 
 
 
