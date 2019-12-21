@@ -55,7 +55,7 @@ public class MyBudgetAppUI extends Application {
 
     private Scene myBudgetScene;
     private Scene newUserScene;
-    private Scene loginscene;
+    private Scene loginScene;
     private Scene pieScene;
     private MyBudgetService mybudgetService;
     private Label menuLabel = new Label();
@@ -95,7 +95,7 @@ public class MyBudgetAppUI extends Application {
     }
 
     @Override
-    public void start(Stage primarystage) throws SQLException, Exception {
+    public void start(Stage primaryStage) throws SQLException, Exception {
         init();
 
         //table scene
@@ -127,10 +127,10 @@ public class MyBudgetAppUI extends Application {
         tablePane.getChildren().addAll(tableGP);
         Scene tablescene = new Scene(tablePane);
         back.setOnAction(e -> {
-            primarystage.setScene(myBudgetScene);
+            primaryStage.setScene(myBudgetScene);
         });
         //login Scene
-        primarystage.setTitle("MyBudgetApp");
+        primaryStage.setTitle("MyBudgetApp");
 
         BorderPane bp = new BorderPane();
         bp.setPadding(new Insets(10, 50, 50, 50));
@@ -182,7 +182,7 @@ public class MyBudgetAppUI extends Application {
         bp.setCenter(gridpane);
 
         //Adding BorderPane to the loginscene 
-        loginscene = new Scene(bp);
+        loginScene = new Scene(bp);
         //loginscene set on action  
         loginButton.setOnAction(e -> {
 
@@ -192,7 +192,7 @@ public class MyBudgetAppUI extends Application {
                 if (mybudgetService.login(username, password)) {
                     user = mybudgetService.getLoggedUser();
                     currentBalance.setText(mybudgetService.updateBalanceLabel());
-                    primarystage.setScene(myBudgetScene);
+                    primaryStage.setScene(myBudgetScene);
 
                     usernameInput.setText("");
                     passwordInput.setText("");
@@ -231,7 +231,7 @@ public class MyBudgetAppUI extends Application {
         Button createExpenseButton = new Button("Save expense");
         Button createIncomeButton = new Button("Save income");
         Button tableView = new Button("Budget history tableview");
-        Button pieSceneB = new Button("Expenses by category piechart");
+        Button pieSceneButton = new Button("Expenses by category piechart");
         TextField newCategoryInput = new TextField();
         TextField newExpenseInput = new TextField();
         TextField newIncomeInput = new TextField();
@@ -258,7 +258,7 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(balanceLabel, 4, 10);
         mybudgetLayout.add(currentBalance, 4, 11);
         mybudgetLayout.add(tableView, 4, 20);
-        mybudgetLayout.add(pieSceneB, 4, 25);
+        mybudgetLayout.add(pieSceneButton, 4, 25);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
         mybudgetLayout.add(incomeDate, 0, 23);
@@ -274,7 +274,7 @@ public class MyBudgetAppUI extends Application {
         // signout buttons returns login view
         signoutButton.setOnAction(e -> {
             mybudgetService.logout();
-            primarystage.setScene(loginscene);
+            primaryStage.setScene(loginScene);
 
         });
         // table view 
@@ -286,11 +286,11 @@ public class MyBudgetAppUI extends Application {
             } catch (Exception exc) {
                 System.out.println("tableView setOnAction error message" + exc.getMessage());
             }
-            primarystage.setScene(tablescene);
+            primaryStage.setScene(tablescene);
         });
 
         // pieScene 
-        pieSceneB.setOnAction(e -> {
+        pieSceneButton.setOnAction(e -> {
             try {
             pieScene = new Scene(new Group());
 
@@ -304,12 +304,12 @@ public class MyBudgetAppUI extends Application {
             } catch (Throwable t) {
                 System.out.println("pieSceneB set on action failure.." + t.getMessage());
             }
-            primarystage.setScene(pieScene);
+            primaryStage.setScene(pieScene);
         });
 
         back2.setOnAction(e -> {
 
-            primarystage.setScene(myBudgetScene);
+            primaryStage.setScene(myBudgetScene);
         });
 //        // delete useraccount
         deleteUser.setOnAction(e -> {
@@ -320,7 +320,7 @@ public class MyBudgetAppUI extends Application {
                 mybudgetService.deleteIncome(user);
                 mybudgetService.deleteExpense(user);
                 deleteMessage.setText(username + "'s user account successfully deleted.");
-                primarystage.setScene(loginscene);
+                primaryStage.setScene(loginScene);
 
             } catch (Throwable t) {
                 System.out.println("delete user account error ..." + t.getMessage());
@@ -438,13 +438,13 @@ public class MyBudgetAppUI extends Application {
 
         signUpButton.setOnAction(e -> {
 
-            primarystage.setScene(newUserScene);
+            primaryStage.setScene(newUserScene);
 
         });
 
         backButton.setOnAction(e -> {
             mybudgetService.logout();
-            primarystage.setScene(loginscene);
+            primaryStage.setScene(loginScene);
 
         });
 
@@ -464,7 +464,7 @@ public class MyBudgetAppUI extends Application {
 
                 if (usernameerror.equals("") && (passworderror.equals("")) && mybudgetService.createUser(usernameSU, passwordSU)) {
                     mybudgetService.createUser(usernameSU, passwordSU);
-                    primarystage.setScene(loginscene);
+                    primaryStage.setScene(loginScene);
                     errorMessage.setText("");
                     usernameInput.setText("");
                     passwordInput.setText("");
@@ -489,9 +489,9 @@ public class MyBudgetAppUI extends Application {
 
         newUserScene = new Scene(newUserPane, 500, 250);
 
-        primarystage.setScene(loginscene);
+        primaryStage.setScene(loginScene);
 
-        primarystage.show();
+        primaryStage.show();
     }
 
     @Override
