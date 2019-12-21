@@ -39,9 +39,9 @@ MyBudgetScene gives you the following functions:
 amount as double and date.
 - **Save expense** button will save the expense entry inputted by the user. The required parameters for the expense entry are
 expense category, amount as double, and date.
+- **Your Balance Today** label shows the user's current balance.
 - **Budget history table view** button will open a new scene with three tables that shows the user's budget history from the most recent transaction to the oldest. The three tables are: Your Balance History, Your Income History, and Your Expense History. Upto 30 entries will be shown.
 - **Expenses by category piechart** button will open a new scene with a piechart that shows a piechart of the user's speding grouped by categories.
-- **Your Balance Today** label shows the user's current balance.
 
 ### MyBudgetHistory
 
@@ -52,7 +52,7 @@ To view your budgethistory, click _Budget history tableview_
 ### Spending by categories
 
 To view the spending pie chart, click _Expenses by category pie chart_
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="400" height="300">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="300" height="300">
 	
 ### Logout	
 To logout of the application, click _sign out_
