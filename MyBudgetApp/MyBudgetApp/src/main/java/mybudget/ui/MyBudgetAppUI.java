@@ -80,7 +80,7 @@ public class MyBudgetAppUI extends Application {
     private TableView tableviewIncome;
     private TableView tableviewExpense;
     private PieChart pieChart;
-    private   ObservableList<PieChart.Data> pieChartData;
+    private ObservableList<PieChart.Data> pieChartData;
     private MyBudgetDatabase database;
     private Connection c = null;
     private ResultSet rs = null;
@@ -219,6 +219,8 @@ public class MyBudgetAppUI extends Application {
         balanceLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
         Label createErrorMsg = new Label();
         Label createConfirmationMsg = new Label();
+        Label incomeMsg = new Label();
+        Label expenseMsg = new Label();
         Label categoryLabel = new Label("New category");
         Label expenseLabel = new Label("New expense: Add amount.");
         Label incomeLabel = new Label("New income: Add amount.");
@@ -252,6 +254,7 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(signoutButton, 15, 0);
         mybudgetLayout.add(expenseLabel, 4, 1);
         mybudgetLayout.add(newExpenseInput, 4, 2);
+        mybudgetLayout.add(expenseMsg, 4, 27);
         mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(dateFieldExpense, 4, 4);
         mybudgetLayout.add(createExpenseButton, 4, 5);
@@ -261,10 +264,11 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(pieSceneButton, 4, 25);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
+        mybudgetLayout.add(incomeMsg, 4, 27);
         mybudgetLayout.add(incomeDate, 0, 23);
         mybudgetLayout.add(dateFieldIncome, 0, 24);
         mybudgetLayout.add(createIncomeButton, 0, 25);
-        mybudgetLayout.add(createErrorMsg, 3, 0);
+        mybudgetLayout.add(createErrorMsg, 4, 27);
         mybudgetLayout.add(deleteUser, 15, 1);
         mybudgetLayout.add(deleteMessage, 15, 2);
         mybudgetPane.getChildren().addAll(mybudgetLayout);
@@ -292,15 +296,15 @@ public class MyBudgetAppUI extends Application {
         // pieScene 
         pieSceneButton.setOnAction(e -> {
             try {
-            pieScene = new Scene(new Group());
+                pieScene = new Scene(new Group());
 
-                    pieChartData = mybudgetService.expenseByCategory(user);
-                    pieChart = new PieChart(pieChartData);
-                    pieChart.setTitle("Expenses by category");
-                    GridPane piePane = new GridPane();
-                    piePane.add(back2, 5, 0);
-                    piePane.add(pieChart, 1, 1);
-                    ((Group) pieScene.getRoot()).getChildren().add(piePane);
+                pieChartData = mybudgetService.expenseByCategory(user);
+                pieChart = new PieChart(pieChartData);
+                pieChart.setTitle("Expenses by category");
+                GridPane piePane = new GridPane();
+                piePane.add(back2, 5, 0);
+                piePane.add(pieChart, 1, 1);
+                ((Group) pieScene.getRoot()).getChildren().add(piePane);
             } catch (Throwable t) {
                 System.out.println("pieSceneB set on action failure.." + t.getMessage());
             }
@@ -349,10 +353,13 @@ public class MyBudgetAppUI extends Application {
         });
         //create a new expense
         createExpenseButton.setOnAction(e -> {
+
+            createErrorMsg.setText("");
+            expenseMsg.setText("");
             if (newExpenseInput.getText().isEmpty()) {
 
                 createErrorMsg.setTextFill(Color.RED);
-                createErrorMsg.setText("Enter the value of expense ");
+                createErrorMsg.setText("Enter the all the required fields: category, amount, and date");
 
             } else {
 
@@ -362,11 +369,19 @@ public class MyBudgetAppUI extends Application {
                 LocalDate expensedate = dateFieldExpense.getValue();
                 System.out.println(d);
                 try {
-                    mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate);
-                    mybudgetService.updateBalanceNewExpense(user.getUsername(), d, expensedate);
-                    currentBalance.setText(mybudgetService.updateBalanceLabel());
-                    chooseCategory.getItems().addAll(mybudgetService.createChoices(user));
+                    if (mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate) == true) {
+                        mybudgetService.updateBalanceNewExpense(user.getUsername(), d, expensedate);
+                        currentBalance.setText(mybudgetService.updateBalanceLabel());
+                        expenseMsg.setText("expense data entered successfully");
+                        expenseMsg.setTextFill(Color.GREEN);
+                        newExpenseInput.setText("");
+                        chooseCategory.getSelectionModel().clearSelection();
+                        dateFieldExpense.getEditor().clear();
+                    } else {
 
+                        createErrorMsg.setTextFill(Color.RED);
+                        createErrorMsg.setText("Enter all the required fields: category, amount, and date");
+                    }
                 } catch (Throwable t) {
                     System.out.println("MybudgetService.createExpense error message ..." + t.getMessage());
                 }
@@ -375,10 +390,13 @@ public class MyBudgetAppUI extends Application {
 
         //create income
         createIncomeButton.setOnAction(e -> {
+
+            createErrorMsg.setText("");
+            incomeMsg.setText("");
             if (newIncomeInput.getText().isEmpty()) {
 
                 createErrorMsg.setTextFill(Color.RED);
-                createErrorMsg.setText("Enter the value of expense ");
+                createErrorMsg.setText("Enter all the required fields: amount and date");
 
             } else {
 
@@ -387,13 +405,20 @@ public class MyBudgetAppUI extends Application {
                 LocalDate incomedate = dateFieldIncome.getValue();
                 System.out.println(d2);
                 try {
-                    mybudgetService.createIncome(user.getUsername(), d2, incomedate);
-                    mybudgetService.updateBalanceNewIncome(user.getUsername(), d2, incomedate);
-                    currentBalance.setText(mybudgetService.updateBalanceLabel());
+                    if (mybudgetService.createIncome(user.getUsername(), d2, incomedate) == true) {
+                        mybudgetService.updateBalanceNewIncome(user.getUsername(), d2, incomedate);
+                        currentBalance.setText(mybudgetService.updateBalanceLabel());
+                        incomeMsg.setText("input data entered successfully");
+                        incomeMsg.setTextFill(Color.GREEN);
+                        newIncomeInput.setText("");
+                        dateFieldIncome.getEditor().clear();
+                    } else {
+
+                        createErrorMsg.setTextFill(Color.RED);
+                        createErrorMsg.setText("Enter all the required fields: amount and date");
+                    }
                 } catch (Exception ex) {
                     System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
-
-                    Logger.getLogger(MyBudgetService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
