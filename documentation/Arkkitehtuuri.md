@@ -184,10 +184,17 @@ When a new expense is recorded, the GUI invokes the createExpense method of the 
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppCreateExpense.png">
 
 
-#### Other Functionalities
-##### Viewing Financial Transactions
+## Other Functionalities
+### Viewing Financial Transactions
+#### Sequence Diagram
+View Budget History 
 
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/">
+#### Sequence Diagram
 
+View Spending by Category
+
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/">
 ## Main weaknesses
 
 ### Graphical user interface
