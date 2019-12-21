@@ -44,13 +44,15 @@ expense category, amount as double, and date.
 - **Your Balance Today** label shows the user's current balance.
 
 ### MyBudgetHistory
+
 To view your budgethistory, click _Budget history tableview_
+
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppBudgetHistory.png" width="300" height="600">
-_logout_
+
 ### Spending by categories
 
 To view the spending pie chart, click _Expenses by category pie chart_
 <img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="400" height="300">
 	
 ### Logout	
-To logout of the application, click _logout_
+To logout of the application, click _sign out_
