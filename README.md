@@ -11,7 +11,7 @@
 
 [Viikko6 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko6)
 
-[Viikko 7 Release/Final Release](https://github.com/sainioan/gitRep/releases/tag/viikko7)
+[Viikko7 Release/Final Release](https://github.com/sainioan/gitRep/releases/tag/viikko7)
 
 [Käyttöohje](../master/documentation/Kayttoohje.md)
 
