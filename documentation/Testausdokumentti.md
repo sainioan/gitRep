@@ -42,6 +42,6 @@ Tests line coverage is 75 % of the code and the branch coverage is 71 % of the c
 
 
 
-### Installation and configuration
+### Installation and Configuration
 
 Program has been installed and tested on OIS and Windows operating systems.
