@@ -45,3 +45,8 @@ Tests line coverage is 75 % of the code and the branch coverage is 71 % of the c
 ### Installation and Configuration
 
 Program has been installed and tested on OIS and Windows operating systems.
+
+
+### Functionalities
+
+All the functionalities listed by [User guide](../master/documentation/Kayttoohje.md) and [Software Requirements Specification](../master/documentation/Vaatimusmaarittely.md) have been tested. All user inputs are being validated by program.
