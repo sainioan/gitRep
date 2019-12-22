@@ -31,7 +31,9 @@
 |16.12.|    4 |Error viestien selvittelya. .gitignore häiriön korjaus, yms. Bugien fiksailua. Testien lisäämistä.|
 |17.12.|    4 |Epäonnistunutta yritystä rakentaa Tableviewn metodeja daon ja serviceen.Java docien täydennystä.|
 |19.12.|    5 | PieChart Scenen metodien koodaus, testin lisääminen, checkstyle virheiden poistoa.|
-
+|20.12.|    3 | Kayttohojedokumentin kirjoitus, GUI luokan päivitystä|
+|21.12.|    4 | Arkkitehtuurikuvausdokumentin kirjoitus, testien debuggausta|
+|22.12.|    5 | Testidokumentin kirjoitus, muiden dokumenttien editointia päivitystä, testin lisäämistä, final release|
 
 
 
