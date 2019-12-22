@@ -55,7 +55,7 @@ To view your budgethistory, click _Budget history tableview_
 
 To view the spending pie chart, click _Expenses by category pie chart_ 
 
-<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="390" height="300">
+<img src="https://github.com/sainioan/gitRep/blob/master/pictures/MyBudgetAppPieChartScene.png" width="390" height="315">
 	
 ### Logout	
 To logout of the application, click _sign out_
