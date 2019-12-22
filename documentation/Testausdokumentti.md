@@ -49,4 +49,4 @@ Program has been installed and tested on OIS and Windows operating systems.
 
 ### Functionalities
 
-All the functionalities listed by [User guide](../master/documentation/Kayttoohje.md) and [Software Requirements Specification](../master/documentation/Vaatimusmaarittely.md) have been tested. All user inputs are being validated by program.
+All the functionalities listed by [User guide](../master/documentation/Kayttoohje.md) and [Software Requirements Specification](../master/documentation/Vaatimusmaarittely.md) have been tested. Different kinds of user inputs are being validated by program including null ones.
