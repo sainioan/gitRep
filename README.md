@@ -11,6 +11,8 @@
 
 [Viikko6 Release](https://github.com/sainioan/gitRep/releases/tag/Viikko6)
 
+[Viikko 7 Release/Final Release](https://github.com/sainioan/gitRep/releases/tag/Viikko7)
+
 [Käyttöohje](../master/documentation/Kayttoohje.md)
 
 
