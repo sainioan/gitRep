@@ -6,7 +6,6 @@
 package mybudgetapp.domain;
 
 import java.time.LocalDate;
-import java.util.*;
 
 /**
  *
@@ -80,6 +79,11 @@ public class Balance {
         this.i = i;
     }
 
+    /**
+     * method which updates the balance if an income is added
+     *
+     * @param income an amount as double given as a parameter
+     */
     public void addIncome(double income) {
 
         if (income >= 0) {
@@ -89,6 +93,12 @@ public class Balance {
         }
     }
 
+    /**
+     * method which updates the balance if an expense is deducted the method
+     * also checks that the balance does not dip below 0.0
+     *
+     * @param expense an amount as double given as a parameter
+     */
     public void deductExpense(double expense) {
         if (this.balance - expense < 0) {
             this.balance = 0.0;
@@ -126,7 +136,8 @@ public class Balance {
     public void setId(int id) {
         this.id = id;
     }
-  /**
+
+    /**
      * @return balance object to String
      */
     @Override

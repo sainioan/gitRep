@@ -217,8 +217,6 @@ public class MyBudgetAppUI extends Application {
         balanceLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 18));
         Label createErrorMsg = new Label();
         Label createConfirmationMsg = new Label();
-        Label incomeMsg = new Label();
-        Label expenseMsg = new Label();
         Label categoryLabel = new Label("New category");
         Label expenseLabel = new Label("New expense: Add amount.");
         Label incomeLabel = new Label("New income: Add amount.");
@@ -241,7 +239,7 @@ public class MyBudgetAppUI extends Application {
         chooseCategory.setEditable(true);
         mybudgetLayout.setPadding(new Insets(10, 10, 10, 10));
         mybudgetLayout.setHgap(5);
-        mybudgetLayout.setVgap(5);;
+        mybudgetLayout.setVgap(5);
 
         mybudgetLayout.add(welcome, 0, 0);
         mybudgetLayout.add(chooseCategory, 0, 2);
@@ -252,7 +250,6 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(signoutButton, 15, 0);
         mybudgetLayout.add(expenseLabel, 4, 1);
         mybudgetLayout.add(newExpenseInput, 4, 2);
-        mybudgetLayout.add(expenseMsg, 4, 27);
         mybudgetLayout.add(expenseDate, 4, 3);
         mybudgetLayout.add(dateFieldExpense, 4, 4);
         mybudgetLayout.add(createExpenseButton, 4, 5);
@@ -262,7 +259,6 @@ public class MyBudgetAppUI extends Application {
         mybudgetLayout.add(pieSceneButton, 4, 25);
         mybudgetLayout.add(incomeLabel, 0, 21);
         mybudgetLayout.add(newIncomeInput, 0, 22);
-        mybudgetLayout.add(incomeMsg, 4, 27);
         mybudgetLayout.add(incomeDate, 0, 23);
         mybudgetLayout.add(dateFieldIncome, 0, 24);
         mybudgetLayout.add(createIncomeButton, 0, 25);
@@ -353,9 +349,7 @@ public class MyBudgetAppUI extends Application {
         createExpenseButton.setOnAction(e -> {
 
             createErrorMsg.setText("");
-            expenseMsg.setText("");
             if (newExpenseInput.getText().isEmpty()) {
-
                 createErrorMsg.setTextFill(Color.RED);
                 createErrorMsg.setText("Enter the all the required fields: category, amount, and date");
 
@@ -370,10 +364,6 @@ public class MyBudgetAppUI extends Application {
                     if (mybudgetService.createExpense(user.getUsername(), categoryString, d, expensedate) == true) {
                         mybudgetService.updateBalanceNewExpense(user.getUsername(), d, expensedate);
                         currentBalance.setText(mybudgetService.updateBalanceLabel());
-                        expenseMsg.setText("expense data entered successfully");
-                        expenseMsg.setTextFill(Color.GREEN);
-                        newExpenseInput.setText("");
-                        
                         chooseCategory.getSelectionModel().clearSelection();
                         dateFieldExpense.getEditor().clear();
                     } else {
@@ -384,7 +374,6 @@ public class MyBudgetAppUI extends Application {
                 } catch (Throwable t) {
                     System.out.println("MybudgetService.createExpense error message ..." + t.getMessage());
                 }
-                expenseMsg.setText("");
             }
         });
 
@@ -393,7 +382,6 @@ public class MyBudgetAppUI extends Application {
 
             createErrorMsg.setText("");
             if (newIncomeInput.getText().isEmpty()) {
-
                 createErrorMsg.setTextFill(Color.RED);
                 createErrorMsg.setText("Enter all the required fields: amount and date");
 
@@ -402,15 +390,11 @@ public class MyBudgetAppUI extends Application {
                 String amount = newIncomeInput.getText();
                 double d2 = Double.parseDouble(amount);
                 LocalDate incomedate = dateFieldIncome.getValue();
-                System.out.println(d2);
                 try {
                     if (mybudgetService.createIncome(user.getUsername(), d2, incomedate) == true) {
                         mybudgetService.updateBalanceNewIncome(user.getUsername(), d2, incomedate);
                         currentBalance.setText(mybudgetService.updateBalanceLabel());
-                        incomeMsg.setText("input data entered successfully");
-                        incomeMsg.setTextFill(Color.GREEN);
                         newIncomeInput.setText("");
-                        
                         dateFieldIncome.getEditor().clear();
                     } else {
 
@@ -420,7 +404,6 @@ public class MyBudgetAppUI extends Application {
                 } catch (Exception ex) {
                     System.out.println("mybudgetService.createIncome error..." + ex.getMessage());
                 }
-                incomeMsg.setText("");
             }
         });
         //create new user scene
@@ -460,7 +443,7 @@ public class MyBudgetAppUI extends Application {
         bpNewUser.setCenter(newUserGridPane);
         textNewUser.setId("text");
         newUsernamePane.getChildren().addAll(newUserGridPane);
-        newUserPane.getChildren().addAll( textNewUser, newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
+        newUserPane.getChildren().addAll(textNewUser, newUserGridPane, userCreationMessage, newPasswordPane, newUsernamePane);
 
         signUpButton.setOnAction(e -> {
 

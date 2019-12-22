@@ -61,6 +61,10 @@ public class Category {
         this.name = name;
     }
 
+/**
+ *
+ * @return category object to String
+ */
     @Override
     public String toString() {
         return this.name;

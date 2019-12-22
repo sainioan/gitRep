@@ -26,6 +26,11 @@ public class DBUserDao implements UserDao {
 
     String selectStmt = "SELECT * FROM user";
 
+    /**
+     * Constructor with one parameter
+     *
+     * @param db the given database
+     */
     public DBUserDao(MyBudgetDatabase db) {
         this.db = db;
 
@@ -50,7 +55,7 @@ public class DBUserDao implements UserDao {
     }
 
     /**
-     * The medhod saves a new user given into the database
+     * The method saves a new user given into the database
      *
      * @param user new user object given as a parameter
      * @return returns true if the saving of the user into the database succeeds
@@ -115,7 +120,11 @@ public class DBUserDao implements UserDao {
         }
         return user;
     }
-
+   /**
+     * The method looks for a specific user by username given as a parameter 
+     * @param username given as a parameter
+     * @return returns the user object
+     */
     @Override
     public User findByUsername(String username) {
         try {

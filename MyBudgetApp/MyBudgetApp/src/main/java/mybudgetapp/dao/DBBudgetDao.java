@@ -485,6 +485,4 @@ public class DBBudgetDao implements BudgetDao {
         }
         return expensesByCategory;
     }
-
-//    
 }

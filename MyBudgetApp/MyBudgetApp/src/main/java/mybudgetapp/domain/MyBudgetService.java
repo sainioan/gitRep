@@ -36,10 +36,10 @@ public class MyBudgetService {
     private TableView tableview;
 
     /**
-     * the contructor for MyBudgetService
+     * the constructor for MyBudgetService
      *
      * @param db the database given as a parameter
-     * @param username the loggedin user's username is given as a parameter
+     * @param username the logged in user's username is given as a parameter
      * @throws SQLException when connection to the database fails
      */
     public MyBudgetService(MyBudgetDatabase db, String username) throws SQLException {

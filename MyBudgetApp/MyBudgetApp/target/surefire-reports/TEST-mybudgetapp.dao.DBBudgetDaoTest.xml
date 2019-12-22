@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="11" failures="0" name="mybudgetapp.dao.DBBudgetDaoTest" time="0.257" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="mybudgetapp.dao.DBBudgetDaoTest" time="0.237" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk/Contents/Home/jre/lib"/>
@@ -61,15 +61,15 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="deleteCategory" time="0.129"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="deleteExpense" time="0.011"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="getBalanceList2Works" time="0.029"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="deleteIncome" time="0.011"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="createExpenseWorks" time="0.01"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="createIncomeWorks" time="0.01"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="saveBalanceWorks" time="0.01"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="getBalanceListWorks" time="0.013"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="findOne2Works" time="0.01"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="createCategoryWorks" time="0.015"/>
-  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="findOneWorks" time="0.009"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="deleteCategory" time="0.112"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="deleteExpense" time="0.014"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="getBalanceList2Works" time="0.025"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="deleteIncome" time="0.014"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="createExpenseWorks" time="0.013"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="createIncomeWorks" time="0.012"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="saveBalanceWorks" time="0.007"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="getBalanceListWorks" time="0.01"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="findOne2Works" time="0.009"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="createCategoryWorks" time="0.011"/>
+  <testcase classname="mybudgetapp.dao.DBBudgetDaoTest" name="findOneWorks" time="0.01"/>
 </testsuite>

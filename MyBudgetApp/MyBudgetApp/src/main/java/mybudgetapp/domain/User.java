@@ -9,7 +9,7 @@ import javafx.beans.property.*;
 
 /**
  *
- * The class representing the user 
+ * The class representing the user
  */
 public class User {
 
@@ -42,7 +42,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param username username of the logged in user
      */
     public void setUsername(String username) {
@@ -66,6 +66,10 @@ public class User {
         }
     }
 
+    /**
+     *
+     * @return returns an empty string if validatePassword succeeds
+     */
     public String validatePassword() {
         String s = "";
 
@@ -79,6 +83,12 @@ public class User {
         }
     }
 
+    /**
+     * method checks if two objects are equal
+     *
+     * @param obj object given as a parameter
+     * @return true if two objects are equal
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof User)) {
@@ -87,7 +97,10 @@ public class User {
         User other = (User) obj;
         return username.equals(other.username);
     }
-
+ /**
+     * 
+     * @return user to String
+     */
     @Override
     public String toString() {
         return this.username;

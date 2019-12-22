@@ -90,7 +90,8 @@ public class Income {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-  /**
+
+    /**
      * @return income object to String
      */
     @Override

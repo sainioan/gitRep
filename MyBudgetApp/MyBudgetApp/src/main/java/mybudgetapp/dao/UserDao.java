@@ -2,7 +2,6 @@ package mybudgetapp.dao;
 
 import java.sql.SQLException;
 import mybudgetapp.domain.User;
-import java.util.List;
 
 /**
  *
