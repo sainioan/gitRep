@@ -8,6 +8,19 @@ This program has been tested by automated unit- and intergation-tests with JUnit
 The core of the automated tests are testing softwarelogic package [mybudgetapp.domain](https://github.com/sainioan/gitRep/tree/master/MyBudgetApp/MyBudgetApp/src/main/java/mybudgetapp/domain). Classes testing this package are:
 
 - [BalanceTest](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/test/java/mybudgetapp/domain/BalanceTest.java)
+
+- [CategoryTest](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/test/java/mybudgetapp/domain/CategoryTest.java)
+
+- [ExpenseTest](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/test/java/mybudgetapp/domain/ExpenseTest.java)
+
+- [IncomeTest](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/test/java/mybudgetapp/domain/IncomeTest.java)
+
+- [MyBudgetServiceTest](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/test/java/mybudgetapp/domain/MyBudgetServiceTest.java)
+
+- [UserTest](https://github.com/sainioan/gitRep/blob/master/MyBudgetApp/MyBudgetApp/src/test/java/mybudgetapp/domain/UserTest.java)
+
+
+
 ### DAO
 ### Database
 
