@@ -68,6 +68,7 @@ public class DBUserDaoTest {
             connection.close();
             assertEquals("tester", user.getUsername());
             assertEquals("password123", user.getPassword());
+            assertEquals(null, dao.findByUsername("someone"));
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }

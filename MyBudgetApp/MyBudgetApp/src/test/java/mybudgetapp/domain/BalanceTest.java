@@ -73,6 +73,8 @@ public class BalanceTest {
         balance.setAmount(2500.0);
         balance.deductExpense(200);
         assertEquals(2300.0, balance.getAmount(), DELTA);
+        balance.deductExpense(100000000);
+        assertEquals(0.0, balance.getAmount(), DELTA);
     }
 
     @Test

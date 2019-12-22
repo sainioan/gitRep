@@ -330,10 +330,12 @@ public class MyBudgetService {
      * @return true if the username input meets the requirements
      */
     public boolean deleteCategory(User user) {
+        if (user == null) {
+            return false;
+        }
         try {
             dbbudgetDao.deleteCategory(user);
         } catch (Exception ex) {
-            return false;
         }
         return true;
     }
@@ -347,10 +349,12 @@ public class MyBudgetService {
      * @return true if the username input meets the requirements
      */
     public boolean deleteExpense(User user) {
+        if (user == null) {
+            return false;
+        }
         try {
             dbbudgetDao.deleteExpense(user);
         } catch (Exception ex) {
-            return false;
         }
         return true;
     }
@@ -364,10 +368,12 @@ public class MyBudgetService {
      * @return true if the username input meets the requirements
      */
     public boolean deleteIncome(User user) {
+        if (user == null) {
+            return false;
+        }
         try {
             dbbudgetDao.deleteIncome(user);
         } catch (Exception ex) {
-            return false;
         }
         return true;
     }
@@ -381,10 +387,12 @@ public class MyBudgetService {
      * @return true if the username input meets the requirements
      */
     public boolean deleteBalance(User user) {
+        if (user == null) {
+            return false;
+        }
         try {
             dbbudgetDao.deleteBalance(user);
         } catch (Exception ex) {
-            return false;
         }
         return true;
     }

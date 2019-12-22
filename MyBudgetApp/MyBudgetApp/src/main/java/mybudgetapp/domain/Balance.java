@@ -26,11 +26,6 @@ public class Balance {
      * @param username of the logged in user
      * @param date time when a balance is checked
      */
-    public Balance(String username, LocalDate date) {
-        this.username = username;
-        this.date = date;
-    }
-
     public Balance(String username, double amount, LocalDate date) {
         this.username = username;
         this.balance = amount;

@@ -108,8 +108,6 @@ public class MyBudgetServiceTest {
             Category category = new Category(testuser.getUsername(), "cars");
             mbs.createCategory(category.getUserName(), category.getName());
             categoriesList = dbbudget.getAllCategories(testuser);
-            // categoriesList = mbs.createChoices(testuser);
-            System.out.println(categoriesList.toString());
             assertEquals(1, categoriesList.size());
         } catch (Exception e) {
             System.out.println("listallcategories error message " + e.getMessage());
@@ -141,32 +139,36 @@ public class MyBudgetServiceTest {
 
     @Test
     public void createIncome() throws SQLException, Exception {
-        //   dbbudget.create(i);
+ 
         assertEquals(true, mbs.createIncome(testuser.getUsername(), 1000.0, today));
     }
 
     @Test
     public void deleteIncome() throws SQLException, Exception {
-        //   dbbudget.create(i);
+  
         assertEquals(true, mbs.deleteIncome(testuser));
+        assertEquals(false, mbs.deleteIncome(null));
     }
-
     @Test
     public void deleteExpense() throws SQLException, Exception {
-        //   dbbudget.create(i);
+       
         assertEquals(true, mbs.deleteExpense(testuser));
+        assertEquals(false, mbs.deleteExpense(null));
     }
 
     @Test
     public void deleteCateogry() throws SQLException, Exception {
-        //   dbbudget.create(i);
+  
         assertEquals(true, mbs.deleteCategory(testuser));
+        assertEquals(false, mbs.deleteCategory(null));
+        
     }
 
     @Test
     public void deleteBalance() throws SQLException, Exception {
-        //   dbbudget.create(i);
+  
         assertEquals(true, mbs.deleteBalance(testuser));
+        assertEquals(false, mbs.deleteBalance(null));
     }
 
     @Test
@@ -184,13 +186,23 @@ public class MyBudgetServiceTest {
         double inc = i.getAmount();
         boolean result = mbs.updateBalanceNewIncome(testuser.getUsername(), inc, LocalDate.now());
         assertEquals(true, result);
+
+        dbbudget.findOne("anothertester");
+        boolean res = mbs.updateBalanceNewIncome("anothertester", 10000.0, LocalDate.now());
+        Balance balance = new Balance("anothertest", 10000.0, LocalDate.now());
+
+        assertEquals(true, res);
+        dbuser.saveUser(new User("anothertest", "1111111"));
+        dbbudget.saveBalance(balance);
+
     }
-    @ Test
-    public void createChoicesWorks()throws SQLException{
-        try{
-        assertTrue(mbs.createChoices(testuser)!=null);
-        } catch(Throwable t){
-            System.out.println(t.getMessage());   
+
+    @Test
+    public void createChoicesWorks() throws SQLException {
+        try {
+            assertTrue(mbs.createChoices(testuser) != null);
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
         }
     }
 
@@ -200,6 +212,8 @@ public class MyBudgetServiceTest {
         double expense = e.getAmount();
         boolean result = mbs.updateBalanceNewExpense(testuser.getUsername(), expense, LocalDate.now());
         assertEquals(true, result);
+        boolean result2 = mbs.updateBalanceNewExpense("fakeuser", expense, today);
+        assertEquals(false, result2);
     }
 
     @Test
@@ -236,6 +250,7 @@ public class MyBudgetServiceTest {
         User user = new User("testabc", "ta1234");
         mbs.createUser(user.getUsername(), user.getPassword());
         assertEquals(true, mbs.deleteUser(user));
+        assertEquals(false, mbs.deleteUser(null));
     }
 
     @Test

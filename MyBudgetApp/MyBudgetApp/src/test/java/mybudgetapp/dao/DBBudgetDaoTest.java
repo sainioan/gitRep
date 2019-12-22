@@ -105,6 +105,7 @@ public class DBBudgetDaoTest {
         dao.saveBalance(b);
         Balance d = dao.findOne("tester");
         assertEquals(7000.0, d.getAmount(), DELTA);
+        assertEquals(null, dao.findOne("fakeTester"));
     }
 
     @Test

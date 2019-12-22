@@ -71,6 +71,11 @@ public class IncomeTest {
         assertEquals(5, i.getId());
 
     }
+    @Test
+    public void setUsernameWorks(){
+        i.setUsername("ballerina");
+        assertEquals("ballerina", i.getUserName());
+    }
 
     @Test
     public void getDateWorks() {
