@@ -30,7 +30,7 @@ public class MyBudgetServiceTest {
     MyBudgetService mbs;
     MyBudgetService mbs2;
     MyBudgetDatabase testdatabase;
-    List<Category> categoriesList = new ArrayList<>();
+    //  List<Category> categoriesList = new ArrayList<>();
     User testuser;
     DBUserDao dbuser;
     DBBudgetDao dbbudget;
@@ -89,7 +89,7 @@ public class MyBudgetServiceTest {
             System.out.println("loggedIn");
             assertEquals("testUser", loggedIn.getUsername());
         } catch (Exception e) {
-            System.out.println("balanceupdateworks error message..." + e.getMessage());
+            System.out.println("createuser error message..." + e.getMessage());
         }
     }
 
@@ -103,6 +103,7 @@ public class MyBudgetServiceTest {
 
     @Test
     public void listAllCategories() throws SQLException, Exception {
+        List<Category> categoriesList = new ArrayList<>();
         try {
             Category category = new Category(testuser.getUsername(), "cars");
             mbs.createCategory(category.getUserName(), category.getName());
@@ -184,6 +185,14 @@ public class MyBudgetServiceTest {
         boolean result = mbs.updateBalanceNewIncome(testuser.getUsername(), inc, LocalDate.now());
         assertEquals(true, result);
     }
+    @ Test
+    public void createChoicesWorks()throws SQLException{
+        try{
+        assertTrue(mbs.createChoices(testuser)!=null);
+        } catch(Throwable t){
+            System.out.println(t.getMessage());   
+        }
+    }
 
     @Test
     public void updateBalanceNewExpense() throws SQLException, Exception {
@@ -231,9 +240,8 @@ public class MyBudgetServiceTest {
 
     @Test
     public void updateBalanceLabelWorks() throws SQLException, Exception {
-
-        assertEquals("TESTUSER: (Balance): 0.0 € (Date): 2019-12-21", mbs.updateBalanceLabel());
-
+        assertEquals("TESTUSER: (Balance): 0.0 € (Date): " + today, mbs.updateBalanceLabel());
+        assertTrue(mbs.updateBalanceLabel() != null);
     }
 
 }
